@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initParallaxEffects();
   initMagneticButtons();
   initGlobalParticleSystem();
+  initAboutSnowParticles();
   initAboutSectionParticles();
   initAnimeQuoteInteraction();
   initInteractiveProjectCards();
@@ -347,6 +348,278 @@ function generateParticleCSS(count) {
   }
   return css;
 }
+// ===== ABOUT SECTION SNOW PARTICLES =====
+function initAboutSnowParticles() {
+  const aboutSection = document.querySelector('.about');
+  if (!aboutSection) return;
+  
+  // Create snow particle container
+  const snowContainer = document.createElement('div');
+  snowContainer.className = 'about-snow-particles';
+  snowContainer.style.cssText = `
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+  `;
+  
+  aboutSection.appendChild(snowContainer);
+  
+  // Create snow particles
+  const snowCount = 40;
+  
+  for (let i = 0; i < snowCount; i++) {
+    const snowflake = document.createElement('div');
+    snowflake.className = 'snow-particle';
+    
+    // Random properties
+    const size = Math.random() * 3 + 1;
+    const duration = Math.random() * 15 + 10;
+    const delay = Math.random() * 10;
+    const startX = Math.random() * 100;
+    const endX = Math.random() * 100;
+    const opacity = Math.random() * 0.6 + 0.4;
+    
+    snowflake.style.cssText = `
+      position: absolute;
+      width: ${size}px;
+      height: ${size}px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 50%, transparent 70%);
+      border-radius: 50%;
+      left: ${startX}%;
+      top: -10px;
+      opacity: ${opacity};
+      animation: snowfall-${i} ${duration}s ${delay}s linear infinite;
+      pointer-events: none;
+    `;
+    
+    snowContainer.appendChild(snowflake);
+    
+    // Create unique animation for each snowflake
+    createSnowAnimation(i, startX, endX, duration);
+  }
+  
+  // Add CSS animations for all snowflakes
+  const style = document.createElement('style');
+  style.textContent = generateSnowCSS(snowCount);
+  document.head.appendChild(style);
+}
+
+function createSnowAnimation(index, startX, endX, duration) {
+  const midX = startX + (endX - startX) * 0.5;
+  const swayAmount = (Math.random() - 0.5) * 20;
+  
+  const keyframes = `
+    @keyframes snowfall-${index} {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.8;
+      }
+      30% {
+        transform: translate(${swayAmount}px, 30vh) rotate(120deg);
+      }
+      50% {
+        transform: translate(${-swayAmount}px, 60vh) rotate(240deg);
+      }
+      70% {
+        transform: translate(${swayAmount * 0.5}px, 90vh) rotate(360deg);
+      }
+      90% {
+        opacity: 0.6;
+      }
+      100% {
+        transform: translate(${(endX - startX) * 2}px, 110vh) rotate(480deg);
+        opacity: 0;
+      }
+    }
+  `;
+  
+  const style = document.createElement('style');
+  style.textContent = keyframes;
+  document.head.appendChild(style);
+}
+
+function generateSnowCSS(count) {
+  let css = '';
+  for (let i = 0; i < count; i++) {
+    const startX = Math.random() * 100;
+    const endX = Math.random() * 100;
+    const swayAmount = (Math.random() - 0.5) * 30;
+    const duration = Math.random() * 15 + 10;
+    
+    css += `
+      @keyframes snowfall-${i} {
+        0% {
+          transform: translate(0, 0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.7;
+        }
+        25% {
+          transform: translate(${swayAmount}px, 25vh) rotate(90deg);
+        }
+        50% {
+          transform: translate(${-swayAmount}px, 50vh) rotate(180deg);
+        }
+        75% {
+          transform: translate(${swayAmount * 0.7}px, 75vh) rotate(270deg);
+        }
+        90% {
+          opacity: 0.5;
+        }
+        100% {
+          transform: translate(${(endX - startX) * 3}px, 110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    `;
+  }
+  return css;
+}
+
+// ===== ABOUT SECTION SNOW PARTICLES =====
+function initAboutSnowParticles() {
+  const aboutSection = document.querySelector('.about');
+  if (!aboutSection) return;
+  
+  // Create snow particle container
+  const snowContainer = document.createElement('div');
+  snowContainer.className = 'about-snow-particles';
+  snowContainer.style.cssText = `
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  `;
+  
+  aboutSection.appendChild(snowContainer);
+  
+  // Create snow particles
+  const particleCount = 80;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    const size = Math.random() * 3 + 1;
+    const duration = Math.random() * 15 + 8;
+    const delay = Math.random() * 10;
+    const startX = Math.random() * 100;
+    const endX = (Math.random() - 0.5) * 100;
+    
+    particle.style.cssText = `
+      position: absolute;
+      width: ${size}px;
+      height: ${size}px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+      border-radius: 50%;
+      left: ${startX}%;
+      top: -10px;
+      opacity: 0;
+      animation: snow-fall-${i} ${duration}s ${delay}s linear infinite;
+      pointer-events: none;
+    `;
+    
+    snowContainer.appendChild(particle);
+    
+    // Create unique animation for each particle
+    createSnowAnimation(i, startX, endX, duration);
+  }
+  
+  // Add CSS animations for all snow particles
+  const style = document.createElement('style');
+  style.textContent = generateSnowCSS(particleCount);
+  document.head.appendChild(style);
+}
+
+function createSnowAnimation(index, startX, endX, duration) {
+  const keyframes = `
+    @keyframes snow-fall-${index} {
+      0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+      }
+      10% {
+        transform: translate(${(Math.random() - 0.5) * 20}px, 10vh) scale(1);
+        opacity: 0.8;
+      }
+      30% {
+        transform: translate(${(Math.random() - 0.5) * 40}px, 30vh) scale(1.1);
+        opacity: 0.6;
+      }
+      60% {
+        transform: translate(${(Math.random() - 0.5) * 60}px, 60vh) scale(0.9);
+        opacity: 0.4;
+      }
+      90% {
+        transform: translate(${endX}px, 90vh) scale(0.7);
+        opacity: 0.2;
+      }
+      100% {
+        transform: translate(${endX + (Math.random() - 0.5) * 30}px, 110vh) scale(0);
+        opacity: 0;
+      }
+    }
+  `;
+  
+  const style = document.createElement('style');
+  style.textContent = keyframes;
+  document.head.appendChild(style);
+}
+
+function generateSnowCSS(count) {
+  let css = '';
+  for (let i = 0; i < count; i++) {
+    const startX = Math.random() * 100;
+    const endX = (Math.random() - 0.5) * 100;
+    const duration = Math.random() * 15 + 8;
+    
+    css += `
+      @keyframes snow-fall-${i} {
+        0% {
+          transform: translate(0, 0) scale(0);
+          opacity: 0;
+        }
+        10% {
+          transform: translate(${(Math.random() - 0.5) * 20}px, 10vh) scale(1);
+          opacity: 0.7;
+        }
+        25% {
+          transform: translate(${(Math.random() - 0.5) * 35}px, 25vh) scale(1.2);
+          opacity: 0.6;
+        }
+        45% {
+          transform: translate(${(Math.random() - 0.5) * 50}px, 45vh) scale(1);
+          opacity: 0.5;
+        }
+        70% {
+          transform: translate(${(Math.random() - 0.5) * 65}px, 70vh) scale(0.8);
+          opacity: 0.3;
+        }
+        90% {
+          transform: translate(${(Math.random() - 0.5) * 80}px, 90vh) scale(0.5);
+          opacity: 0.1;
+        }
+        100% {
+          transform: translate(${(Math.random() - 0.5) * 100}px, 110vh) scale(0);
+          opacity: 0;
+        }
+      }
+    `;
+  }
+  return css;
+}
+
 // ===== ABOUT SECTION PARTICLES =====
 function initAboutSectionParticles() {
   const aboutSection = document.querySelector('.about');
