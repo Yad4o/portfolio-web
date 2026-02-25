@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initGlobalParticleSystem();
   initAboutSnowParticles();
   initAboutSectionParticles();
+  initInternshipSnowParticles();
   initAnimeQuoteInteraction();
   initInteractiveProjectCards();
   initProjectSectionEnhancements();
@@ -586,6 +587,141 @@ function generateSnowCSS(count) {
     
     css += `
       @keyframes snow-fall-${i} {
+        0% {
+          transform: translate(0, 0) scale(0);
+          opacity: 0;
+        }
+        10% {
+          transform: translate(${(Math.random() - 0.5) * 20}px, 10vh) scale(1);
+          opacity: 0.7;
+        }
+        25% {
+          transform: translate(${(Math.random() - 0.5) * 35}px, 25vh) scale(1.2);
+          opacity: 0.6;
+        }
+        45% {
+          transform: translate(${(Math.random() - 0.5) * 50}px, 45vh) scale(1);
+          opacity: 0.5;
+        }
+        70% {
+          transform: translate(${(Math.random() - 0.5) * 65}px, 70vh) scale(0.8);
+          opacity: 0.3;
+        }
+        90% {
+          transform: translate(${(Math.random() - 0.5) * 80}px, 90vh) scale(0.5);
+          opacity: 0.1;
+        }
+        100% {
+          transform: translate(${(Math.random() - 0.5) * 100}px, 110vh) scale(0);
+          opacity: 0;
+        }
+      }
+    `;
+  }
+  return css;
+}
+
+// ===== INTERNSHIP SECTION SNOW PARTICLES =====
+function initInternshipSnowParticles() {
+  const internshipSection = document.querySelector('.internship');
+  if (!internshipSection) return;
+  
+  // Create snow particle container
+  const snowContainer = document.createElement('div');
+  snowContainer.className = 'internship-snow-particles';
+  snowContainer.style.cssText = `
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+  `;
+  
+  internshipSection.appendChild(snowContainer);
+  
+  // Create snow particles
+  const particleCount = 60;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    const size = Math.random() * 3 + 1;
+    const duration = Math.random() * 15 + 8;
+    const delay = Math.random() * 10;
+    const startX = Math.random() * 100;
+    const endX = (Math.random() - 0.5) * 100;
+    
+    particle.style.cssText = `
+      position: absolute;
+      width: ${size}px;
+      height: ${size}px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 50%, transparent 70%);
+      border-radius: 50%;
+      left: ${startX}%;
+      top: -10px;
+      opacity: 0;
+      animation: internship-snow-fall-${i} ${duration}s ${delay}s linear infinite;
+      pointer-events: none;
+    `;
+    
+    snowContainer.appendChild(particle);
+    
+    // Create unique animation for each particle
+    createInternshipSnowAnimation(i, startX, endX, duration);
+  }
+  
+  // Add CSS animations for all snow particles
+  const style = document.createElement('style');
+  style.textContent = generateInternshipSnowCSS(particleCount);
+  document.head.appendChild(style);
+}
+
+function createInternshipSnowAnimation(index, startX, endX, duration) {
+  const keyframes = `
+    @keyframes internship-snow-fall-${index} {
+      0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+      }
+      10% {
+        transform: translate(${(Math.random() - 0.5) * 20}px, 10vh) scale(1);
+        opacity: 0.8;
+      }
+      30% {
+        transform: translate(${(Math.random() - 0.5) * 40}px, 30vh) scale(1.1);
+        opacity: 0.6;
+      }
+      60% {
+        transform: translate(${(Math.random() - 0.5) * 60}px, 60vh) scale(0.9);
+        opacity: 0.4;
+      }
+      90% {
+        transform: translate(${endX}px, 90vh) scale(0.7);
+        opacity: 0.2;
+      }
+      100% {
+        transform: translate(${endX + (Math.random() - 0.5) * 30}px, 110vh) scale(0);
+        opacity: 0;
+      }
+    }
+  `;
+  
+  const style = document.createElement('style');
+  style.textContent = keyframes;
+  document.head.appendChild(style);
+}
+
+function generateInternshipSnowCSS(count) {
+  let css = '';
+  for (let i = 0; i < count; i++) {
+    const startX = Math.random() * 100;
+    const endX = (Math.random() - 0.5) * 100;
+    const duration = Math.random() * 15 + 8;
+    
+    css += `
+      @keyframes internship-snow-fall-${i} {
         0% {
           transform: translate(0, 0) scale(0);
           opacity: 0;
