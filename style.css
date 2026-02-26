@@ -52,6 +52,299 @@ body {
   overflow-x: hidden;
 }
 
+/* ===== FLOATING NAVIGATION INDICATOR ===== */
+.floating-nav-indicator {
+  position: fixed;
+  top: 50%;
+  right: 30px;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  pointer-events: none;
+}
+
+.nav-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(0, 212, 255, 0.5);
+  cursor: pointer;
+  pointer-events: all;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.nav-dot::before {
+  content: attr(data-section);
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+}
+
+.nav-dot:hover::before {
+  opacity: 1;
+}
+
+.nav-dot.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.5);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+}
+
+.nav-dot:hover {
+  background: rgba(0, 212, 255, 0.5);
+  border-color: var(--accent);
+  transform: scale(1.2);
+}
+
+/* Floating orb that follows cursor */
+.floating-orb {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 50%, transparent 70%);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  pointer-events: none;
+  z-index: 999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.1s ease-out;
+  animation: orb-pulse 3s ease-in-out infinite;
+}
+
+@keyframes orb-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* ===== DYNAMIC CORNER INDICATOR ===== */
+.corner-indicator {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 80px;
+  height: 80px;
+  z-index: 10000;
+  pointer-events: none;
+}
+
+.corner-orbit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  box-shadow: 
+    0 0 30px rgba(0, 212, 255, 0.1),
+    inset 0 0 30px rgba(0, 212, 255, 0.05);
+}
+
+.orbit-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--accent);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  margin-top: -2px;
+  margin-left: -2px;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+}
+
+.orbit-particle:nth-child(1) {
+  animation: orbit-1 4s linear infinite;
+}
+
+.orbit-particle:nth-child(2) {
+  animation: orbit-2 3s linear infinite;
+  background: rgba(0, 255, 136, 0.8);
+  box-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+}
+
+.orbit-particle:nth-child(3) {
+  animation: orbit-3 5s linear infinite;
+  background: rgba(255, 107, 107, 0.8);
+  box-shadow: 0 0 10px rgba(255, 107, 107, 0.8);
+}
+
+@keyframes orbit-1 {
+  0% {
+    transform: rotate(0deg) translateX(35px) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: rotate(360deg) translateX(35px) rotate(-360deg);
+    opacity: 0.3;
+  }
+}
+
+@keyframes orbit-2 {
+  0% {
+    transform: rotate(120deg) translateX(30px) rotate(-120deg);
+    opacity: 0.3;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: rotate(480deg) translateX(30px) rotate(-480deg);
+    opacity: 0.3;
+  }
+}
+
+@keyframes orbit-3 {
+  0% {
+    transform: rotate(240deg) translateX(25px) rotate(-240deg);
+    opacity: 0.3;
+  }
+  25% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: rotate(600deg) translateX(25px) rotate(-600deg);
+    opacity: 0.3;
+  }
+}
+
+.corner-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.corner-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--accent);
+  opacity: 0;
+  transition: all 0.3s ease;
+  text-align: center;
+  pointer-events: none;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+}
+
+.corner-indicator.active .corner-text {
+  opacity: 1;
+  animation: text-glow 1s ease-in-out infinite alternate;
+}
+
+@keyframes text-glow {
+  0% {
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
+  }
+  100% {
+    text-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 30px rgba(0, 212, 255, 0.6);
+  }
+}
+
+.corner-indicator.active .corner-core {
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+}
+
+.corner-indicator.morphed .corner-orbit {
+  border-color: rgba(0, 255, 136, 0.3);
+  box-shadow: 
+    0 0 40px rgba(0, 255, 136, 0.2),
+    inset 0 0 40px rgba(0, 255, 136, 0.1);
+}
+
+.corner-indicator.morphed .orbit-particle:nth-child(1) {
+  background: rgba(0, 255, 136, 0.8);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+  animation-duration: 3s;
+}
+
+.corner-indicator.morphed .orbit-particle:nth-child(2) {
+  background: rgba(255, 193, 7, 0.8);
+  box-shadow: 0 0 15px rgba(255, 193, 7, 0.8);
+  animation-duration: 2.5s;
+}
+
+.corner-indicator.morphed .orbit-particle:nth-child(3) {
+  background: rgba(156, 39, 176, 0.8);
+  box-shadow: 0 0 15px rgba(156, 39, 176, 0.8);
+  animation-duration: 4s;
+}
+
+.corner-indicator.morphed .corner-core {
+  background: radial-gradient(circle, #00ff88 0%, transparent 70%);
+  box-shadow: 0 0 30px rgba(0, 255, 136, 0.8);
+}
+
+.corner-indicator.morphed .corner-text {
+  color: #00ff88;
+  text-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+}
+
+/* Floating particles that follow scroll */
+.scroll-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.scroll-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.6) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+}
+
 /* ===== CUSTOM CURSOR ===== */
 .custom-cursor {
   position: fixed;
