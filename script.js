@@ -6,7 +6,7 @@
 // ===== INITIALIZATION =====
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🚀 Portfolio Loading...");
-  
+
   // Initialize all modules
   initFloatingFeatures();
   initCustomCursor();
@@ -16,13 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
   initParallaxEffects();
   initMagneticButtons();
   initGlobalParticleSystem();
+  initHero3DBackground();
   initAboutSnowParticles();
   initAboutSectionParticles();
   initInternshipSnowParticles();
   initAnimeQuoteInteraction();
   initInteractiveProjectCards();
   initProjectSectionEnhancements();
-  
+
   console.log("✨ Portfolio Initialized Successfully!");
 });
 
@@ -31,25 +32,25 @@ function initFloatingFeatures() {
   // Dynamic Corner Indicator
   const cornerIndicator = document.getElementById('cornerIndicator');
   const cornerText = document.getElementById('cornerText');
-  
+
   // Floating Navigation
   const floatingNav = document.getElementById('floatingNav');
   const navDots = document.querySelectorAll('.nav-dot');
-  
+
   // Floating Orb
   const floatingOrb = document.getElementById('floatingOrb');
-  
+
   // Scroll Particles
   const scrollParticles = document.getElementById('scrollParticles');
-  
+
   // Update corner indicator based on scroll
   function updateCornerIndicator() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrollPercent = Math.round((scrollTop / scrollHeight) * 100);
-    
+
     cornerText.textContent = scrollPercent + '%';
-    
+
     // Morph the indicator based on scroll position
     if (scrollPercent > 25 && scrollPercent <= 50) {
       cornerIndicator.classList.add('active');
@@ -60,39 +61,39 @@ function initFloatingFeatures() {
     } else {
       cornerIndicator.classList.remove('active', 'morphed');
     }
-    
+
     // Create scroll particles
     if (Math.random() > 0.7) {
       createScrollParticle();
     }
   }
-  
+
   // Create scroll particles
   function createScrollParticle() {
     const particle = document.createElement('div');
     particle.className = 'scroll-particle';
-    
+
     const startX = Math.random() * window.innerWidth;
     const startY = window.innerHeight + 10;
     const endX = (Math.random() - 0.5) * 200;
     const endY = -50;
     const duration = Math.random() * 3 + 2;
-    
+
     particle.style.cssText = `
       left: ${startX}px;
       top: ${startY}px;
       opacity: 0;
       animation: scroll-particle-rise ${duration}s ease-out forwards;
     `;
-    
+
     scrollParticles.appendChild(particle);
-    
+
     // Remove particle after animation
     setTimeout(() => {
       particle.remove();
     }, duration * 1000);
   }
-  
+
   // Add scroll particle animation
   const scrollParticleStyle = document.createElement('style');
   scrollParticleStyle.textContent = `
@@ -116,17 +117,17 @@ function initFloatingFeatures() {
     }
   `;
   document.head.appendChild(scrollParticleStyle);
-  
+
   // Update active navigation dot based on scroll position
   function updateActiveNavDot() {
     const sections = document.querySelectorAll('section[id]');
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
+
     sections.forEach(section => {
       const sectionTop = section.offsetTop - 100;
       const sectionHeight = section.clientHeight;
       const sectionId = section.getAttribute('id');
-      
+
       if (scrollTop >= sectionTop && scrollTop < sectionTop + sectionHeight) {
         navDots.forEach(dot => {
           dot.classList.remove('active');
@@ -137,7 +138,7 @@ function initFloatingFeatures() {
       }
     });
   }
-  
+
   // Smooth scroll to section when nav dot is clicked
   navDots.forEach(dot => {
     dot.addEventListener('click', () => {
@@ -152,58 +153,82 @@ function initFloatingFeatures() {
       }
     });
   });
-  
-  // Update floating orb position with smooth lag
-  let orbX = window.innerWidth / 2;
-  let orbY = window.innerHeight / 2;
-  let targetX = orbX;
-  let targetY = orbY;
-  
-  function updateFloatingOrb(e) {
+
+  // Create cursor trails
+  const trails = [];
+  const numTrails = 5;
+
+  for (let i = 0; i < numTrails; i++) {
+    const trail = document.createElement('div');
+    trail.className = 'cursor-trail';
+    document.body.appendChild(trail);
+    trails.push({
+      element: trail,
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2
+    });
+  }
+
+  let targetX = window.innerWidth / 2;
+  let targetY = window.innerHeight / 2;
+
+  function updateTrails(e) {
     targetX = e.clientX;
     targetY = e.clientY;
   }
-  
-  function animateFloatingOrb() {
-    // Smooth easing animation
-    orbX += (targetX - orbX) * 0.1;
-    orbY += (targetY - orbY) * 0.1;
-    
-    floatingOrb.style.left = orbX + 'px';
-    floatingOrb.style.top = orbY + 'px';
-    
-    requestAnimationFrame(animateFloatingOrb);
+
+  function animateTrails() {
+    let currentX = targetX;
+    let currentY = targetY;
+
+    trails.forEach((trail, index) => {
+      // Each trail follows the previous one with a delay
+      trail.x += (currentX - trail.x) * (0.2 - index * 0.02);
+      trail.y += (currentY - trail.y) * (0.2 - index * 0.02);
+
+      trail.element.style.left = trail.x + 'px';
+      trail.element.style.top = trail.y + 'px';
+
+      // Decrease size and opacity for trails further back
+      const scale = 1 - (index * 0.15);
+      trail.element.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+      currentX = trail.x;
+      currentY = trail.y;
+    });
+
+    requestAnimationFrame(animateTrails);
   }
-  
+
   // Event listeners
   window.addEventListener('scroll', () => {
     updateCornerIndicator();
     updateActiveNavDot();
   });
-  
-  window.addEventListener('mousemove', updateFloatingOrb);
-  
+
+  window.addEventListener('mousemove', updateTrails);
+
   // Initialize
   updateCornerIndicator();
   updateActiveNavDot();
-  animateFloatingOrb();
-  
+  animateTrails();
+
   // Hide floating navigation on mobile
   if (window.innerWidth <= 768) {
     floatingNav.style.display = 'none';
-    floatingOrb.style.display = 'none';
+    trails.forEach(t => t.element.style.display = 'none');
     cornerIndicator.style.display = 'none';
   }
-  
+
   // Handle window resize
   window.addEventListener('resize', () => {
     if (window.innerWidth <= 768) {
       floatingNav.style.display = 'none';
-      floatingOrb.style.display = 'none';
+      trails.forEach(t => t.element.style.display = 'none');
       cornerIndicator.style.display = 'none';
     } else {
       floatingNav.style.display = 'flex';
-      floatingOrb.style.display = 'block';
+      trails.forEach(t => t.element.style.display = 'block');
       cornerIndicator.style.display = 'block';
     }
   });
@@ -214,33 +239,33 @@ function initCustomCursor() {
   const cursor = document.querySelector('.custom-cursor');
   const cursorDot = document.querySelector('.cursor-dot');
   const cursorRing = document.querySelector('.cursor-ring');
-  
+
   if (!cursor) return;
-  
+
   let mouseX = 0, mouseY = 0;
-  
+
   // Track mouse movement
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
-    
+
     // Update both dot and ring immediately for synchronized movement
-    cursorDot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
-    cursorRing.style.transform = `translate(${mouseX - 16}px, ${mouseY - 16}px)`;
+    cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+    cursorRing.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
   });
-  
+
   // Hover effects
   const hoverElements = document.querySelectorAll('a, button, .project-card, .skill-ring');
   hoverElements.forEach(element => {
     element.addEventListener('mouseenter', () => {
       cursor.classList.add('hover');
     });
-    
+
     element.addEventListener('mouseleave', () => {
       cursor.classList.remove('hover');
     });
   });
-  
+
   // Hide cursor on mobile
   if (window.innerWidth <= 768) {
     cursor.style.display = 'none';
@@ -251,14 +276,14 @@ function initCustomCursor() {
 function initNavigation() {
   const navToggle = document.querySelector('.nav-toggle');
   const navMenu = document.querySelector('.nav-menu');
-  
+
   if (!navToggle || !navMenu) return;
-  
+
   navToggle.addEventListener('click', () => {
     navMenu.classList.toggle('active');
     navToggle.classList.toggle('active');
   });
-  
+
   // Close menu when clicking on a link
   const navLinks = document.querySelectorAll('.nav-link');
   navLinks.forEach(link => {
@@ -267,13 +292,13 @@ function initNavigation() {
       navToggle.classList.remove('active');
     });
   });
-  
+
   // Active link highlighting
   const sections = document.querySelectorAll('section[id]');
   const observerOptions = {
     rootMargin: '-50% 0px -50% 0px'
   };
-  
+
   const sectionObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -283,7 +308,7 @@ function initNavigation() {
       }
     });
   }, observerOptions);
-  
+
   sections.forEach(section => sectionObserver.observe(section));
 }
 
@@ -295,10 +320,10 @@ function initSmoothScrolling() {
       e.preventDefault();
       const target = document.querySelector(anchor.getAttribute('href'));
       if (target) {
-        target.scrollIntoView({ 
-          behavior: 'smooth', 
-          block: 'start', 
-          inline: 'nearest' 
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest'
         });
       }
     });
@@ -317,7 +342,7 @@ function initScrollAnimations() {
     .contact-intro,
     .contact-link
   `);
-  
+
   const animationObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
@@ -332,7 +357,7 @@ function initScrollAnimations() {
     threshold: 0.1,
     rootMargin: '0px 0px -50px 0px'
   });
-  
+
   // Set initial state and observe
   animatedElements.forEach(element => {
     element.style.opacity = '0';
@@ -345,53 +370,53 @@ function initScrollAnimations() {
 // ===== PARALLAX EFFECTS =====
 function initParallaxEffects() {
   const parallaxElements = document.querySelectorAll('.hero-container, .bg-gradient');
-  
+
   let ticking = false;
-  
+
   function updateParallax() {
     const scrolled = window.pageYOffset;
-    
+
     parallaxElements.forEach(element => {
       const speed = element.classList.contains('hero-container') ? 0.5 : 0.2;
       const yPos = -(scrolled * speed);
       element.style.transform = `translateY(${yPos}px)`;
     });
-    
+
     ticking = false;
   }
-  
+
   function requestTick() {
     if (!ticking) {
       requestAnimationFrame(updateParallax);
       ticking = true;
     }
   }
-  
+
   window.addEventListener('scroll', requestTick);
 }
 
 // ===== MAGNETIC BUTTONS =====
 function initMagneticButtons() {
   const magneticButtons = document.querySelectorAll('.magnetic-btn');
-  
+
   magneticButtons.forEach(button => {
     button.addEventListener('mousemove', (e) => {
       const rect = button.getBoundingClientRect();
       const x = e.clientX - rect.left - rect.width / 2;
       const y = e.clientY - rect.top - rect.height / 2;
-      
+
       const distance = Math.sqrt(x * x + y * y);
       const maxDistance = 100;
-      
+
       if (distance < maxDistance) {
         const strength = (maxDistance - distance) / maxDistance;
         const moveX = x * strength * 0.3;
         const moveY = y * strength * 0.3;
-        
+
         button.style.transform = `translate(${moveX}px, ${moveY}px)`;
       }
     });
-    
+
     button.addEventListener('mouseleave', () => {
       button.style.transform = 'translate(0, 0)';
     });
@@ -413,19 +438,19 @@ function initGlobalParticleSystem() {
     z-index: -1;
     overflow: hidden;
   `;
-  
+
   document.body.appendChild(particleContainer);
-  
+
   // Create particles with random properties
   const particleCount = 120;
   const particles = [];
-  
+
   for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement('div');
     const size = Math.random() * 4 + 0.5;
     const duration = Math.random() * 25 + 10;
     const delay = Math.random() * 10;
-    
+
     particle.style.cssText = `
       position: absolute;
       width: ${size}px;
@@ -437,9 +462,9 @@ function initGlobalParticleSystem() {
       animation: global-particle-${i} ${duration}s ${delay}s linear infinite;
       pointer-events: none;
     `;
-    
+
     particleContainer.appendChild(particle);
-    
+
     // Store particle data for animation
     particles.push({
       element: particle,
@@ -450,11 +475,11 @@ function initGlobalParticleSystem() {
       duration: duration,
       delay: delay
     });
-    
+
     // Create unique animation for each particle
     createParticleAnimation(i, particles[i]);
   }
-  
+
   // Add CSS animations for all particles
   const style = document.createElement('style');
   style.textContent = generateParticleCSS(particleCount);
@@ -486,10 +511,200 @@ function createParticleAnimation(index, particle) {
       }
     }
   `;
-  
+
   const style = document.createElement('style');
   style.textContent = keyframes;
   document.head.appendChild(style);
+}
+
+// ===== 3D WEBGL HERO BACKGROUND =====
+function initHero3DBackground() {
+  const container = document.getElementById('canvas-container');
+  if (!container || typeof THREE === 'undefined') return;
+
+  // Set up scene, camera, renderer
+  const scene = new THREE.Scene();
+  scene.background = null;
+
+  const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 4000);
+  camera.position.z = 1000;
+
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  container.appendChild(renderer.domElement);
+
+  // Constants for Constellation
+  const particleCount = 400;
+  const maxDistance = 150;
+  let r = 800; // Radius of distribution
+
+  // Data structures
+  const particlesData = [];
+  const positions = new Float32Array(particleCount * 3);
+  const colors = new Float32Array(particleCount * 3);
+
+  const pMaterial = new THREE.PointsMaterial({
+    color: 0x00d4ff,
+    size: 4,
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+    sizeAttenuation: true
+  });
+
+  const pGeometry = new THREE.BufferGeometry();
+
+  for (let i = 0; i < particleCount; i++) {
+    // Distribute particles in a large sphere
+    const x = Math.random() * r - r / 2;
+    const y = Math.random() * r - r / 2;
+    const z = Math.random() * r - r / 2;
+
+    positions[i * 3] = x;
+    positions[i * 3 + 1] = y;
+    positions[i * 3 + 2] = z;
+
+    // Initialize velocity
+    particlesData.push({
+      velocity: new THREE.Vector3(-1 + Math.random() * 2, -1 + Math.random() * 2, -1 + Math.random() * 2),
+      numConnections: 0
+    });
+  }
+
+  pGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  const particleSystem = new THREE.Points(pGeometry, pMaterial);
+  scene.add(particleSystem);
+
+  // Line segments
+  const segments = particleCount * particleCount;
+  const linePositions = new Float32Array(segments * 3);
+  const lineColors = new Float32Array(segments * 3);
+
+  const lineGeometry = new THREE.BufferGeometry();
+  lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3).setUsage(THREE.DynamicDrawUsage));
+  lineGeometry.setAttribute('color', new THREE.BufferAttribute(lineColors, 3).setUsage(THREE.DynamicDrawUsage));
+
+  const lineMaterial = new THREE.LineBasicMaterial({
+    vertexColors: true,
+    blending: THREE.AdditiveBlending,
+    transparent: true,
+    opacity: 0.3
+  });
+
+  const linesMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
+  scene.add(linesMesh);
+
+  // Interactivity
+  let mouseX = 0;
+  let mouseY = 0;
+  let windowHalfX = window.innerWidth / 2;
+  let windowHalfY = window.innerHeight / 2;
+
+  document.addEventListener('mousemove', (event) => {
+    mouseX = (event.clientX - windowHalfX) * 0.5;
+    mouseY = (event.clientY - windowHalfY) * 0.5;
+  });
+
+  window.addEventListener('resize', () => {
+    windowHalfX = window.innerWidth / 2;
+    windowHalfY = window.innerHeight / 2;
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // Base color parsing for gradient trails
+  const color1 = new THREE.Color(0x00d4ff); // Cyan
+  const color2 = new THREE.Color(0x00ff88); // Green
+
+  let angle = 0;
+  // Animation loop
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Rotate entire constellation very slowly
+    angle += 0.001;
+    particleSystem.rotation.y = angle;
+    linesMesh.rotation.y = angle;
+
+    // React to mouse movement
+    camera.position.x += (mouseX - camera.position.x) * 0.05;
+    camera.position.y += (-mouseY - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+
+    let vertexpos = 0;
+    let colorpos = 0;
+    let numConnected = 0;
+
+    // Reset connections
+    for (let i = 0; i < particleCount; i++) {
+      particlesData[i].numConnections = 0;
+    }
+
+    const positionsArray = pGeometry.attributes.position.array;
+
+    for (let i = 0; i < particleCount; i++) {
+      // Move particles
+      const particleData = particlesData[i];
+
+      positionsArray[i * 3] += particleData.velocity.x;
+      positionsArray[i * 3 + 1] += particleData.velocity.y;
+      positionsArray[i * 3 + 2] += particleData.velocity.z;
+
+      // Bounce horizontally/vertically against bounds
+      if (positionsArray[i * 3 + 1] < -r / 2 || positionsArray[i * 3 + 1] > r / 2) particleData.velocity.y = -particleData.velocity.y;
+      if (positionsArray[i * 3] < -r / 2 || positionsArray[i * 3] > r / 2) particleData.velocity.x = -particleData.velocity.x;
+      if (positionsArray[i * 3 + 2] < -r / 2 || positionsArray[i * 3 + 2] > r / 2) particleData.velocity.z = -particleData.velocity.z;
+
+      // Check connections against other particles
+      for (let j = i + 1; j < particleCount; j++) {
+        const particleDataB = particlesData[j];
+
+        const dx = positionsArray[i * 3] - positionsArray[j * 3];
+        const dy = positionsArray[i * 3 + 1] - positionsArray[j * 3 + 1];
+        const dz = positionsArray[i * 3 + 2] - positionsArray[j * 3 + 2];
+        const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+        if (dist < maxDistance) {
+          particleData.numConnections++;
+          particleDataB.numConnections++;
+
+          const alpha = 1.0 - dist / maxDistance;
+
+          // Color lines dynamically based on alpha range
+          linePositions[vertexpos++] = positionsArray[i * 3];
+          linePositions[vertexpos++] = positionsArray[i * 3 + 1];
+          linePositions[vertexpos++] = positionsArray[i * 3 + 2];
+
+          linePositions[vertexpos++] = positionsArray[j * 3];
+          linePositions[vertexpos++] = positionsArray[j * 3 + 1];
+          linePositions[vertexpos++] = positionsArray[j * 3 + 2];
+
+          // Node 1 Color mix
+          lineColors[colorpos++] = color1.r * alpha;
+          lineColors[colorpos++] = color1.g * alpha;
+          lineColors[colorpos++] = color1.b * alpha;
+
+          // Node 2 Color mix (create a gradient between connected nodes)
+          lineColors[colorpos++] = color2.r * alpha;
+          lineColors[colorpos++] = color2.g * alpha;
+          lineColors[colorpos++] = color2.b * alpha;
+
+          numConnected++;
+        }
+      }
+    }
+
+    // Dynamic line segments based on distance updates
+    linesMesh.geometry.setDrawRange(0, numConnected * 2);
+    linesMesh.geometry.attributes.position.needsUpdate = true;
+    linesMesh.geometry.attributes.color.needsUpdate = true;
+    pGeometry.attributes.position.needsUpdate = true;
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
 }
 
 function generateParticleCSS(count) {
@@ -501,7 +716,7 @@ function generateParticleCSS(count) {
     const midY = Math.random() * 100;
     const endX = Math.random() * 100;
     const endY = Math.random() * 100;
-    
+
     css += `
       @keyframes global-particle-${i} {
         0% {
@@ -537,7 +752,7 @@ function generateParticleCSS(count) {
 function initAboutSnowParticles() {
   const aboutSection = document.querySelector('.about');
   if (!aboutSection) return;
-  
+
   // Create snow particle container
   const snowContainer = document.createElement('div');
   snowContainer.className = 'about-snow-particles';
@@ -551,16 +766,16 @@ function initAboutSnowParticles() {
     z-index: -1;
     overflow: hidden;
   `;
-  
+
   aboutSection.appendChild(snowContainer);
-  
+
   // Create snow particles
   const snowCount = 40;
-  
+
   for (let i = 0; i < snowCount; i++) {
     const snowflake = document.createElement('div');
     snowflake.className = 'snow-particle';
-    
+
     // Random properties
     const size = Math.random() * 3 + 1;
     const duration = Math.random() * 15 + 10;
@@ -568,7 +783,7 @@ function initAboutSnowParticles() {
     const startX = Math.random() * 100;
     const endX = Math.random() * 100;
     const opacity = Math.random() * 0.6 + 0.4;
-    
+
     snowflake.style.cssText = `
       position: absolute;
       width: ${size}px;
@@ -581,13 +796,13 @@ function initAboutSnowParticles() {
       animation: snowfall-${i} ${duration}s ${delay}s linear infinite;
       pointer-events: none;
     `;
-    
+
     snowContainer.appendChild(snowflake);
-    
+
     // Create unique animation for each snowflake
     createSnowAnimation(i, startX, endX, duration);
   }
-  
+
   // Add CSS animations for all snowflakes
   const style = document.createElement('style');
   style.textContent = generateSnowCSS(snowCount);
@@ -597,7 +812,7 @@ function initAboutSnowParticles() {
 function createSnowAnimation(index, startX, endX, duration) {
   const midX = startX + (endX - startX) * 0.5;
   const swayAmount = (Math.random() - 0.5) * 20;
-  
+
   const keyframes = `
     @keyframes snowfall-${index} {
       0% {
@@ -625,7 +840,7 @@ function createSnowAnimation(index, startX, endX, duration) {
       }
     }
   `;
-  
+
   const style = document.createElement('style');
   style.textContent = keyframes;
   document.head.appendChild(style);
@@ -638,7 +853,7 @@ function generateSnowCSS(count) {
     const endX = Math.random() * 100;
     const swayAmount = (Math.random() - 0.5) * 30;
     const duration = Math.random() * 15 + 10;
-    
+
     css += `
       @keyframes snowfall-${i} {
         0% {
@@ -674,7 +889,7 @@ function generateSnowCSS(count) {
 function initAboutSnowParticles() {
   const aboutSection = document.querySelector('.about');
   if (!aboutSection) return;
-  
+
   // Create snow particle container
   const snowContainer = document.createElement('div');
   snowContainer.className = 'about-snow-particles';
@@ -688,12 +903,12 @@ function initAboutSnowParticles() {
     z-index: 1;
     overflow: hidden;
   `;
-  
+
   aboutSection.appendChild(snowContainer);
-  
+
   // Create snow particles
   const particleCount = 80;
-  
+
   for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement('div');
     const size = Math.random() * 3 + 1;
@@ -701,7 +916,7 @@ function initAboutSnowParticles() {
     const delay = Math.random() * 10;
     const startX = Math.random() * 100;
     const endX = (Math.random() - 0.5) * 100;
-    
+
     particle.style.cssText = `
       position: absolute;
       width: ${size}px;
@@ -714,13 +929,13 @@ function initAboutSnowParticles() {
       animation: snow-fall-${i} ${duration}s ${delay}s linear infinite;
       pointer-events: none;
     `;
-    
+
     snowContainer.appendChild(particle);
-    
+
     // Create unique animation for each particle
     createSnowAnimation(i, startX, endX, duration);
   }
-  
+
   // Add CSS animations for all snow particles
   const style = document.createElement('style');
   style.textContent = generateSnowCSS(particleCount);
@@ -756,7 +971,7 @@ function createSnowAnimation(index, startX, endX, duration) {
       }
     }
   `;
-  
+
   const style = document.createElement('style');
   style.textContent = keyframes;
   document.head.appendChild(style);
@@ -768,7 +983,7 @@ function generateSnowCSS(count) {
     const startX = Math.random() * 100;
     const endX = (Math.random() - 0.5) * 100;
     const duration = Math.random() * 15 + 8;
-    
+
     css += `
       @keyframes snow-fall-${i} {
         0% {
@@ -809,7 +1024,7 @@ function generateSnowCSS(count) {
 function initInternshipSnowParticles() {
   const internshipSection = document.querySelector('.internship');
   if (!internshipSection) return;
-  
+
   // Create snow particle container
   const snowContainer = document.createElement('div');
   snowContainer.className = 'internship-snow-particles';
@@ -823,12 +1038,12 @@ function initInternshipSnowParticles() {
     z-index: 1;
     overflow: hidden;
   `;
-  
+
   internshipSection.appendChild(snowContainer);
-  
+
   // Create snow particles
   const particleCount = 60;
-  
+
   for (let i = 0; i < particleCount; i++) {
     const particle = document.createElement('div');
     const size = Math.random() * 3 + 1;
@@ -836,7 +1051,7 @@ function initInternshipSnowParticles() {
     const delay = Math.random() * 10;
     const startX = Math.random() * 100;
     const endX = (Math.random() - 0.5) * 100;
-    
+
     particle.style.cssText = `
       position: absolute;
       width: ${size}px;
@@ -849,13 +1064,13 @@ function initInternshipSnowParticles() {
       animation: internship-snow-fall-${i} ${duration}s ${delay}s linear infinite;
       pointer-events: none;
     `;
-    
+
     snowContainer.appendChild(particle);
-    
+
     // Create unique animation for each particle
     createInternshipSnowAnimation(i, startX, endX, duration);
   }
-  
+
   // Add CSS animations for all snow particles
   const style = document.createElement('style');
   style.textContent = generateInternshipSnowCSS(particleCount);
@@ -891,7 +1106,7 @@ function createInternshipSnowAnimation(index, startX, endX, duration) {
       }
     }
   `;
-  
+
   const style = document.createElement('style');
   style.textContent = keyframes;
   document.head.appendChild(style);
@@ -903,7 +1118,7 @@ function generateInternshipSnowCSS(count) {
     const startX = Math.random() * 100;
     const endX = (Math.random() - 0.5) * 100;
     const duration = Math.random() * 15 + 8;
-    
+
     css += `
       @keyframes internship-snow-fall-${i} {
         0% {
@@ -944,7 +1159,7 @@ function generateInternshipSnowCSS(count) {
 function initAboutSectionParticles() {
   const aboutSection = document.querySelector('.about');
   if (!aboutSection) return;
-  
+
   // Create additional floating elements for about section
   const particleContainer = document.createElement('div');
   particleContainer.className = 'about-particles';
@@ -957,16 +1172,16 @@ function initAboutSectionParticles() {
     pointer-events: none;
     z-index: -1;
   `;
-  
+
   aboutSection.appendChild(particleContainer);
-  
+
   // Create special about section particles
   for (let i = 0; i < 20; i++) {
     const particle = document.createElement('div');
     const size = Math.random() * 4 + 1;
     const duration = Math.random() * 20 + 10;
     const delay = Math.random() * 5;
-    
+
     particle.style.cssText = `
       position: absolute;
       width: ${size}px;
@@ -978,10 +1193,10 @@ function initAboutSectionParticles() {
       animation: about-particle-float ${duration}s ${delay}s ease-in-out infinite;
       pointer-events: none;
     `;
-    
+
     particleContainer.appendChild(particle);
   }
-  
+
   // Add CSS animation for about particles
   const style = document.createElement('style');
   style.textContent = `
@@ -1009,58 +1224,58 @@ function initAboutSectionParticles() {
 function initAnimeQuoteInteraction() {
   const quoteShowcase = document.querySelector('.quote-showcase');
   if (!quoteShowcase) return;
-  
+
   // Create particle container
   const particleContainer = document.createElement('div');
   particleContainer.className = 'anime-particles';
   quoteShowcase.appendChild(particleContainer);
-  
+
   // Mouse tracking for gradient effects
   quoteShowcase.addEventListener('mousemove', (e) => {
     const rect = quoteShowcase.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     const percentX = (x / rect.width) * 100;
     const percentY = (y / rect.height) * 100;
-    
+
     // Update CSS custom properties for gradient position
     quoteShowcase.style.setProperty('--mouse-x', `${percentX}%`);
     quoteShowcase.style.setProperty('--mouse-y', `${percentY}%`);
   });
-  
+
   // Create anime particles on hover
   let particleInterval;
-  
+
   quoteShowcase.addEventListener('mouseenter', () => {
     particleInterval = setInterval(() => {
       createAnimeParticle(particleContainer);
     }, 200);
   });
-  
+
   quoteShowcase.addEventListener('mouseleave', () => {
     clearInterval(particleInterval);
     // Reset mouse position
     quoteShowcase.style.setProperty('--mouse-x', '50%');
     quoteShowcase.style.setProperty('--mouse-y', '50%');
   });
-  
+
   function createAnimeParticle(container) {
     const particle = document.createElement('div');
     particle.className = 'anime-particle';
-    
+
     // Random starting position
     const startX = Math.random() * 100;
     const startY = Math.random() * 100;
-    
+
     // Random end position
     const endX = (Math.random() - 0.5) * 100;
     const endY = (Math.random() - 0.5) * 100;
-    
+
     // Random color
     const colors = ['rgba(0, 212, 255, 0.8)', 'rgba(0, 255, 136, 0.8)', 'rgba(138, 43, 226, 0.8)'];
     const color = colors[Math.floor(Math.random() * colors.length)];
-    
+
     particle.style.cssText = `
       left: ${startX}%;
       top: ${startY}%;
@@ -1069,15 +1284,15 @@ function initAnimeQuoteInteraction() {
       --end-y: ${endY}px;
       animation: anime-particle-float ${Math.random() * 2 + 1}s ease-out forwards;
     `;
-    
+
     container.appendChild(particle);
-    
+
     // Remove particle after animation
     setTimeout(() => {
       particle.remove();
     }, 3000);
   }
-  
+
   // Add click effect
   quoteShowcase.addEventListener('click', (e) => {
     createAnimeBurst(e, particleContainer);
@@ -1088,17 +1303,17 @@ function createAnimeBurst(e, container) {
   const rect = container.getBoundingClientRect();
   const x = e.clientX - rect.left;
   const y = e.clientY - rect.top;
-  
+
   // Create burst of particles
   for (let i = 0; i < 12; i++) {
     const particle = document.createElement('div');
     particle.className = 'anime-particle';
-    
+
     const angle = (i / 12) * Math.PI * 2;
     const distance = 50 + Math.random() * 50;
     const endX = Math.cos(angle) * distance;
     const endY = Math.sin(angle) * distance;
-    
+
     particle.style.cssText = `
       left: ${x}px;
       top: ${y}px;
@@ -1109,9 +1324,9 @@ function createAnimeBurst(e, container) {
       --end-y: ${endY}px;
       animation: anime-particle-float 0.8s ease-out forwards;
     `;
-    
+
     container.appendChild(particle);
-    
+
     setTimeout(() => {
       particle.remove();
     }, 800);
@@ -1119,22 +1334,22 @@ function createAnimeBurst(e, container) {
 }
 function initInteractiveProjectCards() {
   const projectCards = document.querySelectorAll('.project-card');
-  
+
   projectCards.forEach(card => {
     // Mouse move effect for cursor tracking
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
+
       const percentX = (x / rect.width) * 100;
       const percentY = (y / rect.height) * 100;
-      
+
       // Update CSS custom properties for gradient position
       card.style.setProperty('--mouse-x', `${percentX}%`);
       card.style.setProperty('--mouse-y', `${percentY}%`);
     });
-    
+
     // Reset on mouse leave
     card.addEventListener('mouseleave', () => {
       card.style.setProperty('--mouse-x', '50%');
@@ -1147,27 +1362,27 @@ function initInteractiveProjectCards() {
 function initProjectSectionEnhancements() {
   const projectsSection = document.querySelector('.projects');
   if (!projectsSection) return;
-  
+
   // Interactive background cursor tracking
   projectsSection.addEventListener('mousemove', (e) => {
     const rect = projectsSection.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     const percentX = (x / rect.width) * 100;
     const percentY = (y / rect.height) * 100;
-    
+
     // Update CSS custom properties for background gradient
     projectsSection.style.setProperty('--cursor-x', `${percentX}%`);
     projectsSection.style.setProperty('--cursor-y', `${percentY}%`);
   });
-  
+
   // Reset on mouse leave
   projectsSection.addEventListener('mouseleave', () => {
     projectsSection.style.setProperty('--cursor-x', '50%');
     projectsSection.style.setProperty('--cursor-y', '50%');
   });
-  
+
   // Add subtle floating particles
   const particleContainer = document.createElement('div');
   particleContainer.className = 'projects-particles';
@@ -1180,16 +1395,16 @@ function initProjectSectionEnhancements() {
     pointer-events: none;
     z-index: -1;
   `;
-  
+
   projectsSection.appendChild(particleContainer);
-  
+
   // Create gentle floating particles
   for (let i = 0; i < 15; i++) {
     const particle = document.createElement('div');
     const size = Math.random() * 3 + 1;
     const duration = Math.random() * 20 + 15;
     const delay = Math.random() * 10;
-    
+
     particle.style.cssText = `
       position: absolute;
       width: ${size}px;
@@ -1201,10 +1416,10 @@ function initProjectSectionEnhancements() {
       animation: gentle-float ${duration}s ${delay}s ease-in-out infinite;
       pointer-events: none;
     `;
-    
+
     particleContainer.appendChild(particle);
   }
-  
+
   // Add CSS for gentle floating animation
   const style = document.createElement('style');
   style.textContent = `
@@ -1248,7 +1463,7 @@ window.addEventListener('scroll', debounce(() => {
 // ===== LAZY LOADING =====
 function initLazyLoading() {
   const images = document.querySelectorAll('img[data-src]');
-  
+
   const imageObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -1259,7 +1474,7 @@ function initLazyLoading() {
       }
     });
   });
-  
+
   images.forEach(img => imageObserver.observe(img));
 }
 
