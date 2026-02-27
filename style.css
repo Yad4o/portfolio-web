@@ -113,19 +113,30 @@ body {
   transform: scale(1.2);
 }
 
-/* Floating trail behind cursor */
-.cursor-trail {
+/* Floating orb that follows cursor */
+.floating-orb {
   position: fixed;
-  width: 15px;
-  height: 15px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: var(--accent);
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 50%, transparent 70%);
+  border: 1px solid rgba(0, 212, 255, 0.2);
   pointer-events: none;
-  z-index: 9998;
-  opacity: 0.3;
-  filter: blur(4px);
+  z-index: 999;
   transform: translate(-50%, -50%);
   transition: transform 0.1s ease-out;
+  animation: orb-pulse 3s ease-in-out infinite;
+}
+
+@keyframes orb-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.8;
+  }
 }
 
 /* ===== DYNAMIC CORNER INDICATOR ===== */
@@ -147,7 +158,7 @@ body {
   height: 100%;
   border-radius: 50%;
   border: 1px solid rgba(0, 212, 255, 0.2);
-  box-shadow:
+  box-shadow: 
     0 0 30px rgba(0, 212, 255, 0.1),
     inset 0 0 30px rgba(0, 212, 255, 0.05);
 }
@@ -186,15 +197,12 @@ body {
     transform: rotate(0deg) translateX(35px) rotate(0deg);
     opacity: 0.3;
   }
-
   25% {
     opacity: 1;
   }
-
   75% {
     opacity: 0.3;
   }
-
   100% {
     transform: rotate(360deg) translateX(35px) rotate(-360deg);
     opacity: 0.3;
@@ -206,15 +214,12 @@ body {
     transform: rotate(120deg) translateX(30px) rotate(-120deg);
     opacity: 0.3;
   }
-
   25% {
     opacity: 1;
   }
-
   75% {
     opacity: 0.3;
   }
-
   100% {
     transform: rotate(480deg) translateX(30px) rotate(-480deg);
     opacity: 0.3;
@@ -226,15 +231,12 @@ body {
     transform: rotate(240deg) translateX(25px) rotate(-240deg);
     opacity: 0.3;
   }
-
   25% {
     opacity: 1;
   }
-
   75% {
     opacity: 0.3;
   }
-
   100% {
     transform: rotate(600deg) translateX(25px) rotate(-600deg);
     opacity: 0.3;
@@ -278,7 +280,6 @@ body {
   0% {
     text-shadow: 0 0 10px rgba(0, 212, 255, 0.8);
   }
-
   100% {
     text-shadow: 0 0 20px rgba(0, 212, 255, 1), 0 0 30px rgba(0, 212, 255, 0.6);
   }
@@ -291,7 +292,7 @@ body {
 
 .corner-indicator.morphed .corner-orbit {
   border-color: rgba(0, 255, 136, 0.3);
-  box-shadow:
+  box-shadow: 
     0 0 40px rgba(0, 255, 136, 0.2),
     inset 0 0 40px rgba(0, 255, 136, 0.1);
 }

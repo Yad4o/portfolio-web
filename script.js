@@ -34,25 +34,25 @@ function initFloatingFeatures() {
   // Dynamic Corner Indicator
   const cornerIndicator = document.getElementById('cornerIndicator');
   const cornerText = document.getElementById('cornerText');
-
+  
   // Floating Navigation
   const floatingNav = document.getElementById('floatingNav');
   const navDots = document.querySelectorAll('.nav-dot');
-
+  
   // Floating Orb
   const floatingOrb = document.getElementById('floatingOrb');
-
+  
   // Scroll Particles
   const scrollParticles = document.getElementById('scrollParticles');
-
+  
   // Update corner indicator based on scroll
   function updateCornerIndicator() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const scrollPercent = Math.round((scrollTop / scrollHeight) * 100);
-
+    
     cornerText.textContent = scrollPercent + '%';
-
+    
     // Morph the indicator based on scroll position
     if (scrollPercent > 25 && scrollPercent <= 50) {
       cornerIndicator.classList.add('active');
@@ -63,39 +63,39 @@ function initFloatingFeatures() {
     } else {
       cornerIndicator.classList.remove('active', 'morphed');
     }
-
+    
     // Create scroll particles
     if (Math.random() > 0.7) {
       createScrollParticle();
     }
   }
-
+  
   // Create scroll particles
   function createScrollParticle() {
     const particle = document.createElement('div');
     particle.className = 'scroll-particle';
-
+    
     const startX = Math.random() * window.innerWidth;
     const startY = window.innerHeight + 10;
     const endX = (Math.random() - 0.5) * 200;
     const endY = -50;
     const duration = Math.random() * 3 + 2;
-
+    
     particle.style.cssText = `
       left: ${startX}px;
       top: ${startY}px;
       opacity: 0;
       animation: scroll-particle-rise ${duration}s ease-out forwards;
     `;
-
+    
     scrollParticles.appendChild(particle);
-
+    
     // Remove particle after animation
     setTimeout(() => {
       particle.remove();
     }, duration * 1000);
   }
-
+  
   // Add scroll particle animation
   const scrollParticleStyle = document.createElement('style');
   scrollParticleStyle.textContent = `
@@ -119,17 +119,17 @@ function initFloatingFeatures() {
     }
   `;
   document.head.appendChild(scrollParticleStyle);
-
+  
   // Update active navigation dot based on scroll position
   function updateActiveNavDot() {
     const sections = document.querySelectorAll('section[id]');
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
+    
     sections.forEach(section => {
       const sectionTop = section.offsetTop - 100;
       const sectionHeight = section.clientHeight;
       const sectionId = section.getAttribute('id');
-
+      
       if (scrollTop >= sectionTop && scrollTop < sectionTop + sectionHeight) {
         navDots.forEach(dot => {
           dot.classList.remove('active');
@@ -140,7 +140,7 @@ function initFloatingFeatures() {
       }
     });
   }
-
+  
   // Smooth scroll to section when nav dot is clicked
   navDots.forEach(dot => {
     dot.addEventListener('click', () => {
@@ -155,82 +155,58 @@ function initFloatingFeatures() {
       }
     });
   });
-
-  // Create cursor trails
-  const trails = [];
-  const numTrails = 5;
-
-  for (let i = 0; i < numTrails; i++) {
-    const trail = document.createElement('div');
-    trail.className = 'cursor-trail';
-    document.body.appendChild(trail);
-    trails.push({
-      element: trail,
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2
-    });
-  }
-
-  let targetX = window.innerWidth / 2;
-  let targetY = window.innerHeight / 2;
-
-  function updateTrails(e) {
+  
+  // Update floating orb position with smooth lag
+  let orbX = window.innerWidth / 2;
+  let orbY = window.innerHeight / 2;
+  let targetX = orbX;
+  let targetY = orbY;
+  
+  function updateFloatingOrb(e) {
     targetX = e.clientX;
     targetY = e.clientY;
   }
-
-  function animateTrails() {
-    let currentX = targetX;
-    let currentY = targetY;
-
-    trails.forEach((trail, index) => {
-      // Each trail follows the previous one with a delay
-      trail.x += (currentX - trail.x) * (0.2 - index * 0.02);
-      trail.y += (currentY - trail.y) * (0.2 - index * 0.02);
-
-      trail.element.style.left = trail.x + 'px';
-      trail.element.style.top = trail.y + 'px';
-
-      // Decrease size and opacity for trails further back
-      const scale = 1 - (index * 0.15);
-      trail.element.style.transform = `translate(-50%, -50%) scale(${scale})`;
-
-      currentX = trail.x;
-      currentY = trail.y;
-    });
-
-    requestAnimationFrame(animateTrails);
+  
+  function animateFloatingOrb() {
+    // Smooth easing animation
+    orbX += (targetX - orbX) * 0.1;
+    orbY += (targetY - orbY) * 0.1;
+    
+    floatingOrb.style.left = orbX + 'px';
+    floatingOrb.style.top = orbY + 'px';
+    
+    requestAnimationFrame(animateFloatingOrb);
   }
-
+  
   // Event listeners
   window.addEventListener('scroll', () => {
     updateCornerIndicator();
     updateActiveNavDot();
   });
-
-  window.addEventListener('mousemove', updateTrails);
-
+  
+  window.addEventListener('mousemove', updateFloatingOrb);
+  
   // Initialize
   updateCornerIndicator();
   updateActiveNavDot();
-  animateTrails();
-
+  animateFloatingOrb();
+  
   // Hide floating navigation on mobile
   if (window.innerWidth <= 768) {
     floatingNav.style.display = 'none';
-    trails.forEach(t => t.element.style.display = 'none');
+    floatingOrb.style.display = 'none';
     cornerIndicator.style.display = 'none';
   }
-
+  
   // Handle window resize
   window.addEventListener('resize', () => {
     if (window.innerWidth <= 768) {
       floatingNav.style.display = 'none';
-      trails.forEach(t => t.element.style.display = 'none');
+      floatingOrb.style.display = 'none';
       cornerIndicator.style.display = 'none';
     } else {
       floatingNav.style.display = 'flex';
-      trails.forEach(t => t.element.style.display = 'block');
+      floatingOrb.style.display = 'block';
       cornerIndicator.style.display = 'block';
     }
   });
