@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initAboutSectionParticles();
   initInternshipSnowParticles();
   initAnimeQuoteInteraction();
+  initHeroQuoteInteraction();
+  initPolarBear3D();
   initInteractiveProjectCards();
   initProjectSectionEnhancements();
 
@@ -529,14 +531,14 @@ function initHero3DBackground() {
   const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 4000);
   camera.position.z = 1000;
 
-  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-  renderer.setPixelRatio(window.devicePixelRatio);
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
   renderer.setSize(window.innerWidth, window.innerHeight);
   container.appendChild(renderer.domElement);
 
   // Constants for Constellation
-  const particleCount = 400;
-  const maxDistance = 150;
+  const particleCount = 120;
+  const maxDistance = 130;
   let r = 800; // Radius of distribution
 
   // Data structures
@@ -1496,3 +1498,156 @@ if ('serviceWorker' in navigator) {
     //   .catch(error => console.log('SW registration failed'));
   });
 }
+
+// ===== HERO QUOTE INTERACTIVE TILT + GLARE =====
+function initHeroQuoteInteraction() {
+  const quote = document.getElementById('heroQuote');
+  if (!quote) return;
+
+  const glare = quote.querySelector('.quote-glare');
+  const MAX_TILT = 10;
+
+  quote.addEventListener('mousemove', (e) => {
+    const rect = quote.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+
+    // How far is cursor from center (normalized -1 to 1)
+    const dx = (e.clientX - cx) / (rect.width / 2);
+    const dy = (e.clientY - cy) / (rect.height / 2);
+
+    // 3D tilt
+    const rotateY = dx * MAX_TILT;
+    const rotateX = -dy * MAX_TILT;
+    quote.style.transform = `translateY(-3px) perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+
+    // Spotlight glare follows mouse
+    const glareX = ((e.clientX - rect.left) / rect.width) * 100;
+    const glareY = ((e.clientY - rect.top) / rect.height) * 100;
+    if (glare) {
+      glare.style.background = `radial-gradient(circle at ${glareX}% ${glareY}%, rgba(0,212,255,0.18) 0%, transparent 65%)`;
+      glare.style.opacity = '1';
+    }
+
+    // Dynamic border shimmer
+    quote.style.borderColor = `rgba(0,212,255,${0.15 + Math.abs(dx) * 0.3})`;
+    quote.style.boxShadow = `0 20px 60px rgba(0,0,0,0.4), 0 0 ${20 + Math.abs(dx) * 30}px rgba(0,212,255,${0.08 + Math.abs(dx) * 0.12})`;
+  });
+
+  quote.addEventListener('mouseleave', () => {
+    quote.style.transform = '';
+    quote.style.borderColor = '';
+    quote.style.boxShadow = '';
+    if (glare) glare.style.opacity = '0';
+  });
+}
+
+// ===== 3D POLAR BEAR - DRAG TO SPIN + EYE TRACKING =====
+function initPolarBear3D() {
+  const scene = document.getElementById('pbScene');
+  const model = document.getElementById('pbModel');
+  if (!scene || !model) return;
+
+  let rotX = -8, rotY = 0;
+  let targetX = -8, targetY = 0;
+  let isDragging = false;
+  let lastX = 0, lastY = 0;
+  let autoMode = true;
+  let autoT = 0;
+  let autoResumeTimer = null;
+
+  // Drag starts
+  scene.addEventListener('mousedown', e => {
+    isDragging = true;
+    autoMode = false;
+    clearTimeout(autoResumeTimer);
+    lastX = e.clientX;
+    lastY = e.clientY;
+    scene.style.cursor = 'grabbing';
+    e.preventDefault();
+  });
+
+  // Touch support
+  scene.addEventListener('touchstart', e => {
+    isDragging = true;
+    autoMode = false;
+    clearTimeout(autoResumeTimer);
+    lastX = e.touches[0].clientX;
+    lastY = e.touches[0].clientY;
+    e.preventDefault();
+  }, { passive: false });
+
+  window.addEventListener('mousemove', e => {
+    if (isDragging) {
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      targetY += dx * 1.6;                              // full 360 horizontal
+      targetX = Math.max(-45, Math.min(40, targetX - dy * 0.5));
+      lastX = e.clientX;
+      lastY = e.clientY;
+    }
+    trackEyes(e.clientX, e.clientY);
+  });
+
+  window.addEventListener('touchmove', e => {
+    if (isDragging) {
+      const dx = e.touches[0].clientX - lastX;
+      const dy = e.touches[0].clientY - lastY;
+      targetY += dx * 1.6;
+      targetX = Math.max(-45, Math.min(40, targetX - dy * 0.5));
+      lastX = e.touches[0].clientX;
+      lastY = e.touches[0].clientY;
+    }
+  }, { passive: true });
+
+  window.addEventListener('mouseup', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    scene.style.cursor = 'grab';
+    // Resume auto swing after 3 seconds of inactivity
+    autoResumeTimer = setTimeout(() => { autoMode = true; }, 3000);
+  });
+
+  window.addEventListener('touchend', () => {
+    isDragging = false;
+    autoResumeTimer = setTimeout(() => { autoMode = true; }, 3000);
+  });
+
+  function trackEyes(mx, my) {
+    const eyes = [document.getElementById('pbEl'), document.getElementById('pbEr')];
+    eyes.forEach(eye => {
+      if (!eye) return;
+      const rect = eye.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = mx - cx;
+      const dy = my - cy;
+      const len = Math.sqrt(dx * dx + dy * dy) || 1;
+      const maxMove = 3.5;
+      const nx = (dx / len) * Math.min(len / 14, maxMove);
+      const ny = (dy / len) * Math.min(len / 14, maxMove);
+      const pupil = eye.querySelector('.pb-pupil3');
+      if (pupil) pupil.style.transform = `translate(${nx}px, ${ny}px)`;
+    });
+  }
+
+  function tick() {
+    if (autoMode) {
+      autoT += 0.016;
+      // Gentle side-to-side swing that shows left/right sides
+      targetY = Math.sin(autoT * 0.7) * 30;
+      targetX = Math.sin(autoT * 0.45) * 7 - 8;
+    }
+
+    // Smooth lerp
+    rotX += (targetX - rotX) * 0.07;
+    rotY += (targetY - rotY) * 0.07;
+
+    model.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+    requestAnimationFrame(tick);
+  }
+
+  scene.style.cursor = 'grab';
+  tick();
+}
+
