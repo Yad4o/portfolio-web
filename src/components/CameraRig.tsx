@@ -1,49 +1,71 @@
 import { useRef, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import * as THREE from 'three';
 
 /**
- * CameraRig: smoothly drifts the camera using lerp.
- * Also ties camera Z position to scroll progression.
+ * CameraRig: Controls the journey path.
  */
 export const CameraRig = () => {
-  const { camera } = useThree();
-  const mouse = useRef({ x: 0, y: 0 });
+  const { camera, mouse } = useThree();
   const scroll = useRef(0);
 
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      mouse.current.x = (e.clientX / window.innerWidth  - 0.5) * 2;
-      mouse.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
+    const handleScroll = () => {
+      scroll.current = window.scrollY / (document.body.scrollHeight - window.innerHeight);
     };
-    window.addEventListener('mousemove', onMove, { passive: true });
-
-    // Tie scroll to scroll progress
-    const onScroll = () => {
-      const prog = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-      scroll.current = prog;
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('scroll', onScroll);
-    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useFrame(() => {
-    // Smooth camera drift following mouse
-    camera.position.x += (mouse.current.x * 0.7 - camera.position.x) * 0.05;
-    camera.position.y += (-mouse.current.y * 0.5 - camera.position.y) * 0.05;
+    // Basic mouse drift for depth
+    const mx = mouse.x * 2;
+    const my = mouse.y * 2;
 
-    // Scroll-driven camera pull forward/back
-    const targetZ = 5 - scroll.current * 3;
-    camera.position.z += (targetZ - camera.position.z) * 0.04;
+    // SCROLL-BASED PATH
+    // s ranges from 0 to 1
+    const s = scroll.current;
+
+    // Interpolate camera position based on scroll segments
+    // Hero: [0, 0, 10]
+    // About: [5, 5, 15] or similar
+    // Projects: [-5, -5, 10]
+    
+    // Smooth camera path calculation
+    let tx = 0, ty = 0, tz = 10;
+    let ry = 0;
+
+    if (s <= 0.33) {
+        // Segment 1: Hero to About
+        const t = s / 0.33;
+        tx = THREE.MathUtils.lerp(0, 5, t);
+        ty = THREE.MathUtils.lerp(0, 0, t);
+        tz = THREE.MathUtils.lerp(10, 15, t);
+        ry = THREE.MathUtils.lerp(0, 0.2, t);
+    } else if (s <= 0.66) {
+        // Segment 2: About to Projects
+        const t = (s - 0.33) / 0.33;
+        tx = THREE.MathUtils.lerp(5, -5, t);
+        ty = THREE.MathUtils.lerp(0, 5, t);
+        tz = THREE.MathUtils.lerp(15, 8, t);
+        ry = THREE.MathUtils.lerp(0.2, -0.2, t);
+    } else {
+        // Segment 3: Projects to Contact
+        const t = (s - 0.66) / 0.34;
+        tx = THREE.MathUtils.lerp(-5, 0, t);
+        ty = THREE.MathUtils.lerp(5, -10, t);
+        tz = THREE.MathUtils.lerp(8, 20, t);
+        ry = THREE.MathUtils.lerp(-0.2, 0, t);
+    }
+
+    // Apply drift + path
+    camera.position.x += (tx + mx - camera.position.x) * 0.05;
+    camera.position.y += (ty - my - camera.position.y) * 0.05;
+    camera.position.z += (tz - camera.position.z) * 0.05;
 
     camera.lookAt(0, 0, 0);
+    // Subtle tilt
+    camera.rotation.y += (ry - camera.rotation.y) * 0.05;
   });
 
   return null;

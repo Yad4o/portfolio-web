@@ -1,0 +1,16 @@
+﻿src/App.tsx(1,41): error TS6133: 'useRef' is declared but its value is never read.
+src/App.tsx(3,18): error TS6133: 'useFrame' is declared but its value is never read.
+src/App.tsx(4,39): error TS6133: 'Float' is declared but its value is never read.
+src/App.tsx(4,53): error TS6133: 'Text' is declared but its value is never read.
+src/App.tsx(4,59): error TS6133: 'Trail' is declared but its value is never read.
+src/App.tsx(8,18): error TS6133: 'Linkedin' is declared but its value is never read.
+src/App.tsx(8,45): error TS6133: 'ExternalLink' is declared but its value is never read.
+src/App.tsx(33,23): error TS2322: Type '{ children: Element[]; disableNormalPass: true; }' is not assignable to type 'IntrinsicAttributes & EffectComposerProps & RefAttributes<EffectComposer>'.
+  Property 'disableNormalPass' does not exist on type 'IntrinsicAttributes & EffectComposerProps & RefAttributes<EffectComposer>'. Did you mean 'enableNormalPass'?
+src/components/CameraRig.tsx(20,13): error TS6133: 'state' is declared but its value is never read.
+src/components/CameraRig.tsx(36,9): error TS6133: 'rx' is declared but its value is never read.
+src/components/FloatingGeometry.tsx(4,10): error TS2305: Module '"../shaders"' has no exported member 'floatingVertexShader'.
+src/components/FloatingGeometry.tsx(4,32): error TS2305: Module '"../shaders"' has no exported member 'floatingFragmentShader'.
+src/components/ParticleField.tsx(4,10): error TS2724: '"../shaders"' has no exported member named 'particleVertexShader'. Did you mean 'particleMorphVertexShader'?
+src/components/ParticleField.tsx(4,32): error TS2724: '"../shaders"' has no exported member named 'particleFragmentShader'. Did you mean 'particleMorphFragmentShader'?
+src/components/ProjectScene.tsx(2,20): error TS6133: 'useThree' is declared but its value is never read.
