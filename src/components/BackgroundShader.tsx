@@ -54,13 +54,14 @@ export const BackgroundShader = () => {
   });
 
   return (
-    <mesh ref={meshRef} position={[0, 0, -10]} scale={[50, 50, 1]}>
-      <planeGeometry args={[1, 1, 1, 1]} />
+    <mesh ref={meshRef} position={[0, 0, 0]} scale={[50, 50, 50]}>
+      <sphereGeometry args={[1, 32, 32]} />
       <shaderMaterial
         ref={materialRef}
         vertexShader={noiseVertexShader}
         fragmentShader={noiseFragmentShader}
         uniforms={uniforms}
+        side={THREE.BackSide}
         depthWrite={false}
       />
     </mesh>

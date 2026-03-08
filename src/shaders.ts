@@ -60,7 +60,7 @@ export const noiseFragmentShader = /* glsl */`
 
   void main() {
     float n = snoise(vec3(vUv * 2.0, uTime * 0.2));
-    vec3 color = mix(vec3(0.03, 0.03, 0.08), vec3(0.0, 0.4, 0.8), n * 0.5 + 0.5);
+    vec3 color = mix(vec3(0.22, 0.24, 0.31), vec3(0.71, 0.73, 0.77), n * 0.5 + 0.5);
     gl_FragColor = vec4(color, 1.0);
   }
 `;
@@ -94,7 +94,7 @@ export const particleMorphVertexShader = /* glsl */`
     gl_PointSize = 4.0 * (10.0 / (max(0.1, -mvPosition.z)));
     gl_Position = projectionMatrix * mvPosition;
     
-    vColor = mix(vec3(0.0, 0.8, 1.0), vec3(0.5, 0.0, 1.0), pos.y * 0.1 + 0.5);
+    vColor = mix(vec3(0.71, 0.73, 0.77), vec3(0.22, 0.24, 0.31), pos.y * 0.1 + 0.5);
   }
 `;
 
@@ -103,7 +103,7 @@ export const particleMorphFragmentShader = /* glsl */`
   void main() {
     float d = distance(gl_PointCoord, vec2(0.5));
     if (d > 0.5) discard;
-    gl_FragColor = vec4(vColor, 1.0 - d * 2.0);
+    gl_FragColor = vec4(mix(vec3(0.71, 0.73, 0.77), vec3(0.22, 0.24, 0.31), vColor.r), 1.0 - d * 2.0);
   }
 `;
 

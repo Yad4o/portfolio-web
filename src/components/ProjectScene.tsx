@@ -15,7 +15,7 @@ const ProjectHologram = ({ url, position, index, scroll }: any) => {
 
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
-    uColor: { value: new THREE.Color(index % 2 === 0 ? '#00d4ff' : '#a78bfa') },
+    uColor: { value: new THREE.Color(index % 2 === 0 ? '#b6bac5' : '#383e4e') },
     uTexture: { value: tex },
   }), [tex, index]);
 

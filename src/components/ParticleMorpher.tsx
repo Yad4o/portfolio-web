@@ -3,11 +3,11 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { particleMorphVertexShader, particleMorphFragmentShader } from '../shaders';
 
-const COUNT = 5000; // Stabilized count for the final verification
+const COUNT = 2000;
 
 /**
- * 15,000 GPU-morphed particles.
- * High-end immersive morphing between Sphere, Box, Torus, and Galaxy.
+ * 2,000 GPU-morphed particles.
+ * Minimal morphing between geometric shapes for subtle effect.
  */
 export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
   const pointsRef = useRef<THREE.Points>(null);
@@ -23,17 +23,17 @@ export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
         // --- Sphere ---
         const phi = Math.acos(-1 + (2 * i) / COUNT);
         const theta = Math.sqrt(COUNT * Math.PI) * phi;
-        p1[i * 3 + 0] = 3.5 * Math.cos(theta) * Math.sin(phi);
-        p1[i * 3 + 1] = 3.5 * Math.sin(theta) * Math.sin(phi);
-        p1[i * 3 + 2] = 3.5 * Math.cos(phi);
+        p1[i * 3 + 0] = 2.0 * Math.cos(theta) * Math.sin(phi);
+        p1[i * 3 + 1] = 2.0 * Math.sin(theta) * Math.sin(phi);
+        p1[i * 3 + 2] = 2.0 * Math.cos(phi);
 
         // --- Box ---
-        p2[i * 3 + 0] = (Math.random() - 0.5) * 6;
-        p2[i * 3 + 1] = (Math.random() - 0.5) * 6;
-        p2[i * 3 + 2] = (Math.random() - 0.5) * 6;
+        p2[i * 3 + 0] = (Math.random() - 0.5) * 4;
+        p2[i * 3 + 1] = (Math.random() - 0.5) * 4;
+        p2[i * 3 + 2] = (Math.random() - 0.5) * 4;
 
         // --- Torus ---
-        const ir = 4, or = 1;
+        const ir = 2.5, or = 0.8;
         const u = (i / COUNT) * Math.PI * 2;
         const v = Math.random() * Math.PI * 2;
         p3[i * 3 + 0] = (ir + or * Math.cos(v)) * Math.cos(u);
@@ -41,10 +41,10 @@ export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
         p3[i * 3 + 2] = or * Math.sin(v);
 
         // --- Galaxy ---
-        const r = Math.random() * 8;
-        const a = (i / COUNT) * Math.PI * 20;
+        const r = Math.random() * 5;
+        const a = (i / COUNT) * Math.PI * 15;
         p4[i * 3 + 0] = r * Math.cos(a + r);
-        p4[i * 3 + 1] = (Math.random() - 0.5) * 1.5;
+        p4[i * 3 + 1] = (Math.random() - 0.5) * 0.5; // Reduced y-axis range
         p4[i * 3 + 2] = r * Math.sin(a + r);
     }
     return { pos1: p1, pos2: p2, pos3: p3, pos4: p4 };
@@ -60,11 +60,11 @@ export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
   useFrame((state) => {
     if (matRef.current) {
         matRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
-        matRef.current.uniforms.uMorphProgress.value = scroll * 3.0; // 0.0 to 3.0
+        matRef.current.uniforms.uMorphProgress.value = scroll * 2.0; // 0.0 to 2.0
     }
     if (pointsRef.current) {
-        pointsRef.current.rotation.y += 0.001;
-        pointsRef.current.rotation.z += 0.0005;
+        pointsRef.current.rotation.y += 0.0005;
+        pointsRef.current.rotation.z += 0.0002;
     }
   });
 
