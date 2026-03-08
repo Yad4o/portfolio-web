@@ -1,0 +1,5 @@
+﻿vite.config.ts(3,18): error TS2307: Cannot find module 'path' or its corresponding type declarations.
+vite.config.ts(9,25): error TS2304: Cannot find name '__dirname'.
+src/App.tsx(1,8): error TS6133: 'React' is declared but its value is never read.
+src/App.tsx(4,10): error TS6133: 'Environment' is declared but its value is never read.
+src/App.tsx(4,37): error TS6133: 'Text' is declared but its value is never read.
