@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize all modules
   initFloatingFeatures();
-  initCustomCursor();
   initNavigation();
   initSmoothScrolling();
   initScrollAnimations();
@@ -38,9 +37,6 @@ function initFloatingFeatures() {
   // Floating Navigation
   const floatingNav = document.getElementById('floatingNav');
   const navDots = document.querySelectorAll('.nav-dot');
-  
-  // Floating Orb
-  const floatingOrb = document.getElementById('floatingOrb');
   
   // Scroll Particles
   const scrollParticles = document.getElementById('scrollParticles');
@@ -156,45 +152,19 @@ function initFloatingFeatures() {
     });
   });
   
-  // Update floating orb position with smooth lag
-  let orbX = window.innerWidth / 2;
-  let orbY = window.innerHeight / 2;
-  let targetX = orbX;
-  let targetY = orbY;
-  
-  function updateFloatingOrb(e) {
-    targetX = e.clientX;
-    targetY = e.clientY;
-  }
-  
-  function animateFloatingOrb() {
-    // Smooth easing animation
-    orbX += (targetX - orbX) * 0.1;
-    orbY += (targetY - orbY) * 0.1;
-    
-    floatingOrb.style.left = orbX + 'px';
-    floatingOrb.style.top = orbY + 'px';
-    
-    requestAnimationFrame(animateFloatingOrb);
-  }
-  
   // Event listeners
   window.addEventListener('scroll', () => {
     updateCornerIndicator();
     updateActiveNavDot();
   });
   
-  window.addEventListener('mousemove', updateFloatingOrb);
-  
   // Initialize
   updateCornerIndicator();
   updateActiveNavDot();
-  animateFloatingOrb();
   
   // Hide floating navigation on mobile
   if (window.innerWidth <= 768) {
     floatingNav.style.display = 'none';
-    floatingOrb.style.display = 'none';
     cornerIndicator.style.display = 'none';
   }
   
@@ -202,53 +172,14 @@ function initFloatingFeatures() {
   window.addEventListener('resize', () => {
     if (window.innerWidth <= 768) {
       floatingNav.style.display = 'none';
-      floatingOrb.style.display = 'none';
       cornerIndicator.style.display = 'none';
     } else {
       floatingNav.style.display = 'flex';
-      floatingOrb.style.display = 'block';
       cornerIndicator.style.display = 'block';
     }
   });
 }
 
-// ===== CUSTOM CURSOR =====
-function initCustomCursor() {
-  const cursor = document.querySelector('.custom-cursor');
-  const cursorDot = document.querySelector('.cursor-dot');
-  const cursorRing = document.querySelector('.cursor-ring');
-
-  if (!cursor) return;
-
-  let mouseX = 0, mouseY = 0;
-
-  // Track mouse movement
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-
-    // Update both dot and ring immediately for synchronized movement
-    cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-    cursorRing.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-  });
-
-  // Hover effects
-  const hoverElements = document.querySelectorAll('a, button, .project-card, .skill-ring');
-  hoverElements.forEach(element => {
-    element.addEventListener('mouseenter', () => {
-      cursor.classList.add('hover');
-    });
-
-    element.addEventListener('mouseleave', () => {
-      cursor.classList.remove('hover');
-    });
-  });
-
-  // Hide cursor on mobile
-  if (window.innerWidth <= 768) {
-    cursor.style.display = 'none';
-  }
-}
 
 // ===== NAVIGATION =====
 function initNavigation() {

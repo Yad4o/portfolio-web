@@ -37,7 +37,6 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  cursor: none !important;
 }
 
 html {
@@ -113,31 +112,7 @@ body {
   transform: scale(1.2);
 }
 
-/* Floating orb that follows cursor */
-.floating-orb {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 50%, transparent 70%);
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  pointer-events: none;
-  z-index: 999;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s ease-out;
-  animation: orb-pulse 3s ease-in-out infinite;
-}
 
-@keyframes orb-pulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 0.6;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 0.8;
-  }
-}
 
 /* ===== DYNAMIC CORNER INDICATOR ===== */
 .corner-indicator {
@@ -346,60 +321,6 @@ body {
   opacity: 0;
 }
 
-/* ===== CUSTOM CURSOR ===== */
-.custom-cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9999;
-}
-
-.cursor-dot {
-  display: none;
-}
-
-.cursor-ring {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  transition: all 0.15s ease-out;
-
-  /* Highly realistic 3D glass orb */
-  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.1) 25%, rgba(0, 212, 255, 0.05) 50%, transparent 80%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow:
-    inset 2px 2px 4px rgba(255, 255, 255, 0.5),
-    inset -2px -2px 6px rgba(0, 0, 0, 0.3),
-    0 4px 10px rgba(0, 0, 0, 0.5),
-    inset 0 0 10px rgba(0, 212, 255, 0.3);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  z-index: 1;
-}
-
-.custom-cursor.hover .cursor-dot {
-  width: 0px;
-  height: 0px;
-  opacity: 0;
-}
-
-.custom-cursor.hover .cursor-ring {
-  width: 32px;
-  height: 32px;
-  background: radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.2) 20%, rgba(0, 255, 136, 0.1) 60%, transparent 90%);
-  border-color: rgba(255, 255, 255, 0.6);
-  box-shadow:
-    inset 2px 2px 4px rgba(255, 255, 255, 0.8),
-    inset -2px -2px 6px rgba(0, 0, 0, 0.2),
-    0 6px 15px rgba(0, 0, 0, 0.6),
-    0 0 12px rgba(0, 255, 136, 0.4),
-    inset 0 0 12px rgba(0, 255, 136, 0.5);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-}
 
 /* ===== NAVIGATION ===== */
 .nav {
