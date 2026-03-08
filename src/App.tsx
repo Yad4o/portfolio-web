@@ -83,7 +83,7 @@ const App = () => {
   return (
     <div className="bg-[#050505]">
       {/* FIXED IMMERSIVE CANVAS */}
-      <div className="fixed inset-0 z-0">
+      <div className="fixed inset-0 z-0 w-screen h-screen">
         <Canvas
           camera={{ position: [0, 0, 10], fov: 45 }}
           gl={{ 
@@ -94,6 +94,14 @@ const App = () => {
             alpha: false
           }}
           dpr={[1, 1]}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 0
+          }}
         >
           <ImmersiveCore scroll={scroll} />
         </Canvas>
