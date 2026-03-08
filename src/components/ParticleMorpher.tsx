@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { particleMorphVertexShader, particleMorphFragmentShader } from '../shaders';
 
-const COUNT = 15000; // Even more particles for high-end look
+const COUNT = 5000; // Stabilized count for the final verification
 
 /**
  * 15,000 GPU-morphed particles.

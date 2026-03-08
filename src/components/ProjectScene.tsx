@@ -9,8 +9,10 @@ import { hologramVertexShader, hologramFragmentShader } from '../shaders';
  */
 const ProjectHologram = ({ url, position, index, scroll }: any) => {
   const meshRef = useRef<THREE.Mesh>(null);
-  const tex = useTexture(url);
   
+  // Use a fallback image if the URL fails to load
+  const tex = useTexture(url);
+
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
     uColor: { value: new THREE.Color(index % 2 === 0 ? '#00d4ff' : '#a78bfa') },
@@ -19,17 +21,25 @@ const ProjectHologram = ({ url, position, index, scroll }: any) => {
 
   useFrame((state) => {
     if (meshRef.current) {
-        meshRef.current.position.y += Math.sin(state.clock.elapsedTime + index) * 0.001;
+        const material = meshRef.current.material as THREE.ShaderMaterial;
+        if (material.uniforms) {
+            material.uniforms.uTime.value = state.clock.elapsedTime;
+        }
+
+        // Float effect
+        meshRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 0.5 + index) * 0.2;
         
         // Appear/Disappear logic based on scroll
-        // scroll is 0 to 1
-        const targetOpacity = smoothstep(0.3, 0.4, scroll) * smoothstep(0.9, 0.7, scroll);
-        meshRef.current.scale.setScalar(targetOpacity);
+        const start = 0.5; // Starts appearing at 50% scroll (Projects section)
+        const end = 0.8;
+        const targetScale = smoothstep(start - 0.1, start + 0.1, scroll) * smoothstep(end + 0.1, end - 0.1, scroll);
+        meshRef.current.scale.setScalar(targetScale);
+        meshRef.current.visible = targetScale > 0.01;
     }
   });
 
   return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={1}>
+    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
         <mesh ref={meshRef} position={position}>
             <planeGeometry args={[4, 2.5]} />
             <shaderMaterial
@@ -52,10 +62,10 @@ function smoothstep(min: number, max: number, value: number) {
 }
 
 const PROJECTS = [
-    { url: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=800', pos: [-5, 2, -10] },
-    { url: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=800', pos: [5,  3, -8] },
-    { url: 'https://images.unsplash.com/photo-1620641788421-7a1c34a62120?q=80&w=800', pos: [-6, -2, -12] },
-    { url: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800', pos: [6, -3, -9] },
+    { url: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&w=800', pos: [-5, 2, -10] },
+    { url: 'https://images.unsplash.com/photo-1587620962725-abab7fe55159?auto=format&w=800', pos: [5,  3, -8] },
+    { url: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&w=800', pos: [-6, -2, -12] },
+    { url: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&w=800', pos: [6, -3, -9] },
 ];
 
 export const ProjectScene = ({ scroll }: { scroll: number }) => {

@@ -91,7 +91,7 @@ export const particleMorphVertexShader = /* glsl */`
 
     // View-aligned points
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-    gl_PointSize = 4.0 * (10.0 / -mvPosition.z);
+    gl_PointSize = 4.0 * (10.0 / (max(0.1, -mvPosition.z)));
     gl_Position = projectionMatrix * mvPosition;
     
     vColor = mix(vec3(0.0, 0.8, 1.0), vec3(0.5, 0.0, 1.0), pos.y * 0.1 + 0.5);

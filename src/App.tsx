@@ -1,12 +1,12 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState, useRef } from 'react';
+import * as THREE from 'three';
 import Lenis from '@studio-freight/lenis';
-import { Canvas } from '@react-three/fiber';
-import { AdaptiveDpr, AdaptiveEvents, Stars } from '@react-three/drei';
-import { EffectComposer, Bloom, ChromaticAberration, Vignette, Noise } from '@react-three/postprocessing';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Stars } from '@react-three/drei';
+import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, Mail, ArrowDown } from 'lucide-react';
-import * as THREE from 'three';
 
 import { BackgroundShader } from './components/BackgroundShader';
 import { ParticleMorpher } from './components/ParticleMorpher';
@@ -27,23 +27,7 @@ const ImmersiveCore = ({ scroll }: { scroll: number }) => {
       <ProjectScene scroll={scroll} />
       
       {/* Decorative stars / dust */}
-      <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={1} />
-      
-      {/* Cinematic Post-Processing */}
-      <EffectComposer>
-        <Bloom 
-          intensity={1.2} 
-          luminanceThreshold={0.5} 
-          luminanceSmoothing={0.9} 
-          mipmapBlur 
-        />
-        <ChromaticAberration offset={new THREE.Vector2(0.001, 0.001)} />
-        <Vignette eskil={false} offset={0.1} darkness={1.1} />
-        <Noise opacity={0.06} />
-      </EffectComposer>
-      
-      <AdaptiveDpr pixelated />
-      <AdaptiveEvents />
+      <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
     </Suspense>
   );
 };
@@ -109,7 +93,7 @@ const App = () => {
             depth: true,
             alpha: false
           }}
-          dpr={[1, 1.5]}
+          dpr={[1, 1]}
         >
           <ImmersiveCore scroll={scroll} />
         </Canvas>
