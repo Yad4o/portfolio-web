@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initPolarBear3D();
   initInteractiveProjectCards();
   initProjectSectionEnhancements();
+  initGravityEffect();
 
   console.log("✨ Portfolio Initialized Successfully!");
 });
@@ -1558,3 +1559,151 @@ function initPolarBear3D() {
   tick();
 }
 
+// ===== GRAVITY EFFECT =====
+function initGravityEffect() {
+  const gravityBtn = document.getElementById('gravityBtn');
+  if (!gravityBtn) return;
+
+  let gravityActive = false;
+  let engine, runner, mouseConstraint;
+  let bodiesDOM = [];
+
+  function toggleGravity() {
+    if (typeof Matter === 'undefined') {
+      console.warn("Matter.js is not loaded.");
+      return;
+    }
+
+    if (gravityActive) {
+      // Deactivate Gravity
+      gravityActive = false;
+      document.body.style.overflow = '';
+      document.body.style.userSelect = '';
+      
+      if (runner) Matter.Runner.stop(runner);
+      if (engine) {
+        Matter.World.clear(engine.world);
+        Matter.Engine.clear(engine);
+      }
+
+      // Restore elements to their original state
+      bodiesDOM.forEach(item => {
+        const { el, origTransform, origTransition, origZIndex } = item;
+        el.style.transform = origTransform;
+        el.style.transition = origTransition;
+        el.style.zIndex = origZIndex;
+      });
+
+      bodiesDOM = [];
+      return;
+    }
+
+    // Activate Gravity
+    gravityActive = true;
+    document.body.style.overflow = 'hidden';
+    document.body.style.userSelect = 'none';
+
+    const Engine = Matter.Engine,
+          Runner = Matter.Runner,
+          Bodies = Matter.Bodies,
+          World = Matter.World,
+          Mouse = Matter.Mouse,
+          MouseConstraint = Matter.MouseConstraint;
+
+    engine = Engine.create();
+    const world = engine.world;
+    engine.gravity.y = 1;
+
+    const fallingElements = document.querySelectorAll(
+      'h1, h2, h3, h4, p, a, button, li, .skill-ring, .project-card, .highlight-item, .timeline-item, .timeline-content, .company-logo, .quote-showcase, .nav-logo, .hero-status'
+    );
+    
+    const elementsList = Array.from(fallingElements);
+    const filteredElements = elementsList.filter(el => {
+      let parent = el.parentElement;
+      while (parent) {
+        if (elementsList.includes(parent)) return false;
+        parent = parent.parentElement;
+      }
+      return true;
+    });
+
+    bodiesDOM = [];
+    filteredElements.forEach(el => {
+      const origTransform = el.style.transform;
+      const origTransition = el.style.transition;
+      const origZIndex = el.style.zIndex;
+
+      el.style.transform = 'none';
+      const rect = el.getBoundingClientRect();
+      el.style.transform = origTransform;
+
+      if (rect.width === 0 || rect.height === 0 || el.offsetParent === null) return;
+      
+      const cx = rect.left + window.scrollX + rect.width / 2;
+      const cy = rect.top + window.scrollY + rect.height / 2;
+
+      const body = Bodies.rectangle(cx, cy, rect.width, rect.height, {
+        restitution: 0.7,
+        frictionAir: 0.01,
+        friction: 0.1,
+        render: { visible: false }
+      });
+      
+      bodiesDOM.push({ el, body, cxOriginal: cx, cyOriginal: cy, origTransform, origTransition, origZIndex });
+      World.add(world, body);
+      
+      el.style.transition = 'none';
+      el.style.zIndex = '10000';
+    });
+
+    const cw = window.innerWidth;
+    const ch = window.innerHeight;
+    const sx = window.scrollX;
+    const sy = window.scrollY;
+
+    const floor = Bodies.rectangle(sx + cw / 2, sy + ch + 50, cw * 2, 100, { isStatic: true });
+    const wallLeft = Bodies.rectangle(sx - 50, sy + ch / 2, 100, ch * 2, { isStatic: true });
+    const wallRight = Bodies.rectangle(sx + cw + 50, sy + ch / 2, 100, ch * 2, { isStatic: true });
+    const ceiling = Bodies.rectangle(sx + cw / 2, sy - 50, cw * 2, 100, { isStatic: true });
+    
+    World.add(world, [floor, wallLeft, wallRight, ceiling]);
+
+    // Add interactivity
+    const mouse = Mouse.create(document.body);
+    mouseConstraint = MouseConstraint.create(engine, {
+      mouse: mouse,
+      constraint: {
+        stiffness: 0.2,
+        render: { visible: false }
+      }
+    });
+
+    World.add(world, mouseConstraint);
+
+    // Keep the mouse in sync with scrolling
+    mouseConstraint.mouse.element.removeEventListener("mousewheel", mouseConstraint.mouse.mousewheel);
+    mouseConstraint.mouse.element.removeEventListener("DOMMouseScroll", mouseConstraint.mouse.mousewheel);
+
+    Matter.Events.on(engine, 'afterUpdate', function() {
+      bodiesDOM.forEach(item => {
+        const { el, body, cxOriginal, cyOriginal } = item;
+        const dx = body.position.x - cxOriginal;
+        const dy = body.position.y - cyOriginal;
+        
+        el.style.transform = `translate(${dx}px, ${dy}px) rotate(${body.angle}rad)`;
+      });
+    });
+
+    runner = Runner.create();
+    Runner.run(runner, engine);
+  }
+
+  gravityBtn.addEventListener('click', toggleGravity);
+  
+  document.addEventListener('keydown', (e) => {
+    if ((e.key === 'g' || e.key === 'G') && !e.ctrlKey && !e.metaKey && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+      toggleGravity();
+    }
+  });
+}
