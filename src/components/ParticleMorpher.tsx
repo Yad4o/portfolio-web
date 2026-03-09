@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { particleMorphVertexShader, particleMorphFragmentShader } from '../shaders';
 
-const COUNT = 2000;
+const COUNT = 3000;
 
 /**
  * 2,000 GPU-morphed particles.
@@ -22,115 +22,181 @@ export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
     const p6 = new Float32Array(COUNT * 3);
 
     for (let i = 0; i < COUNT; i++) {
-        // --- Hero Section: DNA Helix ---
-        const t = (i / COUNT) * Math.PI * 8;
-        const r = 2.0;
-        const helixY = (i / COUNT - 0.5) * 8;
-        const strand = i % 2; // Two strands
-        const phase = strand * Math.PI; // 180 degrees between strands
-        p1[i * 3 + 0] = r * Math.cos(t + phase) + Math.sin(t * 2) * 0.3;
-        p1[i * 3 + 1] = helixY;
-        p1[i * 3 + 2] = r * Math.sin(t + phase) + Math.cos(t * 2) * 0.3;
-
-        // --- About Section: Tree of Life ---
-        const treeProgress = i / COUNT;
-        const branchLevel = Math.floor(treeProgress * 5);
-        const branchT = (treeProgress * 5 - branchLevel) * Math.PI * 2;
-        const trunkHeight = treeProgress * 4 - 2;
-        const branchRadius = (1 - treeProgress) * 2;
+        const t = i / COUNT;
+        const angle = t * Math.PI * 2;
+        const spiralFactor = i / COUNT;
         
-        if (branchLevel === 0) { // Trunk
-            p2[i * 3 + 0] = (Math.random() - 0.5) * 0.3;
-            p2[i * 3 + 1] = trunkHeight * 2;
-            p2[i * 3 + 2] = (Math.random() - 0.5) * 0.3;
-        } else {
-            const branchAngle = branchT + branchLevel * Math.PI * 0.4;
-            p2[i * 3 + 0] = Math.cos(branchAngle) * branchRadius;
-            p2[i * 3 + 1] = trunkHeight * 2 + Math.random() * 0.5;
-            p2[i * 3 + 2] = Math.sin(branchAngle) * branchRadius;
+        // --- Hero Section: Hypersphere with Fibonacci Spiral ---
+        const phi = Math.acos(1 - 2 * t);
+        const theta = Math.PI * (1 + Math.sqrt(5)) * i; // Golden angle
+        const sphereRadius = 2.5 + Math.sin(angle * 3) * 0.3;
+        p1[i * 3 + 0] = sphereRadius * Math.sin(phi) * Math.cos(theta) * (1 + spiralFactor * 0.2);
+        p1[i * 3 + 1] = sphereRadius * Math.cos(phi) * (1 + Math.sin(angle * 2) * 0.1);
+        p1[i * 3 + 2] = sphereRadius * Math.sin(phi) * Math.sin(theta) * (1 + spiralFactor * 0.2);
+
+        // --- About Section: Dynamic Star with Inner Core ---
+        const starPoints = 8; // 8-pointed star
+        const starAngle = angle;
+        const starStep = Math.floor(starAngle / (Math.PI * 2 / starPoints));
+        const coreRadius = 0.5 + Math.sin(angle * 8) * 0.2;
+        
+        if (i % 3 === 0) { // Core particles
+            const coreAngle = angle * 4;
+            p2[i * 3 + 0] = Math.cos(coreAngle) * coreRadius;
+            p2[i * 3 + 1] = Math.sin(coreAngle) * coreRadius;
+            p2[i * 3 + 2] = Math.sin(angle * 6) * 0.1;
+        } else { // Star formation
+            const outerRadius = 2.8 + Math.sin(angle * 4) * 0.4;
+            const innerRadius = 1.2 + Math.cos(angle * 3) * 0.2;
+            const radius = (starStep % 2 === 0) ? outerRadius : innerRadius;
+            
+            p2[i * 3 + 0] = Math.cos(starAngle) * radius;
+            p2[i * 3 + 1] = Math.sin(starAngle) * radius * 0.3;
+            p2[i * 3 + 2] = Math.sin(starAngle) * radius;
         }
 
-        // --- Projects Section: Neural Network ---
-        const neuronIndex = Math.floor(i / (COUNT / 12));
-        const particleInNeuron = i % (COUNT / 12);
-        const layer = Math.floor(neuronIndex / 3);
-        const neuronInLayer = neuronIndex % 3;
+        // --- Projects Section: Enhanced Globe with Energy Grid ---
+        const globeSection = Math.floor(i / (COUNT / 4)); // 4 sections
+        const globeProgress = (i % (COUNT / 4)) / (COUNT / 4);
+        const globeTime = globeProgress * Math.PI * 2;
         
-        const layerX = (layer - 1.5) * 3;
-        const neuronY = (neuronInLayer - 1) * 2;
-        
-        // Create connections between neurons
-        if (particleInNeuron < (COUNT / 12) * 0.7) {
-            // Neuron center
-            p3[i * 3 + 0] = layerX + (Math.random() - 0.5) * 0.5;
-            p3[i * 3 + 1] = neuronY + (Math.random() - 0.5) * 0.5;
-            p3[i * 3 + 2] = (Math.random() - 0.5) * 0.5;
-        } else {
-            // Connection particles
-            const t = particleInNeuron / ((COUNT / 12) * 0.3);
-            const nextLayer = layer < 3 ? layer + 1 : 0;
-            const nextNeuron = Math.random() * 3 - 1.5;
-            p3[i * 3 + 0] = layerX + (nextLayer - layer) * 3 * t;
-            p3[i * 3 + 1] = neuronY + (nextNeuron - neuronY) * t;
-            p3[i * 3 + 2] = Math.sin(t * Math.PI) * 0.3;
+        if (globeSection === 0) { // Globe surface with waves
+            const globeTheta = globeProgress * Math.PI * 2;
+            const globePhi = Math.acos(2 * globeProgress - 1);
+            const waveRadius = 2.2 + Math.sin(globeTheta * 8 + globePhi * 4) * 0.15;
+            p3[i * 3 + 0] = waveRadius * Math.sin(globePhi) * Math.cos(globeTheta);
+            p3[i * 3 + 1] = waveRadius * Math.cos(globePhi);
+            p3[i * 3 + 2] = waveRadius * Math.sin(globePhi) * Math.sin(globeTheta);
+        } else if (globeSection === 1) { // Energy latitude lines
+            const latLines = 12;
+            const latIndex = Math.floor(globeProgress * latLines);
+            const latAngle = (latIndex / latLines) * Math.PI - Math.PI/2;
+            const lineTheta = globeTime * 6;
+            const lineRadius = 2.2 * Math.cos(latAngle) * (1 + Math.sin(lineTheta) * 0.1);
+            p3[i * 3 + 0] = lineRadius * Math.cos(lineTheta);
+            p3[i * 3 + 1] = 2.2 * Math.sin(latAngle);
+            p3[i * 3 + 2] = lineRadius * Math.sin(lineTheta);
+        } else if (globeSection === 2) { // Energy longitude lines
+            const lonLines = 16;
+            const lonIndex = Math.floor(globeProgress * lonLines);
+            const lonAngle = (lonIndex / lonLines) * Math.PI * 2;
+            const linePhi = globeTime * 4 - Math.PI/2;
+            const lineRadius = 2.2 * Math.cos(linePhi) * (1 + Math.cos(lonAngle * 2) * 0.1);
+            p3[i * 3 + 0] = lineRadius * Math.cos(lonAngle);
+            p3[i * 3 + 1] = 2.2 * Math.sin(linePhi);
+            p3[i * 3 + 2] = lineRadius * Math.sin(lonAngle);
+        } else { // Orbital particles
+            const orbitRadius = 2.8 + Math.sin(globeTime * 3) * 0.3;
+            const orbitHeight = Math.sin(globeTime * 2) * 0.5;
+            p3[i * 3 + 0] = Math.cos(globeTime * 8) * orbitRadius;
+            p3[i * 3 + 1] = orbitHeight;
+            p3[i * 3 + 2] = Math.sin(globeTime * 8) * orbitRadius;
         }
 
-        // --- Contact Section: Phoenix Bird ---
-        const wingPhase = Math.floor(i / (COUNT / 3));
-        const localT = (i % (COUNT / 3)) / (COUNT / 3) * Math.PI;
+        // --- Contact Section: Enhanced Diamond with Energy Core ---
+        const diamondLayer = Math.floor(i / (COUNT / 3)); // 3 layers
+        const diamondProgress = (i % (COUNT / 3)) / (COUNT / 3);
+        const diamondSize = 2.8;
         
-        if (wingPhase === 0) { // Body
-            p4[i * 3 + 0] = 0;
-            p4[i * 3 + 1] = Math.sin(localT) * 2;
-            p4[i * 3 + 2] = localT * 2 - Math.PI;
-        } else if (wingPhase === 1) { // Left wing
-            const wingSpread = Math.sin(localT) * 3;
-            p4[i * 3 + 0] = -wingSpread;
-            p4[i * 3 + 1] = Math.cos(localT) * 1.5 + 1;
-            p4[i * 3 + 2] = localT * 2 - Math.PI;
-        } else { // Right wing
-            const wingSpread = Math.sin(localT) * 3;
-            p4[i * 3 + 0] = wingSpread;
-            p4[i * 3 + 1] = Math.cos(localT) * 1.5 + 1;
-            p4[i * 3 + 2] = localT * 2 - Math.PI;
+        if (diamondLayer === 0) { // Upper diamond with curves
+            const curve = Math.sin(diamondProgress * Math.PI) * 0.3;
+            p4[i * 3 + 0] = (diamondProgress - 0.5) * diamondSize * 2.2;
+            p4[i * 3 + 1] = (diamondProgress * diamondSize + curve);
+            p4[i * 3 + 2] = Math.sin(diamondProgress * Math.PI * 2) * 0.3;
+        } else if (diamondLayer === 1) { // Energy core
+            const coreAngle = diamondProgress * Math.PI * 4;
+            const coreRadius = 0.3 + Math.sin(coreAngle * 3) * 0.2;
+            p4[i * 3 + 0] = Math.cos(coreAngle) * coreRadius;
+            p4[i * 3 + 1] = 0;
+            p4[i * 3 + 2] = Math.sin(coreAngle) * coreRadius;
+        } else { // Lower diamond with curves
+            const curve = Math.sin(diamondProgress * Math.PI) * 0.3;
+            p4[i * 3 + 0] = (diamondProgress - 0.5) * diamondSize * 2.2;
+            p4[i * 3 + 1] = ((1 - diamondProgress) * -diamondSize - curve);
+            p4[i * 3 + 2] = Math.sin(diamondProgress * Math.PI * 2) * 0.3;
         }
 
-        // --- Footer: Dragon ---
-        const dragonT = (i / COUNT) * Math.PI * 6;
-        const dragonSegment = Math.floor(i / (COUNT / 8));
-        const segmentProgress = (i % (COUNT / 8)) / (COUNT / 8);
+        // --- Footer: Enhanced Cube with Energy Flow ---
+        const cubeFace = Math.floor(i / (COUNT / 8)); // 8 sections for edges
+        const cubeProgress = (i % (COUNT / 8)) / (COUNT / 8);
+        const cubeSize = 2.0;
         
-        // Dragon body curve
-        const bodyX = Math.sin(dragonT) * (2 + dragonSegment * 0.3);
-        const bodyY = Math.cos(dragonT * 0.5) * 1.5 + dragonSegment * 0.2;
-        const bodyZ = dragonT * 0.8 - Math.PI * 3;
-        
-        if (dragonSegment === 0) { // Head
-            p5[i * 3 + 0] = bodyX + Math.sin(segmentProgress * Math.PI * 2) * 0.5;
-            p5[i * 3 + 1] = bodyY + 0.5;
-            p5[i * 3 + 2] = bodyZ + 0.5;
-        } else if (dragonSegment < 6) { // Body
-            p5[i * 3 + 0] = bodyX + Math.sin(segmentProgress * Math.PI * 2 + dragonSegment) * 0.3;
-            p5[i * 3 + 1] = bodyY;
-            p5[i * 3 + 2] = bodyZ;
-        } else { // Tail
-            const tailFlare = (1 - segmentProgress) * 2;
-            p5[i * 3 + 0] = bodyX + Math.sin(segmentProgress * Math.PI * 4) * tailFlare;
-            p5[i * 3 + 1] = bodyY - segmentProgress * 0.5;
-            p5[i * 3 + 2] = bodyZ - segmentProgress * 0.3;
+        if (cubeFace < 6) { // 6 faces
+            const face = cubeFace;
+            const flowOffset = Math.sin(angle * 4) * 0.1;
+            
+            if (face === 0) { // Front face with grid
+                p5[i * 3 + 0] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
+                p5[i * 3 + 1] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
+                p5[i * 3 + 2] = cubeSize;
+            } else if (face === 1) { // Back face
+                p5[i * 3 + 0] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
+                p5[i * 3 + 1] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
+                p5[i * 3 + 2] = -cubeSize;
+            } else if (face === 2) { // Left face
+                p5[i * 3 + 0] = -cubeSize;
+                p5[i * 3 + 1] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
+                p5[i * 3 + 2] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
+            } else if (face === 3) { // Right face
+                p5[i * 3 + 0] = cubeSize;
+                p5[i * 3 + 1] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
+                p5[i * 3 + 2] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
+            } else if (face === 4) { // Top face
+                p5[i * 3 + 0] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
+                p5[i * 3 + 1] = cubeSize;
+                p5[i * 3 + 2] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
+            } else { // Bottom face
+                p5[i * 3 + 0] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
+                p5[i * 3 + 1] = -cubeSize;
+                p5[i * 3 + 2] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
+            }
+        } else { // Edge particles with energy flow
+            const edgeType = cubeFace - 6;
+            const edgeProgress = cubeProgress;
+            const energyPulse = Math.sin(angle * 8) * 0.2;
+            
+            if (edgeType === 0) { // Vertical edges
+                p5[i * 3 + 0] = cubeSize * (edgeProgress < 0.5 ? 1 : -1) + energyPulse;
+                p5[i * 3 + 1] = (edgeProgress - 0.5) * cubeSize * 2;
+                p5[i * 3 + 2] = cubeSize * (edgeProgress < 0.5 ? 1 : -1);
+            } else { // Horizontal edges
+                p5[i * 3 + 0] = (edgeProgress - 0.5) * cubeSize * 2;
+                p5[i * 3 + 1] = cubeSize * (edgeType === 1 ? 1 : -1) + energyPulse;
+                p5[i * 3 + 2] = cubeSize * (edgeProgress < 0.5 ? 1 : -1);
+            }
         }
 
-        // --- Default: Crystal Formation ---
-        const crystalIndex = i % 8; // 8 faces of crystal
-        const crystalProgress = (i / COUNT) * 3;
-        const angle = (crystalIndex / 8) * Math.PI * 2;
+        // --- Default: Enhanced Moon with Crater Field ---
+        const moonSection = Math.floor(i / (COUNT / 4)); // 4 sections
+        const moonProgress = (i % (COUNT / 4)) / (COUNT / 4);
+        const moonAngle = moonProgress * Math.PI * 2;
         
-        const radius = crystalProgress * 2;
-        const height = crystalProgress * 4 - 2;
-        
-        p6[i * 3 + 0] = Math.cos(angle) * radius * (1 + crystalProgress * 0.2);
-        p6[i * 3 + 1] = height;
-        p6[i * 3 + 2] = Math.sin(angle) * radius * (1 + crystalProgress * 0.2);
+        if (moonSection === 0) { // Moon surface with enhanced detail
+            const moonRadius = 2.2 + Math.sin(moonAngle * 6) * 0.15;
+            p6[i * 3 + 0] = Math.cos(moonAngle) * moonRadius;
+            p6[i * 3 + 1] = Math.sin(moonAngle * 8) * 0.25; // Enhanced craters
+            p6[i * 3 + 2] = Math.sin(moonAngle) * moonRadius;
+        } else if (moonSection === 1) { // Detailed crater field
+            const craterAngle = moonAngle * 12;
+            const craterRadius = 0.4 + Math.sin(moonProgress * Math.PI * 8) * 0.25;
+            const craterX = Math.cos(craterAngle) * (1.5 + Math.sin(moonAngle * 4) * 0.6);
+            const craterZ = Math.sin(craterAngle) * (1.5 + Math.sin(moonAngle * 4) * 0.6);
+            p6[i * 3 + 0] = craterX + Math.cos(moonAngle) * craterRadius;
+            p6[i * 3 + 1] = Math.sin(moonAngle * 3) * 0.15;
+            p6[i * 3 + 2] = craterZ + Math.sin(moonAngle) * craterRadius;
+        } else if (moonSection === 2) { // Moon atmosphere/glow
+            const glowRadius = 2.8 + Math.sin(moonProgress * Math.PI * 6) * 0.4;
+            const glowHeight = Math.sin(moonAngle * 4) * 0.2;
+            p6[i * 3 + 0] = Math.cos(moonAngle) * glowRadius;
+            p6[i * 3 + 1] = glowHeight;
+            p6[i * 3 + 2] = Math.sin(moonAngle) * glowRadius;
+        } else { // Orbital ring particles
+            const orbitAngle = moonAngle * 3;
+            const orbitRadius = 3.2 + Math.sin(orbitAngle * 2) * 0.3;
+            p6[i * 3 + 0] = Math.cos(orbitAngle) * orbitRadius;
+            p6[i * 3 + 1] = Math.sin(moonAngle * 5) * 0.1;
+            p6[i * 3 + 2] = Math.sin(orbitAngle) * orbitRadius;
+        }
     }
     return { pos1: p1, pos2: p2, pos3: p3, pos4: p4, pos5: p5, pos6: p6 };
   }, []);
@@ -138,18 +204,31 @@ export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
   const uniforms = useMemo(() => ({
     uTime: { value: 0 },
     uMorphProgress: { value: 0 },
-    uPointSize: { value: 1.0 },
+    uPointSize: { value: 4.0 },
     uMouse: { value: new THREE.Vector2(0, 0) },
+    uBurstIntensity: { value: 0.1 },
+    uSecondaryIntensity: { value: 0.05 },
+    uTertiaryIntensity: { value: 0.02 },
+    u4DRotation: { value: 0 },
+    uHyperScale: { value: 1.0 },
+    uDimensionalShift: { value: 0 },
   }), []);
 
   useFrame((state) => {
     if (matRef.current) {
-        matRef.current.uniforms.uTime.value = state.clock.getElapsedTime();
+        const time = state.clock.getElapsedTime();
+        matRef.current.uniforms.uTime.value = time;
         matRef.current.uniforms.uMorphProgress.value = scroll * 5.0; // 0.0 to 5.0
-    }
-    if (pointsRef.current) {
-        pointsRef.current.rotation.y += 0.0005;
-        pointsRef.current.rotation.z += 0.0002;
+        
+        // 4D animation effects based on scroll
+        matRef.current.uniforms.u4DRotation.value = time * 0.5 + scroll * Math.PI * 2;
+        matRef.current.uniforms.uHyperScale.value = 1.0 + Math.sin(time * 0.3 + scroll * Math.PI) * 0.3;
+        matRef.current.uniforms.uDimensionalShift.value = Math.sin(time * 0.2) * 0.5 + scroll * 0.5;
+        
+        // Enhanced burst effects for 4D visualization
+        matRef.current.uniforms.uBurstIntensity.value = 0.1 + Math.sin(time * 0.7) * 0.05;
+        matRef.current.uniforms.uSecondaryIntensity.value = 0.05 + Math.cos(time * 0.4) * 0.03;
+        matRef.current.uniforms.uTertiaryIntensity.value = 0.02 + Math.sin(time * 0.6) * 0.02;
     }
   });
 
