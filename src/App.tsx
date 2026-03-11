@@ -1,9 +1,7 @@
-import { Suspense, useEffect, useState, useRef } from 'react';
-import * as THREE from 'three';
+import { Suspense, useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
-import { Canvas, useFrame } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { Stars } from '@react-three/drei';
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, Mail, ArrowDown, ExternalLink } from 'lucide-react';
