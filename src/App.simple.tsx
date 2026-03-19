@@ -6,8 +6,10 @@ import { Stars } from '@react-three/drei';
 const TestScene = () => {
   return (
     <>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} />
       <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
-      <mesh>
+      <mesh rotation={[0, 1, 0]}>
         <boxGeometry args={[1, 1, 1]} />
         <meshStandardMaterial color="orange" />
       </mesh>
