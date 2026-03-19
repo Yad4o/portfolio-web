@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { particleMorphVertexShader, particleMorphFragmentShader } from '../shaders';
 
-const COUNT = 3000;
+const COUNT = 1800;
 
 /**
  * 2,000 GPU-morphed particles.
@@ -217,7 +217,7 @@ export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
   useFrame((state) => {
     if (matRef.current) {
         const time = state.clock.getElapsedTime();
-        matRef.current.uniforms.uTime.value = time;
+        matRef.current.uniforms.uTime.value = time * 0.6;
         matRef.current.uniforms.uMorphProgress.value = scroll * 5.0; // 0.0 to 5.0
         
         // 4D animation effects based on scroll
