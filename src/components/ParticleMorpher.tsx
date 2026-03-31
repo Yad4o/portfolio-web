@@ -12,6 +12,7 @@ const COUNT = 1800;
 export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
   const pointsRef = useRef<THREE.Points>(null);
   const matRef = useRef<THREE.ShaderMaterial>(null);
+  const smoothScrollRef = useRef(0);
 
   const { pos1, pos2, pos3, pos4, pos5, pos6 } = useMemo(() => {
     const p1 = new Float32Array(COUNT * 3);
@@ -217,23 +218,30 @@ export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
   useFrame((state) => {
     if (matRef.current) {
         const time = state.clock.getElapsedTime();
+        // Dampen scroll-driven morphing for buttery transitions.
+        smoothScrollRef.current = THREE.MathUtils.lerp(smoothScrollRef.current, scroll, 0.06);
+        const smoothScroll = smoothScrollRef.current;
+        const ambientMorph = 0.28 + Math.sin(time * 0.08) * 0.06;
+        const scrollInfluence = smoothScroll * 0.12;
+
         matRef.current.uniforms.uTime.value = time * 0.6;
-        matRef.current.uniforms.uMorphProgress.value = scroll * 5.0; // 0.0 to 5.0
+        // Keep particles as ambient background floaters with only slight scroll response.
+        matRef.current.uniforms.uMorphProgress.value = ambientMorph + scrollInfluence;
         
         // 4D animation effects based on scroll
-        matRef.current.uniforms.u4DRotation.value = time * 0.5 + scroll * Math.PI * 2;
-        matRef.current.uniforms.uHyperScale.value = 1.0 + Math.sin(time * 0.3 + scroll * Math.PI) * 0.3;
-        matRef.current.uniforms.uDimensionalShift.value = Math.sin(time * 0.2) * 0.5 + scroll * 0.5;
+        matRef.current.uniforms.u4DRotation.value = time * 0.12 + smoothScroll * Math.PI * 0.18;
+        matRef.current.uniforms.uHyperScale.value = 1.0 + Math.sin(time * 0.16) * 0.1;
+        matRef.current.uniforms.uDimensionalShift.value = 0.03 + Math.sin(time * 0.12) * 0.02 + smoothScroll * 0.03;
         
-        // Enhanced burst effects for 4D visualization
-        matRef.current.uniforms.uBurstIntensity.value = 0.1 + Math.sin(time * 0.7) * 0.05;
-        matRef.current.uniforms.uSecondaryIntensity.value = 0.05 + Math.cos(time * 0.4) * 0.03;
-        matRef.current.uniforms.uTertiaryIntensity.value = 0.02 + Math.sin(time * 0.6) * 0.02;
+        // Keep sparkle movement subtle and smooth.
+        matRef.current.uniforms.uBurstIntensity.value = 0.02 + Math.sin(time * 0.45) * 0.008;
+        matRef.current.uniforms.uSecondaryIntensity.value = 0.012 + Math.cos(time * 0.3) * 0.006;
+        matRef.current.uniforms.uTertiaryIntensity.value = 0.008 + Math.sin(time * 0.35) * 0.004;
     }
   });
 
   return (
-    <points ref={pointsRef}>
+    <points ref={pointsRef} position={[0, 0, -4.5]} scale={1.08}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" count={COUNT} array={pos1} itemSize={3} />
         <bufferAttribute attach="attributes-aPosition2" count={COUNT} array={pos2} itemSize={3} />

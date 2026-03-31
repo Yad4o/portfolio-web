@@ -82,6 +82,7 @@ export const particleMorphVertexShader = /* glsl */`
   uniform float uDimensionalShift;
   uniform vec2 uMouse;
   varying vec3 vColor;
+  varying float vShapeSeed;
 
   // 4D rotation functions
   vec4 rotate4DXW(vec4 p, float angle) {
@@ -123,6 +124,9 @@ export const particleMorphVertexShader = /* glsl */`
   }
 
   void main() {
+    // Stable per-particle seed from base position (does not depend on extra buffer attributes)
+    vShapeSeed = fract(sin(dot(position, vec3(12.9898, 78.233, 45.164))) * 43758.5453123);
+
     vec3 pos;
     float progress = uMorphProgress;
     
@@ -182,169 +186,91 @@ export const particleMorphVertexShader = /* glsl */`
     );
     pos += burstOffset;
 
-    // Clean particle sizing with 4D influence
+    // Larger on-screen points so background sparkles stay visible
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-    float baseSize = 4.0 * hyperScale;
-    gl_PointSize = baseSize * (12.0 / (max(0.1, -mvPosition.z)));
+    float baseSize = 9.0 * hyperScale;
+    gl_PointSize = baseSize * (22.0 / (max(0.1, -mvPosition.z)));
     gl_Position = projectionMatrix * mvPosition;
-    
-    // Dynamic color based on 4D position
-    float colorIntensity = 0.1 + abs(w) * 0.2;
-    vColor = vec3(colorIntensity, colorIntensity * 0.8, colorIntensity * 1.2);
+
+    // Brighter base tint (still cool / soft)
+    float colorIntensity = 0.35 + abs(w) * 0.25;
+    vColor = vec3(colorIntensity, colorIntensity * 0.88, colorIntensity * 1.08);
   }
 `;
 
 export const particleMorphFragmentShader = /* glsl */`
   varying vec3 vColor;
+  varying float vShapeSeed;
   uniform float uTime;
   uniform float u4DRotation;
   uniform float uHyperScale;
-  
-  // Advanced shape functions for stunning visuals
-  float circle(vec2 uv, float radius) {
-    return 1.0 - smoothstep(radius, radius + 0.01, length(uv));
+
+  float softCircle(vec2 uv, float radius) {
+    float d = length(uv);
+    return 1.0 - smoothstep(radius, radius + 0.14, d);
   }
-  
-  float hyperCircle(vec2 uv, float radius, float distortion) {
+
+  // Soft 4-lobe star (distinct silhouette, smooth edges)
+  float softStar4(vec2 uv, float scale) {
+    float a = atan(uv.y, uv.x);
     float r = length(uv);
-    float angle = atan(uv.y, uv.x);
-    float distortedRadius = radius * (1.0 + sin(angle * 3.0 + u4DRotation) * distortion);
-    return 1.0 - smoothstep(distortedRadius, distortedRadius + 0.02, r);
+    float lobes = 0.52 + 0.22 * cos(4.0 * a);
+    float radius = scale * lobes;
+    return 1.0 - smoothstep(radius - 0.03, radius + 0.06, r);
   }
-  
-  float starShape(vec2 uv, float radius, float points) {
-    float r = length(uv);
-    float angle = atan(uv.y, uv.x);
-    float starAngle = angle * points;
-    float starRadius = radius * (0.5 + 0.5 * cos(starAngle));
-    return 1.0 - smoothstep(starRadius, starRadius + 0.02, r);
+
+  float softRing(vec2 uv, float rInner, float rOuter) {
+    float d = length(uv);
+    float inner = smoothstep(rInner - 0.05, rInner, d);
+    float outer = 1.0 - smoothstep(rOuter, rOuter + 0.06, d);
+    return inner * outer;
   }
-  
-  float flowerShape(vec2 uv, float radius, float petals) {
-    float r = length(uv);
-    float angle = atan(uv.y, uv.x);
-    float petalWave = sin(angle * petals) * 0.3 + 0.7;
-    float flowerRadius = radius * petalWave;
-    return 1.0 - smoothstep(flowerRadius, flowerRadius + 0.01, r);
-  }
-  
-  float crystalShape(vec2 uv, float radius) {
-    vec2 abs_uv = abs(uv);
-    float diamond = max(abs_uv.x, abs_uv.y);
-    float rotated = max(abs_uv.x + abs_uv.y, abs_uv.x - abs_uv.y) * 0.707;
-    float crystal = min(diamond, rotated);
-    return 1.0 - smoothstep(crystal * radius, crystal * radius + 0.01, length(uv));
-  }
-  
-  float dimensionalGlow(vec2 uv, float core, float halo) {
-    float coreShape = circle(uv, core);
-    float haloShape = circle(uv, halo);
-    float glow = haloShape * 0.4 + coreShape * 0.8;
-    
-    // Add pulsing effect
-    float pulse = sin(uTime * 3.0) * 0.15 + 0.85;
-    glow *= pulse;
-    
-    return glow;
-  }
-  
-  float quantumField(vec2 uv, float time) {
-    float field = 0.0;
-    float freq = 2.0;
-    float amp = 0.1;
-    
-    for(float i = 0.0; i < 4.0; i++) {
-      vec2 p = uv * freq + time * 0.5;
-      field += sin(p.x + time) * cos(p.y + time * 0.7) * amp;
-      freq *= 1.5;
-      amp *= 0.5;
-    }
-    
-    return field;
+
+  float softDiamond(vec2 uv, float size) {
+    float d = abs(uv.x) + abs(uv.y);
+    return 1.0 - smoothstep(size * 0.48, size * 0.48 + 0.1, d);
   }
 
   void main() {
     vec2 uv = gl_PointCoord - vec2(0.5);
     float dist = length(uv);
-    
-    // Dynamic shape selection based on 4D rotation
-    float shapePhase = u4DRotation * 0.159; // Golden ratio factor
-    float shapeIndex = mod(floor(shapePhase), 5.0);
-    
-    // 4D-influenced particle parameters
-    float distortion = abs(sin(u4DRotation * 0.5)) * 0.4;
-    float coreSize = 0.35 * uHyperScale;
-    float haloSize = 0.65 * uHyperScale;
-    
-    // Create base shape with morphing
-    float alpha = 0.0;
-    
-    if (shapeIndex < 1.0) {
-      // Crystal shape
-      alpha = crystalShape(uv, coreSize * 1.2);
-    } else if (shapeIndex < 2.0) {
-      // Star shape
-      float starPoints = 5.0 + sin(u4DRotation) * 2.0;
-      alpha = starShape(uv, coreSize, starPoints);
-    } else if (shapeIndex < 3.0) {
-      // Flower shape
-      float petals = 6.0 + cos(u4DRotation * 0.7) * 2.0;
-      alpha = flowerShape(uv, coreSize, petals);
-    } else if (shapeIndex < 4.0) {
-      // Hyper-dimensional ring
-      alpha = hyperCircle(uv, coreSize * 0.8, distortion);
-    } else {
-      // Quantum field distortion
-      float field = quantumField(uv, uTime);
-      alpha = circle(uv, coreSize + field * 0.1);
-    }
-    
-    // Add dimensional glow
-    float glowAlpha = dimensionalGlow(uv, coreSize * 0.5, haloSize);
-    alpha = max(alpha, glowAlpha * 0.6);
-    
-    // Add rotating outer rings
-    float ringAngle = u4DRotation * 2.0;
-    vec2 rotatedUV = vec2(
-      uv.x * cos(ringAngle) - uv.y * sin(ringAngle),
-      uv.x * sin(ringAngle) + uv.y * cos(ringAngle)
-    );
-    float ringAlpha = hyperCircle(rotatedUV, haloSize * 1.2, distortion * 0.3);
-    alpha = max(alpha, ringAlpha * 0.2);
-    
-    if (alpha < 0.01) discard;
-    
-    // Enhanced color system
+    float r = 0.42 * uHyperScale;
+
+    float s0 = softCircle(uv, r);
+    float s1 = softStar4(uv, r * 1.05);
+    float s2 = softRing(uv, r * 0.38, r * 0.72);
+    float s3 = softDiamond(uv, r * 1.1);
+
+    // One dominant silhouette per particle (0–3) so shapes read clearly
+    float k = floor(vShapeSeed * 4.0);
+    float alpha = s0 * (1.0 - step(1.0, k))
+      + s1 * (step(1.0, k) - step(2.0, k))
+      + s2 * (step(2.0, k) - step(3.0, k))
+      + s3 * step(3.0, k);
+
+    // Soft morph between neighboring types over time (still readable)
+    float phase = u4DRotation * 0.25 + uTime * 0.15;
+    float morph = sin(phase + vShapeSeed * 6.28318530718) * 0.5 + 0.5;
+    float alt = mod(k + 1.0, 4.0);
+    float sAlt = s0 * (1.0 - step(1.0, alt)) + s1 * (step(1.0, alt) - step(2.0, alt))
+      + s2 * (step(2.0, alt) - step(3.0, alt)) + s3 * step(3.0, alt);
+    alpha = mix(alpha, sAlt, morph * 0.22);
+
+    if (alpha < 0.02) discard;
+
     vec3 baseColor = vColor;
-    
-    // Multi-layer color shifting
-    float colorShift1 = sin(u4DRotation * 2.0 + dist * 8.0) * 0.5 + 0.5;
-    float colorShift2 = cos(u4DRotation * 3.0 - dist * 12.0) * 0.5 + 0.5;
-    float colorShift3 = sin(uTime * 2.0 + u4DRotation) * 0.5 + 0.5;
-    
-    // Color palette: deep blues to purples to cyans
-    vec3 color1 = vec3(0.05, 0.08, 0.15);     // Deep blue
-    vec3 color2 = vec3(0.15, 0.1, 0.25);      // Purple-blue
-    vec3 color3 = vec3(0.1, 0.2, 0.3);        // Cyan-blue
-    vec3 color4 = vec3(0.2, 0.15, 0.35);      // Light purple
-    
-    vec3 dimensionalColor = mix(
-      mix(color1, color2, colorShift1),
-      mix(color3, color4, colorShift2),
-      colorShift3
-    );
-    
-    // Add shimmer effect
-    float shimmer = sin(uTime * 5.0 + dist * 20.0) * 0.1 + 0.9;
-    dimensionalColor *= shimmer;
-    
-    vec3 finalColor = mix(baseColor, dimensionalColor, 0.8);
-    
-    // Enhanced transparency with depth falloff
-    float depthFade = 1.0 - smoothstep(0.0, 1.0, dist * 2.0);
-    float finalAlpha = alpha * 0.85 * depthFade;
-    
-    gl_FragColor = vec4(finalColor, finalAlpha);
+    float slowWave = sin(uTime * 0.6 + u4DRotation * 0.2);
+    float radialFade = 1.0 - smoothstep(0.0, 0.88, dist * 2.0);
+    float sparkleTwinkle = 0.82 + 0.18 * sin(uTime * 1.2 + gl_PointCoord.x * 20.0 + gl_PointCoord.y * 14.0);
+
+    vec3 accentColor = vec3(0.18, 0.22, 0.34);
+    vec3 mixed = mix(baseColor, accentColor, 0.42 + 0.12 * slowWave);
+
+    float coreGlow = 1.0 - smoothstep(0.0, 0.22, dist);
+    vec3 sparkleColor = mixed + vec3(0.12, 0.14, 0.2) * coreGlow * 0.55;
+    float finalAlpha = alpha * radialFade * 0.65 * sparkleTwinkle;
+
+    gl_FragColor = vec4(sparkleColor, finalAlpha);
   }
 `;
 
@@ -410,13 +336,14 @@ export const particleVertexShader = /* glsl */`
     
     vec3 pos = position;
     
-    // Animate particles
-    pos.x += sin(uTime * 0.5 + aOffset) * 0.5;
-    pos.y += cos(uTime * 0.3 + aOffset) * 0.3;
-    pos.z += sin(uTime * 0.7 + aOffset) * 0.2;
+    // Smooth, slow orbital motion
+    float t = uTime * 0.25;
+    pos.x += sin(t + aOffset) * 0.25;
+    pos.y += cos(t * 0.8 + aOffset) * 0.18;
+    pos.z += sin(t * 0.6 + aOffset) * 0.15;
     
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-    gl_PointSize = aSize * (300.0 / (max(0.1, -mvPosition.z)));
+    gl_PointSize = aSize * (120.0 / (max(0.1, -mvPosition.z)));
     gl_Position = projectionMatrix * mvPosition;
   }
 `;
