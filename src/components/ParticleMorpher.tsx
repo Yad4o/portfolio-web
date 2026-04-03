@@ -23,85 +23,96 @@ export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
     const p6 = new Float32Array(COUNT * 3);
 
     for (let i = 0; i < COUNT; i++) {
-        // Shared randomizers
+        // Shared Variables
         const t = i / COUNT;
-        const r1 = Math.random();
-        const r2 = Math.random();
+        // Use Golden Ratio for visually perfect distribution
+        const goldenRatio = (1 + Math.sqrt(5)) / 2;
 
-        // --- SHAPE 1: Massive Double-Spiral Galaxy ---
-        const arms = 3;
-        const armOffset = (Math.floor(r1 * arms) / arms) * Math.PI * 2;
-        const galaxyRadius = Math.pow(r2, 0.5) * 4.5; 
-        const galaxyTheta = galaxyRadius * 2.0 + armOffset;
-        p1[i * 3 + 0] = Math.cos(galaxyTheta) * galaxyRadius + (Math.random() - 0.5) * 0.4;
-        p1[i * 3 + 1] = (Math.random() - 0.5) * 0.3 * (4.5 - galaxyRadius) + (Math.random() - 0.5) * 0.1;
-        p1[i * 3 + 2] = Math.sin(galaxyTheta) * galaxyRadius + (Math.random() - 0.5) * 0.4;
+        // --- SHAPE 1: 'Vision' - The Elegant Iris/Eye ---
+        // Represents "Visionary creative developer"
+        const eyeAspect = 2.5; 
+        const eyeT = t * Math.PI * 2 * 30; // spiral tracking
+        const irisRad = 1.0 + Math.random() * 2.0; 
+        // Create an almond eye shape contour
+        const eyeX = Math.cos(eyeT) * irisRad;
+        const eyeZ = Math.sin(eyeT) * irisRad / eyeAspect;
+        // Make the outer edges curve inward and taper
+        const taper = Math.pow(Math.abs(Math.cos(eyeT)), 1.5) * 1.5;
+        p1[i * 3 + 0] = eyeX * 1.5;
+        p1[i * 3 + 1] = (Math.random() - 0.5) * 0.2 + (irisRad < 1.4 ? (Math.random() - 0.5)*1.5 : 0); // Pupil noise
+        p1[i * 3 + 2] = eyeZ * (1.0 + taper);
 
-        // --- SHAPE 2: Clifford-style Strange Attractor Swirl ---
-        // Generates cool twisted ribbon clouds
-        let cx = (Math.random() - 0.5) * 2;
-        let cy = (Math.random() - 0.5) * 2;
-        let cz = (Math.random() - 0.5) * 2;
-        const a = 1.4, b = 1.56, c = 1.4, d = -1.56;
-        // Warm up iteration
-        for(let j=0; j<8; j++) {
-            let nx = Math.sin(a * cy) + c * Math.cos(a * cx);
-            let ny = Math.sin(b * cx) + d * Math.cos(b * cy);
-            let nz = Math.sin(c * cz) + a * Math.cos(d * cx);
-            cx = nx; cy = ny; cz = nz;
-        }
-        p2[i * 3 + 0] = cx * 1.8;
-        p2[i * 3 + 1] = cy * 1.8;
-        p2[i * 3 + 2] = cz * 1.8;
-
-        // --- SHAPE 3: Deep Vortex Tornado ---
-        const vortexHeight = (r1 * 2.0 - 1.0) * 3.5;
-        const vortexRad = Math.exp(vortexHeight * 0.6) * 0.4 + 0.1;
-        const vortexAngle = t * Math.PI * 150.0 + vortexHeight * 3.0;
-        p3[i * 3 + 0] = Math.cos(vortexAngle) * vortexRad + (Math.random()-0.5) * 0.2;
-        p3[i * 3 + 1] = vortexHeight;
-        p3[i * 3 + 2] = Math.sin(vortexAngle) * vortexRad + (Math.random()-0.5) * 0.2;
-
-        // --- SHAPE 4: Organic Dual DNA Helix Network ---
-        const dnaLength = (r1 * 2.0 - 1.0) * 4.0;
-        const dnaPhase = t * Math.PI * 8.0;
-        const strand = Math.random() > 0.5 ? 1 : -1;
-        const dnaRadius = 1.5;
-        p4[i * 3 + 0] = Math.cos(dnaPhase + (strand > 0 ? 0 : Math.PI)) * dnaRadius + (Math.random() - 0.5)*0.3;
-        p4[i * 3 + 1] = dnaLength;
-        p4[i * 3 + 2] = Math.sin(dnaPhase + (strand > 0 ? 0 : Math.PI)) * dnaRadius + (Math.random() - 0.5)*0.3;
-
-        // Add bridging bonds randomly
-        if (Math.random() > 0.85) {
-            const bridgeT = Math.random();
-            const bX1 = Math.cos(dnaPhase) * dnaRadius;
-            const bZ1 = Math.sin(dnaPhase) * dnaRadius;
-            const bX2 = Math.cos(dnaPhase + Math.PI) * dnaRadius;
-            const bZ2 = Math.sin(dnaPhase + Math.PI) * dnaRadius;
-            p4[i * 3 + 0] = bX1 + (bX2 - bX1) * bridgeT;
-            p4[i * 3 + 2] = bZ1 + (bZ2 - bZ1) * bridgeT;
+        // --- SHAPE 2: 'Logic' - The React / Atomic Orbitals ---
+        // Represents "React / Code"
+        const atomType = i % 3;
+        const atomT = (i / COUNT) * Math.PI * 2 * (COUNT / 3);
+        const rAtom = 3.0;
+        const tilt = Math.PI / 3; // 60 degrees intersect
+        if (atomType === 0) {
+            p2[i * 3 + 0] = Math.cos(atomT) * rAtom;
+            p2[i * 3 + 1] = Math.sin(atomT) * rAtom * Math.cos(tilt);
+            p2[i * 3 + 2] = Math.sin(atomT) * rAtom * Math.sin(tilt);
+        } else if (atomType === 1) {
+            p2[i * 3 + 0] = Math.cos(atomT) * rAtom * Math.cos(tilt) - Math.sin(atomT) * rAtom * Math.sin(tilt);
+            p2[i * 3 + 1] = Math.sin(atomT) * rAtom;
+            p2[i * 3 + 2] = Math.cos(atomT) * rAtom * Math.sin(tilt) + Math.sin(atomT) * rAtom * Math.cos(tilt);
+        } else {
+            p2[i * 3 + 0] = Math.cos(atomT) * rAtom * Math.cos(-tilt) - Math.sin(atomT) * rAtom * Math.sin(-tilt);
+            p2[i * 3 + 1] = Math.sin(atomT) * rAtom;
+            p2[i * 3 + 2] = Math.cos(atomT) * rAtom * Math.sin(-tilt) + Math.sin(atomT) * rAtom * Math.cos(-tilt);
         }
 
-        // --- SHAPE 5: Parametric Math Rose / Lotus ---
-        const roseT = t * Math.PI * 2 * 7;
-        const pMod = 5.0 / 3.0;
-        const rRad = Math.cos(pMod * roseT) * 3.5;
-        const rTh = roseT;
-        const rPhi = r1 * Math.PI;
-        p5[i * 3 + 0] = rRad * Math.cos(rTh) * Math.sin(rPhi) + (Math.random() - 0.5)*0.1;
-        p5[i * 3 + 1] = rRad * Math.sin(rTh) * Math.sin(rPhi) + (Math.random() - 0.5)*0.1;
-        p5[i * 3 + 2] = rRad * Math.cos(rPhi) + (Math.random() - 0.5)*0.1;
+        // --- SHAPE 3: 'Fluidity' - The Double Helix DNA ---
+        // Represents "Organic growth and adaptation"
+        const dnaLen = (t - 0.5) * 8.0;
+        const dnaAng = t * Math.PI * 12.0;
+        const strandId = i % 2;
+        const rDna = 1.4;
+        p3[i * 3 + 0] = Math.cos(dnaAng + (strandId * Math.PI)) * rDna;
+        p3[i * 3 + 1] = dnaLen;
+        p3[i * 3 + 2] = Math.sin(dnaAng + (strandId * Math.PI)) * rDna;
+        // Connectors
+        if (i % 25 === 0) {
+            p3[i * 3 + 0] = 0; p3[i * 3 + 2] = 0; // pull to center for rung
+        }
 
-        // --- SHAPE 6: Expanding Nova Sphere (Porous Core) ---
-        const thetaSp = Math.random() * Math.PI * 2;
-        const phiSp = Math.acos((Math.random() * 2) - 1);
-        const R = 3.5 * Math.pow(Math.random(), 0.3) + 0.5; // Core clustered, expands out
-        // Punchholes via sin function
-        const holePunch = Math.sin(thetaSp * 6) * Math.cos(phiSp * 6);
-        const finalR = holePunch > 0.3 ? R * 1.5 : R;
-        p6[i * 3 + 0] = finalR * Math.sin(phiSp) * Math.cos(thetaSp);
-        p6[i * 3 + 1] = finalR * Math.cos(phiSp);
-        p6[i * 3 + 2] = finalR * Math.sin(phiSp) * Math.sin(thetaSp);
+        // --- SHAPE 4: 'Connectivity' - The Brain / Neural Cloud ---
+        // Represents "Architecture and intelligence"
+        const phi4 = Math.acos(1 - 2 * t);
+        const theta4 = Math.PI * 2 * i / goldenRatio;
+        // Make it slightly bi-lobed like a brain hemisphere!
+        const rBrain = 2.5 + Math.pow(Math.abs(Math.sin(theta4)), 4) * 0.5 - Math.abs(Math.sin(phi4)) * 0.4;
+        p4[i * 3 + 0] = rBrain * Math.sin(phi4) * Math.cos(theta4);
+        p4[i * 3 + 1] = rBrain * Math.cos(phi4) * 0.8; // flattened
+        p4[i * 3 + 2] = rBrain * Math.sin(phi4) * Math.sin(theta4) * 1.2; // elongated back to front
+        // Create sulci/gyri (brain folds) using high frequency math
+        const fold = Math.sin(theta4 * 12) * Math.cos(phi4 * 12) * 0.15;
+        p4[i * 3 + 0] += fold; p4[i * 3 + 1] += fold; p4[i * 3 + 2] += fold;
+
+        // --- SHAPE 5: 'Resonance' - Sound Wave / Data Cylinder ---
+        // Represents "Data & Signal Processing"
+        const cRad = 2.2;
+        const cHeight = (t - 0.5) * 6.0;
+        const cAng = i * 0.1; 
+        const waveform = Math.sin(cAng * 5.0) * Math.cos(cHeight * 4.0) * 0.6;
+        p5[i * 3 + 0] = Math.cos(cAng) * (cRad + waveform);
+        p5[i * 3 + 1] = cHeight;
+        p5[i * 3 + 2] = Math.sin(cAng) * (cRad + waveform);
+
+        // --- SHAPE 6: 'Excellence' - The Flawless Diamond ---
+        // Represents "Premium Output"
+        const R6 = 2.8; 
+        const isTop = t < 0.5;
+        const dT = isTop ? t * 2.0 : (t - 0.5) * 2.0;
+        const currentY = isTop ? (1.0 - dT) * R6 : (dT - 1.0) * R6; 
+        // Max radius at Y=0 is R6, converging to 0 at poles
+        const sliceRad = R6 * (1.0 - Math.abs(currentY)/R6);
+        // Diamond has 4 corners at slice (octahedron)
+        const dAng = Math.floor(Math.random() * 4) * (Math.PI / 2) + ((Math.random()-0.5)*0.2); // Snap to 4 points with slight jitter to draw edges
+        const mixCenter = Math.random(); 
+        p6[i * 3 + 0] = Math.cos(dAng) * sliceRad * mixCenter;
+        p6[i * 3 + 1] = currentY;
+        p6[i * 3 + 2] = Math.sin(dAng) * sliceRad * mixCenter;
     }
     return { pos1: p1, pos2: p2, pos3: p3, pos4: p4, pos5: p5, pos6: p6 };
   }, []);
