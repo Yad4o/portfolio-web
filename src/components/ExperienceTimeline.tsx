@@ -65,11 +65,11 @@ export const ExperienceTimeline = () => {
                     {experiences.map((exp, i) => (
                         <div key={i} className={`timeline-item relative w-full flex flex-col md:flex-row items-center justify-between mb-24 ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
                             <div className="w-full md:w-[45%] flex justify-end">
-                                <div className={`w-full ${i % 2 === 0 ? 'md:text-left' : 'md:text-right'} bg-white/[0.01] border border-white/10 p-8 rounded-3xl backdrop-blur-xl hover:bg-white/[0.05] transition-colors duration-500`}>
-                                    <span className="text-xs font-bold tracking-[0.3em] text-white/50">{exp.year}</span>
-                                    <h3 className="text-2xl font-black text-white mt-4 mb-1">{exp.role}</h3>
-                                    <h4 className="text-sm font-medium text-white/60 mb-6 uppercase tracking-wider">{exp.company}</h4>
-                                    <p className="text-white/40 text-sm leading-relaxed">{exp.desc}</p>
+                                <div className={`w-full ${i % 2 === 0 ? 'md:text-left' : 'md:text-right'} bg-white/[0.01] border border-white/5 p-8 md:p-12 rounded-[2rem] backdrop-blur-2xl hover:bg-white/[0.04] hover:scale-[1.02] transition-all duration-700 shadow-xl group`}>
+                                    <span className="font-mono text-sm tracking-[0.2em] text-white/50 bg-white/[0.05] px-4 py-1 rounded-full">{exp.year}</span>
+                                    <h3 className="text-3xl md:text-5xl font-black text-white mt-8 mb-2 tracking-tighter group-hover:text-white/90 transition-colors">{exp.role}</h3>
+                                    <h4 className="font-mono text-lg text-white/40 mb-6 tracking-tight uppercase border-b border-white/10 pb-4 inline-block">{exp.company}</h4>
+                                    <p className="text-white/50 text-sm md:text-base leading-loose font-light">{exp.desc}</p>
                                 </div>
                             </div>
                             

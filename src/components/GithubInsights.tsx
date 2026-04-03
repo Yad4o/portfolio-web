@@ -55,70 +55,69 @@ export const GithubInsights = () => {
   return (
     <section className="min-h-screen relative py-24" id="github-insights">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <div className="text-center mb-16">
-          <p className="text-[#b6bac5] text-xs uppercase tracking-[0.4em] mb-4 border border-[#b6bac5]/20 px-4 py-2 rounded-full inline-block text-border-clear">
+        <div className="text-center mb-24 pointer-events-none">
+          <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.4em] mb-4 ml-1">
             GITHUB DEEP DIVE
           </p>
-          <h2 className="text-4xl md:text-7xl font-black text-white mb-6 border-4 border-[#b6bac5]/20 px-6 py-3 rounded-2xl inline-block text-border-thick">
-            AI & ML Profile.
+          <h2 className="text-[5rem] md:text-[8rem] font-black tracking-tighter text-white leading-[0.8] mb-10 mix-blend-overlay opacity-90">
+            AI & ML <br/> Profile.
           </h2>
-          <p className="text-white/65 text-sm md:text-base max-w-2xl mx-auto border border-[#b6bac5]/15 px-6 py-3 rounded-xl text-border-clear">
-            A curated snapshot of your GitHub work – highlighting multi‑agent systems, recommendation engines,
-            computer vision, and data‑driven projects that show your strength as an applied AI engineer.
+          <p className="text-white/60 text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto border-l-2 border-white/20 pl-6 text-left backdrop-blur-[2px]">
+            A curated snapshot of GitHub work – highlighting multi‑agent systems, recommendation engines,
+            computer vision, and data‑driven projects demonstrating capability as an applied AI engineer.
           </p>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-[1.2fr,0.8fr] mb-14">
-          <div className="border-2 border-[#b6bac5]/30 bg-[#05060b]/80 backdrop-blur-2xl rounded-3xl p-6 md:p-8 shadow-xl shadow-black/40">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 rounded-xl border border-[#b6bac5]/40 bg-[#0b0d16]/80">
-                <BrainCog className="w-5 h-5 text-[#b6bac5]" />
+        <div className="grid gap-6 md:grid-cols-[1.2fr,0.8fr] mb-20 pointer-events-auto">
+          <div className="bg-white/[0.02] border border-white/5 p-8 md:p-12 rounded-[2rem] backdrop-blur-3xl hover:bg-white/[0.04] transition-all duration-700 shadow-2xl">
+            <div className="flex items-center gap-6 mb-10">
+              <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02]">
+                <BrainCog className="w-8 h-8 text-white/50" />
               </div>
               <div className="text-left">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-[#b6bac5]/70 font-semibold">
+                <p className="font-mono text-xs uppercase tracking-[0.3em] text-white/40 font-bold mb-2">
                   Core Themes
                 </p>
-                <p className="text-sm md:text-base text-white/80 font-medium">
+                <p className="text-xl md:text-2xl text-white/90 font-bold tracking-tight">
                   Applied AI, multi‑agent systems, and practical analytics.
                 </p>
               </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2 text-xs md:text-sm text-white/70">
-              <div className="border border-[#b6bac5]/30 rounded-2xl p-4 bg-black/40">
-                <p className="text-[10px] uppercase tracking-[0.25em] text-[#b6bac5]/70 font-semibold mb-2">
+            <div className="grid gap-6 md:grid-cols-2 text-sm text-white/60 font-light leading-loose">
+              <div className="border border-white/5 rounded-[1.5rem] p-6 bg-white/[0.01]">
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold mb-4">
                   AI SYSTEMS
                 </p>
                 <p>
-                  Projects like <span className="font-semibold text-white">MAP</span> and your recommendation
-                  work in <span className="font-semibold text-white">SRS</span> show you can design, orchestrate,
-                  and ship end‑to‑end AI products – from APIs and data stores to orchestration and deployment.
+                  Projects like <span className="font-bold text-white">MAP</span> and recommendation
+                  work in <span className="font-bold text-white">SRS</span> show you can design, orchestrate,
+                  and ship end‑to‑end AI products.
                 </p>
               </div>
-              <div className="border border-[#b6bac5]/30 rounded-2xl p-4 bg-black/40">
-                <p className="text-[10px] uppercase tracking-[0.25em] text-[#b6bac5]/70 font-semibold mb-2">
+              <div className="border border-white/5 rounded-[1.5rem] p-6 bg-white/[0.01]">
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold mb-4">
                   RESEARCH → REAL WORLD
                 </p>
                 <p>
                   Vision work like{' '}
-                  <span className="font-semibold text-white">Human-Action-Recognition</span> and analytics in{' '}
-                  <span className="font-semibold text-white">Evoastra</span> & accident‑EDA repos demonstrate you
-                  can move from notebooks and experiments into insights that matter for users and businesses.
+                  <span className="font-bold text-white">Human-Action-Recognition</span> demonstrates you
+                  can move from experiments into insights that matter for users.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="border-2 border-[#b6bac5]/30 bg-[#05060b]/80 backdrop-blur-2xl rounded-3xl p-6 md:p-8 shadow-xl shadow-black/40 flex flex-col justify-between">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl border border-[#b6bac5]/40 bg-[#0b0d16]/80">
-                  <Github className="w-5 h-5 text-[#b6bac5]" />
+          <div className="bg-white/[0.02] border border-white/5 p-8 md:p-12 rounded-[2rem] backdrop-blur-3xl hover:bg-white/[0.04] transition-all duration-700 shadow-2xl flex flex-col justify-between">
+            <div className="flex items-center justify-between mb-10">
+              <div className="flex items-center gap-4">
+                <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02]">
+                  <Github className="w-6 h-6 text-white/50" />
                 </div>
                 <div>
-                  <p className="text-xs text-white/80 font-semibold">GitHub Snapshot</p>
-                  <p className="text-[11px] text-white/40 tracking-[0.2em] uppercase">
-                    8+ public repos · AI/ML focus
+                  <p className="text-xl font-black text-white tracking-tight">GitHub</p>
+                  <p className="font-mono text-xs text-white/40 tracking-[0.2em] uppercase mt-1">
+                    8+ Public · AI/ML
                   </p>
                 </div>
               </div>
@@ -126,30 +125,29 @@ export const GithubInsights = () => {
                 href="https://github.com/Yad4o"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[11px] text-[#b6bac5] border border-[#b6bac5]/40 rounded-full px-3 py-1 hover:bg-[#b6bac5] hover:text-black transition-all"
+                className="group inline-flex items-center gap-2 font-mono text-[10px] uppercase font-bold text-white border border-white/20 rounded-full px-4 py-2 hover:bg-white hover:text-black transition-all"
               >
-                View profile
-                <ExternalLink className="w-3 h-3" />
+                Profile <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100" />
               </a>
             </div>
 
-            <div className="space-y-3 text-xs text-white/70">
-              <div className="flex items-center justify-between border border-[#b6bac5]/25 rounded-2xl px-3 py-2 bg-black/40">
-                <div className="flex items-center gap-2">
-                  <Cpu className="w-3 h-3 text-[#b6bac5]" />
-                  <span className="font-semibold">Tech Stack</span>
+            <div className="space-y-4 text-xs md:text-sm text-white/60 font-light">
+              <div className="flex items-center justify-between border border-white/5 rounded-2xl px-5 py-4 bg-white/[0.01]">
+                <div className="flex items-center gap-3">
+                  <Cpu className="w-4 h-4 text-white/40" />
+                  <span className="font-bold tracking-widest uppercase text-white/80">Stack</span>
                 </div>
-                <span className="text-[11px] text-white/55">
-                  Python · TypeScript · C++ · FastAPI · PostgreSQL · Redis · Docker
+                <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest text-right">
+                  Python · C++ · FastAPI<br/>Docker · Redis
                 </span>
               </div>
-              <div className="flex items-center justify-between border border-[#b6bac5]/25 rounded-2xl px-3 py-2 bg-black/40">
-                <div className="flex items-center gap-2">
-                  <LineChart className="w-3 h-3 text-[#b6bac5]" />
-                  <span className="font-semibold">Project Types</span>
+              <div className="flex items-center justify-between border border-white/5 rounded-2xl px-5 py-4 bg-white/[0.01]">
+                <div className="flex items-center gap-3">
+                  <LineChart className="w-4 h-4 text-white/40" />
+                  <span className="font-bold tracking-widest uppercase text-white/80">Domains</span>
                 </div>
-                <span className="text-[11px] text-white/55">
-                  Multi‑agent systems · Recommenders · Vision · Analytics · Algorithms
+                <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest text-right">
+                  Agents · Vision<br/>Algorithms
                 </span>
               </div>
             </div>
@@ -163,29 +161,29 @@ export const GithubInsights = () => {
               href={repo.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group border-2 border-[#b6bac5]/25 bg-[#05060b]/85 backdrop-blur-2xl rounded-3xl p-5 hover:border-[#b6bac5]/60 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/60 transition-all"
+              className="group bg-white/[0.01] border border-white/5 p-8 rounded-[2rem] backdrop-blur-2xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-700 shadow-xl"
             >
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full border border-[#b6bac5]/40 bg-black/60 flex items-center justify-center text-[10px] font-bold text-[#b6bac5]">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-4">
+                  <span className="w-10 h-10 rounded-xl border border-white/10 bg-white/[0.02] flex items-center justify-center font-black text-white/30 group-hover:text-white/80 transition-colors">
                     {repo.name[0]}
                   </span>
-                  <p className="text-sm font-semibold text-white group-hover:text-[#b6bac5] transition-colors">
+                  <p className="text-xl font-black text-white group-hover:text-white/80 transition-colors tracking-tighter">
                     {repo.name.replace(/-/g, ' ')}
                   </p>
                 </div>
-                <span className="text-[10px] uppercase tracking-[0.2em] text-[#b6bac5]/70 border border-[#b6bac5]/35 rounded-full px-2 py-0.5">
+                <span className="font-mono text-[9px] uppercase tracking-[0.3em] font-bold text-white/40 border border-white/10 rounded-full px-3 py-1">
                   {repo.tag}
                 </span>
               </div>
-              <p className="text-xs text-white/65 mb-3 border border-[#b6bac5]/20 rounded-2xl px-3 py-2 bg-black/40">
+              <p className="text-sm text-white/50 mb-8 font-light leading-relaxed h-16">
                 {repo.summary}
               </p>
-              <div className="flex flex-wrap gap-1.5">
+              <div className="flex flex-wrap gap-2">
                 {repo.focus.map((f) => (
                   <span
                     key={f}
-                    className="text-[10px] uppercase tracking-[0.18em] px-2 py-1 rounded-full border border-[#b6bac5]/30 text-[#b6bac5]/80 bg-black/40"
+                    className="font-mono text-[9px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border border-white/10 text-white/60 bg-white/[0.02]"
                   >
                     {f}
                   </span>

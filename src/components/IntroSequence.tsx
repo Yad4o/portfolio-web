@@ -16,22 +16,36 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
                 }
             });
 
-            // Simulate loading progress
+            // Lightning fast Initialization Bar
             const rawProgress = { val: 0 };
             tl.to(rawProgress, {
                 val: 100,
-                duration: 2.5,
-                ease: 'power4.inOut',
+                duration: 1.0, // MUCH faster
+                ease: 'power3.inOut',
                 onUpdate: () => setProgress(Math.round(rawProgress.val))
             });
 
-            // Name spread and fade
-            tl.to('.intro-text', {
-                letterSpacing: '0.4em',
-                opacity: 1,
-                duration: 1.5,
-                ease: 'expo.out'
-            }, "-=1.0");
+            // Extreme Lightning Shock Flicker Effect
+            tl.to('.intro-text', { opacity: 1, duration: 0.02, scale: 1.05 }, "-=0.2")
+              .to('.intro-text', { opacity: 0, duration: 0.03, scale: 1.0 })
+              .to('.intro-text', { opacity: 1, duration: 0.01, scale: 1.1 })
+              .to('.intro-text', { opacity: 0, duration: 0.04, scale: 0.95 })
+              .to('.intro-text', { opacity: 0.8, duration: 0.02, scale: 1.02 })
+              .to('.intro-text', { opacity: 0, duration: 0.06 })
+              .to('.intro-text', { opacity: 1, duration: 0.01 })
+              .to('.intro-text', { opacity: 0, duration: 0.03 })
+              .to('.intro-text', { opacity: 0.5, duration: 0.02, x: -10 })
+              .to('.intro-text', { opacity: 0, duration: 0.02, x: 10 })
+              .to('.intro-text', { opacity: 1, duration: 0.02, x: 0 })
+              .to('.intro-text', { opacity: 0.2, duration: 0.08 })
+              .to('.intro-text', {
+                  letterSpacing: '0.3em',
+                  opacity: 1,
+                  textShadow: '0 0 30px rgba(255,255,255,1), 0 0 60px rgba(255,255,255,0.6)',
+                  scale: 1,
+                  duration: 0.8,
+                  ease: 'elastic.out(1, 0.3)' // Gives a slight shocking snap
+              });
 
             // Curtains pull apart meaning transition
             tl.to('.intro-curtain-top', {

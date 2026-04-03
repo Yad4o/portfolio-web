@@ -10,12 +10,18 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  body, h1, h2, h3, h4, h5, h6, p, a, span, div {
+    font-family: 'Outfit', sans-serif;
+  }
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace !important;
+  }
   body {
-    @apply bg-[#383e4e] text-white overflow-x-hidden;
+    @apply bg-[#05060b] text-white overflow-x-hidden;
     font-feature-settings: 'kern';
   }
   ::selection {
-    background: rgba(182, 186, 197, 0.3);
+    background: rgba(255, 255, 255, 0.3);
   }
 }
 
