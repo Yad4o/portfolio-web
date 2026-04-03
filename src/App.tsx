@@ -8,6 +8,8 @@ import { Github, Mail, ArrowDown, ExternalLink } from 'lucide-react';
 
 import { BackgroundShader } from './components/BackgroundShader';
 import { ParticleMorpher } from './components/ParticleMorpher';
+import { BgOptionLiquid } from './components/BgOptionLiquid';
+import { BgOptionCyber } from './components/BgOptionCyber';
 import { CameraRig } from './components/CameraRig';
 import { GitHubProjects } from './components/GitHubProjects';
 import { GithubInsights } from './components/GithubInsights';
@@ -21,15 +23,18 @@ gsap.registerPlugin(ScrollTrigger);
 // ─────────────────────────────────────────────
 // IMMERSIVE 3D EXPERIENCE CONTROLLER
 // ─────────────────────────────────────────────
-const ImmersiveCore = ({ scroll }: { scroll: number }) => {
+const ImmersiveCore = ({ scroll, bgMode }: { scroll: number, bgMode: number }) => {
   return (
     <Suspense fallback={null}>
       <CameraRig />
-      <BackgroundShader />
-      <ParticleMorpher scroll={scroll} />
+      {bgMode === 0 && <BackgroundShader />}
       
-      {/* Decorative stars / dust */}
-      <Stars radius={100} depth={50} count={1000} factor={4} saturation={0} fade speed={1} />
+      {bgMode === 0 && <ParticleMorpher scroll={scroll} />}
+      {bgMode === 1 && <BgOptionLiquid scroll={scroll} />}
+      {bgMode === 2 && <BgOptionCyber scroll={scroll} />}
+      
+      {/* Decorative stars always visible but restyled per mode */}
+      <Stars radius={100} depth={50} count={bgMode === 2 ? 0 : 1000} factor={4} saturation={0} fade speed={1} />
     </Suspense>
   );
 };
@@ -41,6 +46,7 @@ const App = () => {
   const [scroll, setScroll] = useState(0);
   const [activePage, setActivePage] = useState<'home' | 'resume' | 'github'>('home');
   const [isIntroDone, setIsIntroDone] = useState(false);
+  const [bgMode, setBgMode] = useState<number>(0);
 
   // ── Smooth Scroll (Lenis) ──────────────────
   useEffect(() => {
@@ -147,9 +153,31 @@ const App = () => {
             zIndex: 0
           }}
         >
-          <ImmersiveCore scroll={scroll} />
+          <ImmersiveCore scroll={scroll} bgMode={bgMode} />
         </Canvas>
       </div>
+
+      {/* BACKGROUND HOT-SWAP CONTROLLER */}
+      {isIntroDone && (
+          <div className="fixed bottom-6 left-6 z-[200] flex flex-col gap-2 pointer-events-auto bg-black/60 backdrop-blur-xl p-3 rounded-2xl border border-white/10 shadow-2xl">
+            <span className="text-[9px] text-white/50 uppercase tracking-widest font-bold mb-1">Render Engine</span>
+            <div className="flex gap-2">
+              {[
+                { id: 0, label: "Sacred Math" },
+                { id: 1, label: "Liquid Distort" },
+                { id: 2, label: "Cyber Matrix" }
+              ].map(opt => (
+                <button 
+                  key={opt.id}
+                  onClick={() => setBgMode(opt.id)}
+                  className={`text-[10px] uppercase tracking-widest font-bold px-3 py-1.5 rounded-lg border transition-all duration-300 ${bgMode === opt.id ? 'border-[#c77dff] bg-[#c77dff]/20 text-[#c77dff] shadow-[0_0_20px_rgba(199,125,255,0.4)]' : 'border-white/10 text-white/50 hover:bg-white/10 hover:text-white'}`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+      )}
 
       {/* INTERACTIVE UI LAYER */}
       <main className="relative z-10 w-full">
