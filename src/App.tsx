@@ -209,9 +209,11 @@ const App = () => {
                         OM<br/><span className="ml-[10%] opacity-90">YADAV</span>
                     </h1>
                 </div>
-                <p className="hero-reveal text-white/50 text-sm md:text-lg max-w-md mt-10 font-medium tracking-[0.1em] leading-relaxed uppercase">
-                    Forging immersive digital experiences perfectly balanced strictly between engineering and visual art.
-                </p>
+                <div className="hero-reveal mt-10 bg-[#05060b]/90 border-l-4 border-white rounded-r-2xl p-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] pointer-events-auto">
+                    <p className="text-white/60 text-sm md:text-lg max-w-md font-medium tracking-[0.1em] leading-relaxed uppercase">
+                        Forging immersive digital experiences perfectly balanced strictly between engineering and visual art.
+                    </p>
+                </div>
                 <div className="hero-reveal absolute bottom-12 flex flex-col items-center gap-3 text-white/30">
                     <span className="text-[8px] uppercase font-bold tracking-[0.4em]">DISCOVER MORE</span>
                     <ArrowDown size={14} className="animate-bounce opacity-50" />
@@ -247,7 +249,7 @@ const App = () => {
                         <h2 className="text-5xl md:text-[7rem] font-black tracking-tighter text-white leading-[0.8] mb-10 drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)]">
                             Pushing <br/>Boundaries.
                         </h2>
-                        <div className="space-y-6 text-lg md:text-xl text-white/80 leading-relaxed font-light max-w-xl pointer-events-auto bg-[#05060b]/80 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 shadow-2xl">
+                        <div className="space-y-6 text-lg md:text-xl text-white/80 leading-relaxed font-light max-w-xl pointer-events-auto bg-[#05060b]/90 border-l-4 border-[#b6bac5] backdrop-blur-2xl p-8 rounded-r-3xl shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
                             <p>
                                 A relentless pursuit of flawless interactive execution. Specialized in fusing high-performance code with bleeding-edge visual fidelity.
                             </p>
@@ -260,7 +262,7 @@ const App = () => {
                         {['React.js', 'WebGL', 'Three.js', 'Animation'].map((t, i) => (
                             <div
                               key={i}
-                              className="group p-6 bg-white/[0.02] border border-white/5 backdrop-blur-3xl hover:bg-white/[0.08] hover:border-white/30 transition-all duration-700 hover:-translate-y-2 hover:scale-105 shadow-2xl"
+                              className="group p-6 bg-[#05060b]/80 shadow-[0_10px_30px_rgba(0,0,0,0.8)] border-l-2 border-transparent hover:border-white backdrop-blur-3xl hover:bg-[#05060b]/95 transition-all duration-700 hover:-translate-y-2 hover:scale-105"
                             >
                                 <span className="text-white/20 font-black text-xs inline-block mb-8 transition-transform group-hover:translate-x-2 duration-500">0{i+1}</span>
                                 <h3 className="text-white/80 font-bold tracking-[0.2em] text-sm uppercase transition-all duration-500 group-hover:text-white">
@@ -278,20 +280,20 @@ const App = () => {
         <section className="data-section relative min-h-screen py-32 flex flex-col items-center justify-center pointer-events-none z-10 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-t from-[#05060b] via-transparent to-transparent opacity-80" />
             <div className="max-w-7xl mx-auto px-8 relative w-full grid grid-cols-1 md:grid-cols-3 gap-12 text-center pointer-events-auto">
-                <div className="parallax-float backdrop-blur-2xl bg-white/[0.01] border border-white/10 p-12 rounded-3xl group hover:bg-white/[0.05] transition-all duration-500">
-                    <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-white overflow-hidden">
+                <div className="parallax-float backdrop-blur-2xl bg-[#05060b]/90 border-t-4 border-white p-12 rounded-b-3xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] group hover:bg-black transition-all duration-500">
+                    <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-white overflow-hidden drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)]">
                         <span className="metric-number" data-target="9">0</span>
                     </h4>
                     <p className="text-white/40 text-sm font-bold tracking-[0.4em] uppercase mt-6 group-hover:text-white/80 transition-colors">Repositories</p>
                 </div>
-                <div className="parallax-float backdrop-blur-2xl bg-white/[0.01] border border-white/10 p-12 rounded-3xl group hover:bg-white/[0.05] transition-all duration-500 md:mt-24">
-                    <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-white overflow-hidden">
+                <div className="parallax-float backdrop-blur-2xl bg-[#05060b]/90 border-t-4 border-white p-12 rounded-b-3xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] group hover:bg-black transition-all duration-500 md:mt-24">
+                    <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-white overflow-hidden drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)]">
                         <span className="metric-number" data-target="4">0</span><span className="text-white/30 font-light">M</span>
                     </h4>
                     <p className="text-white/40 text-sm font-bold tracking-[0.4em] uppercase mt-6 group-hover:text-white/80 transition-colors">Lines of Code</p>
                 </div>
-                <div className="parallax-float backdrop-blur-2xl bg-white/[0.01] border border-white/10 p-12 rounded-3xl group hover:bg-white/[0.05] transition-all duration-500">
-                    <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-white overflow-hidden">
+                <div className="parallax-float backdrop-blur-2xl bg-[#05060b]/90 border-t-4 border-white p-12 rounded-b-3xl shadow-[0_30px_60px_rgba(0,0,0,0.8)] group hover:bg-black transition-all duration-500">
+                    <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-white overflow-hidden drop-shadow-[0_10px_10px_rgba(0,0,0,0.8)]">
                         <span className="text-white/30 font-light">∞</span>
                     </h4>
                     <p className="text-white/40 text-sm font-bold tracking-[0.4em] uppercase mt-6 group-hover:text-white/80 transition-colors">Energy Level</p>

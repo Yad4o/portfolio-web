@@ -62,14 +62,14 @@ export const GithubInsights = () => {
           <h2 className="text-[5rem] md:text-[8rem] font-black tracking-tighter text-white leading-[0.8] mb-10 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
             AI & ML <br/> Profile.
           </h2>
-          <p className="text-white/60 text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto border-l-2 border-white/20 pl-6 text-left backdrop-blur-[2px]">
+          <p className="text-white/80 text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto border border-[#b6bac5]/20 bg-[#0b0d16]/90 px-8 py-6 rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.8)] backdrop-blur-3xl text-left pointer-events-auto">
             A curated snapshot of GitHub work – highlighting multi‑agent systems, recommendation engines,
             computer vision, and data‑driven projects demonstrating capability as an applied AI engineer.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-[1.2fr,0.8fr] mb-20 pointer-events-auto">
-          <div className="bg-white/[0.02] border border-white/5 p-8 md:p-12 rounded-[2rem] backdrop-blur-3xl hover:bg-white/[0.04] transition-all duration-700 shadow-2xl">
+          <div className="bg-[#0b0d16]/95 border-b-4 border-[#b6bac5]/40 p-8 md:p-12 rounded-t-3xl backdrop-blur-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)]">
             <div className="flex items-center gap-6 mb-10">
               <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02]">
                 <BrainCog className="w-8 h-8 text-white/50" />
@@ -108,7 +108,7 @@ export const GithubInsights = () => {
             </div>
           </div>
 
-          <div className="bg-white/[0.02] border border-white/5 p-8 md:p-12 rounded-[2rem] backdrop-blur-3xl hover:bg-white/[0.04] transition-all duration-700 shadow-2xl flex flex-col justify-between">
+          <div className="bg-[#0b0d16]/95 border-b-4 border-[#b6bac5]/40 p-8 md:p-12 rounded-t-3xl backdrop-blur-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)] flex flex-col justify-between">
             <div className="flex items-center justify-between mb-10">
               <div className="flex items-center gap-4">
                 <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02]">
@@ -161,7 +161,7 @@ export const GithubInsights = () => {
               href={repo.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-white/[0.01] border border-white/5 p-8 rounded-[2rem] backdrop-blur-2xl hover:bg-white/[0.04] hover:border-white/20 transition-all duration-700 shadow-xl"
+              className="group bg-[#0b0d16]/90 border border-[#b6bac5]/10 border-b-2 hover:border-b-[#b6bac5] p-8 rounded-2xl backdrop-blur-2xl transition-all duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.9)] hover:-translate-y-1"
             >
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">

@@ -16,7 +16,7 @@ export const BentoSkills = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-3 gap-6 h-auto md:h-[800px]">
                     {/* Main Tech Stack - Span 2x2 */}
-                    <div className="md:col-span-2 md:row-span-2 bg-white/[0.02] border border-white/10 rounded-[2rem] p-8 md:p-12 hover:bg-white/[0.05] transition-all duration-500 overflow-hidden relative group">
+                    <div className="md:col-span-2 md:row-span-2 bg-[#05060b]/80 border border-white/10 rounded-[2rem] p-8 md:p-12 hover:bg-white/[0.05] transition-all duration-500 overflow-hidden relative group">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-white/[0.08] transition-all duration-700" />
                         <Layers className="w-10 h-10 text-white/50 mb-6" />
                         <h3 className="text-3xl font-bold text-white mb-4 tracking-tight">Core Stack</h3>
@@ -43,7 +43,7 @@ export const BentoSkills = () => {
                     </div>
 
                     {/* Performance - Span 1x1 */}
-                    <div className="bg-white/[0.02] border border-white/10 rounded-[2rem] p-8 hover:-translate-y-2 transition-transform duration-500 flex flex-col justify-between">
+                    <div className="bg-[#05060b]/80 border border-white/10 rounded-[2rem] p-8 hover:-translate-y-2 transition-transform duration-500 flex flex-col justify-between">
                         <Zap className="w-8 h-8 text-white/40" />
                         <div>
                             <h3 className="text-xl font-bold text-white">Algorithms</h3>
@@ -52,7 +52,7 @@ export const BentoSkills = () => {
                     </div>
 
                     {/* Architecture - Span 1x1 */}
-                    <div className="bg-white/[0.02] border border-white/10 rounded-[2rem] p-8 hover:-translate-y-2 transition-transform duration-500 flex flex-col justify-between">
+                    <div className="bg-[#05060b]/80 border border-white/10 rounded-[2rem] p-8 hover:-translate-y-2 transition-transform duration-500 flex flex-col justify-between">
                         <Cpu className="w-8 h-8 text-white/40" />
                         <div>
                             <h3 className="text-xl font-bold text-white">System Design</h3>
