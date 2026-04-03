@@ -1,54 +1,12 @@
 import { Suspense, useEffect, useState } from 'react';
 import Lenis from '@studio-freight/lenis';
 import { Canvas } from '@react-three/fiber';
-import { Stars } from '@react-three/drei';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, Mail, ArrowDown, ExternalLink } from 'lucide-react';
 
-import { BackgroundShader } from './components/BackgroundShader';
-
-import { BgOptionLiquid } from './components/BgOptionLiquid';
 import { BgOptionCyber } from './components/BgOptionCyber';
-import { 
-  BgOptionNeonGeometric, 
-  BgOptionCosmicDust, 
-  BgOptionQuantumFlow, 
-  BgOptionHoloTopography, 
-  BgOptionPrismaticGlass, 
-  BgOptionAbyssalVoid, 
-  BgOptionRetroSynthwave, 
-  BgOptionNeuralNetwork, 
-  BgOptionPlasmaOrbs, 
-  BgOptionEtherealAurora,
-  BgOptionGalacticSpiral,
-  BgOptionVoxelCity,
-  BgOptionTunnelVision,
-  BgOptionOscilloscope,
-  BgOptionFluidBlob
-} from './components/ExtraBackgrounds';
-import {
-  BgOptionDNAHelix,
-  BgOptionMeteorShower,
-  BgOptionCrystalLattice,
-  BgOptionFireflies,
-  BgOptionPulseRadar,
-  BgOptionConstellationMap,
-  BgOptionMagneticField,
-  BgOptionHexGrid,
-  BgOptionSoundBars,
-  BgOptionRipplePool,
-  BgOptionOrbitSystem,
-  BgOptionLightningStorm,
-  BgOptionWaveGrid,
-  BgOptionSmokeWisps,
-  BgOptionPrismBeams,
-  BgOptionParticleFountain,
-  BgOptionHologramCube,
-  BgOptionAuroraCurtain,
-  BgOptionBokehLights,
-  BgOptionDigitalMatrix
-} from './components/ExtraBackgrounds2';
+import { BgOptionHoloTopography } from './components/ExtraBackgrounds';
 import { CameraRig } from './components/CameraRig';
 import { GitHubProjects } from './components/GitHubProjects';
 import { GithubInsights } from './components/GithubInsights';
@@ -59,56 +17,13 @@ import { IntroSequence } from './components/IntroSequence';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ─────────────────────────────────────────────
-// IMMERSIVE 3D EXPERIENCE CONTROLLER
-// ─────────────────────────────────────────────
-const ImmersiveCore = ({ scroll, bgMode }: { scroll: number, bgMode: number }) => {
+// IMMERSIVE 3D BACKGROUND
+const ImmersiveCore = ({ scroll }: { scroll: number }) => {
   return (
     <Suspense fallback={null}>
       <CameraRig />
-      {bgMode === 0 && <BackgroundShader />}
-      
-
-      {bgMode === 1 && <BgOptionLiquid scroll={scroll} />}
-      {bgMode === 2 && <BgOptionCyber scroll={scroll} />}
-      {bgMode === 3 && <BgOptionNeonGeometric scroll={scroll} />}
-      {bgMode === 4 && <BgOptionCosmicDust scroll={scroll} />}
-      {bgMode === 5 && <BgOptionQuantumFlow scroll={scroll} />}
-      {bgMode === 6 && <BgOptionHoloTopography scroll={scroll} />}
-      {bgMode === 7 && <BgOptionPrismaticGlass scroll={scroll} />}
-      {bgMode === 8 && <BgOptionAbyssalVoid scroll={scroll} />}
-      {bgMode === 9 && <BgOptionRetroSynthwave scroll={scroll} />}
-      {bgMode === 10 && <BgOptionNeuralNetwork scroll={scroll} />}
-      {bgMode === 11 && <BgOptionPlasmaOrbs scroll={scroll} />}
-      {bgMode === 12 && <BgOptionEtherealAurora scroll={scroll} />}
-      {bgMode === 13 && <BgOptionGalacticSpiral scroll={scroll} />}
-      {bgMode === 14 && <BgOptionVoxelCity scroll={scroll} />}
-      {bgMode === 15 && <BgOptionTunnelVision scroll={scroll} />}
-      {bgMode === 16 && <BgOptionOscilloscope scroll={scroll} />}
-      {bgMode === 17 && <BgOptionFluidBlob scroll={scroll} />}
-      {bgMode === 18 && <BgOptionDNAHelix scroll={scroll} />}
-      {bgMode === 19 && <BgOptionMeteorShower scroll={scroll} />}
-      {bgMode === 20 && <BgOptionCrystalLattice scroll={scroll} />}
-      {bgMode === 21 && <BgOptionFireflies scroll={scroll} />}
-      {bgMode === 22 && <BgOptionPulseRadar scroll={scroll} />}
-      {bgMode === 23 && <BgOptionConstellationMap scroll={scroll} />}
-      {bgMode === 24 && <BgOptionMagneticField scroll={scroll} />}
-      {bgMode === 25 && <BgOptionHexGrid scroll={scroll} />}
-      {bgMode === 26 && <BgOptionSoundBars scroll={scroll} />}
-      {bgMode === 27 && <BgOptionRipplePool scroll={scroll} />}
-      {bgMode === 28 && <BgOptionOrbitSystem scroll={scroll} />}
-      {bgMode === 29 && <BgOptionLightningStorm scroll={scroll} />}
-      {bgMode === 30 && <BgOptionWaveGrid scroll={scroll} />}
-      {bgMode === 31 && <BgOptionSmokeWisps scroll={scroll} />}
-      {bgMode === 32 && <BgOptionPrismBeams scroll={scroll} />}
-      {bgMode === 33 && <BgOptionParticleFountain scroll={scroll} />}
-      {bgMode === 34 && <BgOptionHologramCube scroll={scroll} />}
-      {bgMode === 35 && <BgOptionAuroraCurtain scroll={scroll} />}
-      {bgMode === 36 && <BgOptionBokehLights scroll={scroll} />}
-      {bgMode === 37 && <BgOptionDigitalMatrix scroll={scroll} />}
-      
-      {/* Decorative stars always visible but restyled per mode */}
-      <Stars radius={100} depth={50} count={bgMode >= 2 ? 0 : 1000} factor={4} saturation={0} fade speed={1} />
+      <BgOptionCyber scroll={scroll} />
+      <BgOptionHoloTopography scroll={scroll} />
     </Suspense>
   );
 };
@@ -120,7 +35,6 @@ const App = () => {
   const [scroll, setScroll] = useState(0);
   const [activePage, setActivePage] = useState<'home' | 'resume' | 'github'>('home');
   const [isIntroDone, setIsIntroDone] = useState(false);
-  const [bgMode, setBgMode] = useState<number>(0);
 
   // ── Smooth Scroll (Lenis) ──────────────────
   useEffect(() => {
@@ -227,66 +141,9 @@ const App = () => {
             zIndex: 0
           }}
         >
-          <ImmersiveCore scroll={scroll} bgMode={bgMode} />
+          <ImmersiveCore scroll={scroll} />
         </Canvas>
       </div>
-
-      {/* BACKGROUND HOT-SWAP CONTROLLER */}
-      {isIntroDone && (
-          <div className="fixed bottom-6 left-6 z-[200] flex flex-col gap-2 pointer-events-auto bg-black/60 backdrop-blur-xl p-3 rounded-2xl border border-white/10 shadow-2xl">
-            <span className="text-[9px] text-white/50 uppercase tracking-widest font-bold mb-1">Render Engine</span>
-            <div className="flex flex-wrap gap-2 max-w-[calc(100vw-3rem)] sm:max-w-xl md:max-w-2xl max-h-[40vh] overflow-y-auto custom-scrollbar pr-2">
-              {[
-                { id: 0, label: "Sacred Math" },
-                { id: 1, label: "Liquid Distort" },
-                { id: 2, label: "Cyber Matrix" },
-                { id: 3, label: "Neon Geometrics" },
-                { id: 4, label: "Cosmic Dust" },
-                { id: 5, label: "Quantum Flow" },
-                { id: 6, label: "Holo Topography" },
-                { id: 7, label: "Prismatic Glass" },
-                { id: 8, label: "Abyssal Void" },
-                { id: 9, label: "Retro Synthwave" },
-                { id: 10, label: "Neural Network" },
-                { id: 11, label: "Plasma Orbs" },
-                { id: 12, label: "Ethereal Aurora" },
-                { id: 13, label: "Galactic Spiral" },
-                { id: 14, label: "Voxel City" },
-                { id: 15, label: "Tunnel Vision" },
-                { id: 16, label: "Oscilloscope" },
-                { id: 17, label: "Fluid Blob" },
-                { id: 18, label: "DNA Helix" },
-                { id: 19, label: "Meteor Shower" },
-                { id: 20, label: "Crystal Lattice" },
-                { id: 21, label: "Fireflies" },
-                { id: 22, label: "Pulse Radar" },
-                { id: 23, label: "Constellation" },
-                { id: 24, label: "Magnetic Field" },
-                { id: 25, label: "Hex Grid" },
-                { id: 26, label: "Sound Bars" },
-                { id: 27, label: "Ripple Pool" },
-                { id: 28, label: "Orbit System" },
-                { id: 29, label: "Lightning" },
-                { id: 30, label: "Wave Grid" },
-                { id: 31, label: "Smoke Wisps" },
-                { id: 32, label: "Prism Beams" },
-                { id: 33, label: "Fountain" },
-                { id: 34, label: "Hologram Cube" },
-                { id: 35, label: "Aurora Curtain" },
-                { id: 36, label: "Bokeh Lights" },
-                { id: 37, label: "Digital Matrix" }
-              ].map(opt => (
-                <button 
-                  key={opt.id}
-                  onClick={() => setBgMode(opt.id)}
-                  className={`text-[10px] uppercase tracking-widest font-bold px-3 py-1.5 rounded-lg border transition-all duration-300 ${bgMode === opt.id ? 'border-[#c77dff] bg-[#c77dff]/20 text-[#c77dff] shadow-[0_0_20px_rgba(199,125,255,0.4)]' : 'border-white/10 text-white/50 hover:bg-white/10 hover:text-white'}`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
-          </div>
-      )}
 
       {/* INTERACTIVE UI LAYER */}
       <main className="relative z-10 w-full">
@@ -334,8 +191,8 @@ const App = () => {
 
         {activePage === 'home' && (
         <>
-        <section className="h-[200vh] relative flex flex-col items-center justify-center pointer-events-none">
-            <div className="sticky top-0 h-screen flex flex-col items-center justify-center text-center px-4 w-full">
+        <section className="min-h-screen relative flex flex-col items-center justify-center pointer-events-none">
+            <div className="h-screen flex flex-col items-center justify-center text-center px-4 w-full">
                 <div className="hero-reveal mb-6 overflow-hidden">
                     <p className="text-white/50 text-[10px] md:text-xs font-semibold uppercase tracking-[0.5em] backdrop-blur-sm px-6 py-2 rounded-full border border-white/10 bg-white/[0.02]">
                         VISIONARY CREATIVE DEVELOPER
@@ -403,8 +260,8 @@ const App = () => {
             </div>
         </section>
 
-        <section id="about" className="h-[200vh] relative mt-20">
-            <div className="sticky top-0 h-screen flex items-center justify-center p-8 md:p-24 overflow-hidden pointer-events-none">
+        <section id="about" className="min-h-screen relative mt-20">
+            <div className="h-screen flex items-center justify-center p-8 md:p-24 overflow-hidden pointer-events-none">
                 <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
                     <div className="md:col-span-7 flex flex-col justify-center">
                         <h2 className="text-5xl md:text-[7rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-[#7b2cbf] leading-[0.8] mb-10 drop-shadow-[0_10px_30px_rgba(123,44,191,0.4)] hover:-rotate-2 hover:scale-105 origin-left transition-all duration-700">

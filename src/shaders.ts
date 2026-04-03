@@ -8,71 +8,151 @@ export const noiseVertexShader = /* glsl */`
 `;
 
 export const noiseFragmentShader = /* glsl */`
+  precision highp float;
   uniform float uTime;
   uniform vec2 uResolution;
   varying vec2 vUv;
 
-  #define PI 3.14159265359
+  // --- Simplex Noise ---
+  vec4 permute(vec4 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
+  vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
 
-  // 2D Rotation matrix
-  mat2 rot(float a) {
-      float c = cos(a), s = sin(a);
-      return mat2(c, -s, s, c);
+  float snoise(vec3 v) {
+    const vec2 C = vec2(1.0/6.0, 1.0/3.0);
+    const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+    vec3 i = floor(v + dot(v, C.yyy));
+    vec3 x0 = v - i + dot(i, C.xxx);
+    vec3 g = step(x0.yzx, x0.xyz);
+    vec3 l = 1.0 - g;
+    vec3 i1 = min(g.xyz, l.zxy);
+    vec3 i2 = max(g.xyz, l.zxy);
+    vec3 x1 = x0 - i1 + C.xxx;
+    vec3 x2 = x0 - i2 + C.yyy;
+    vec3 x3 = x0 - D.yyy;
+    i = mod(i, 289.0);
+    vec4 p = permute(permute(permute(
+      i.z + vec4(0.0, i1.z, i2.z, 1.0))
+      + i.y + vec4(0.0, i1.y, i2.y, 1.0))
+      + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+    float nf = 1.0 / 7.0;
+    vec3 ns = nf * D.wyz - D.xzx;
+    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+    vec4 xf = floor(j * ns.z);
+    vec4 yf = floor(j - 7.0 * xf);
+    vec4 xn = xf * ns.x + ns.yyyy;
+    vec4 yn = yf * ns.x + ns.yyyy;
+    vec4 h = 1.0 - abs(xn) - abs(yn);
+    vec4 b0 = vec4(xn.xy, yn.xy);
+    vec4 b1 = vec4(xn.zw, yn.zw);
+    vec4 s0 = floor(b0) * 2.0 + 1.0;
+    vec4 s1 = floor(b1) * 2.0 + 1.0;
+    vec4 sh = -step(h, vec4(0.0));
+    vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy;
+    vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww;
+    vec3 p0 = vec3(a0.xy, h.x);
+    vec3 p1 = vec3(a0.zw, h.y);
+    vec3 p2 = vec3(a1.xy, h.z);
+    vec3 p3 = vec3(a1.zw, h.w);
+    vec4 norm = taylorInvSqrt(vec4(dot(p0, p0), dot(p1, p1), dot(p2, p2), dot(p3, p3)));
+    p0 *= norm.x; p1 *= norm.y; p2 *= norm.z; p3 *= norm.w;
+    vec4 m = max(0.6 - vec4(dot(x0, x0), dot(x1, x1), dot(x2, x2), dot(x3, x3)), 0.0);
+    m = m * m;
+    return 42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
   }
 
-  // Neon glowing palette
-  vec3 palette(float t) {
-      vec3 a = vec3(0.5, 0.5, 0.5);
-      vec3 b = vec3(0.5, 0.5, 0.5);
-      vec3 c = vec3(1.0, 1.0, 1.0);
-      vec3 d = vec3(0.263, 0.416, 0.557);
-      return a + b * cos(6.28318 * (c * t + d));
+  // --- Fractal Brownian Motion ---
+  float fbm(vec3 p) {
+    float value = 0.0;
+    float amplitude = 0.5;
+    float frequency = 1.0;
+    for (int i = 0; i < 5; i++) {
+      value += amplitude * snoise(p * frequency);
+      frequency *= 2.0;
+      amplitude *= 0.5;
+    }
+    return value;
+  }
+
+  // --- Domain-warped noise ---
+  float warpedNoise(vec2 uv, float time) {
+    vec3 p = vec3(uv * 1.5, time * 0.08);
+    float w1 = fbm(p + vec3(
+      fbm(p + vec3(1.7, 9.2, time * 0.06)),
+      fbm(p + vec3(8.3, 2.8, time * 0.05)),
+      0.0
+    ));
+    float w2 = fbm(p + vec3(
+      w1 * 2.0 + time * 0.04,
+      w1 * 1.5 - time * 0.03,
+      w1 * 0.5
+    ));
+    return w2;
   }
 
   void main() {
-    // Map vUv from [0,1] to [-1, 1]
-    vec2 uv = (vUv - 0.5) * 2.0;
-    
-    // Aspect ratio correction (prevent stretching)
+    vec2 uv = vUv;
+
+    // Aspect ratio correction
+    vec2 asp = vec2(1.0);
     if (uResolution.x > 0.0 && uResolution.y > 0.0) {
-        uv.x *= uResolution.x / uResolution.y;
+      asp = vec2(uResolution.x / uResolution.y, 1.0);
     }
+    vec2 cUv = (uv - 0.5) * asp;
 
-    vec2 uv0 = uv;
-    vec3 finalColor = vec3(0.0);
-    
-    // Slow majestic rotation
-    uv *= rot(uTime * 0.05);
-    
-    // Iterate to create profound geometric fractals (Sacred Math)
-    for (float i = 0.0; i < 4.0; i++) {
-        // Space folding
-        uv = fract(uv * 1.5) - 0.5;
+    float time = uTime;
 
-        float d = length(uv) * exp(-length(uv0));
+    // Organic flowing noise patterns
+    float n1 = warpedNoise(cUv * 0.8, time);
+    float n2 = warpedNoise(cUv * 1.2 + vec2(5.0, 3.0), time * 0.7);
+    float n3 = warpedNoise(cUv * 0.6 - vec2(2.0, 7.0), time * 1.1);
 
-        // Shift color palette dynamically
-        vec3 col = palette(length(uv0) + float(i)*0.4 + uTime * 0.4);
+    // Premium color palette
+    vec3 bgColor = vec3(0.012, 0.008, 0.028);
+    vec3 color1 = vec3(0.15, 0.0, 0.35);    // Deep indigo
+    vec3 color2 = vec3(0.0, 0.55, 0.75);    // Teal cyan
+    vec3 color3 = vec3(0.55, 0.1, 0.65);    // Rich purple
+    vec3 color4 = vec3(0.85, 0.15, 0.55);   // Hot magenta
+    vec3 color5 = vec3(0.0, 0.75, 0.65);    // Emerald
 
-        // Core geometric repeating
-        d = sin(d * 8.0 + uTime * 0.5) / 8.0;
-        d = abs(d);
+    // Mix colors based on noise layers
+    float b1 = smoothstep(-0.3, 0.6, n1);
+    float b2 = smoothstep(-0.2, 0.5, n2);
+    float b3 = smoothstep(-0.4, 0.4, n3);
 
-        // Neon bloom glow (inverse falloff)
-        d = pow(0.01 / d, 1.3);
+    vec3 aurora = bgColor;
+    aurora = mix(aurora, color1, b1 * 0.7);
+    aurora = mix(aurora, color2, b2 * 0.5);
+    aurora = mix(aurora, color3, b3 * 0.4);
 
-        finalColor += col * d;
-    }
-    
-    // Blend with an ultra-premium dark background
-    vec3 spaceBg = vec3(0.02, 0.0, 0.04);
-    finalColor = mix(spaceBg, finalColor, 0.45);
-    
-    // Outer vignette
-    float v = length(uv0);
-    finalColor *= smoothstep(2.5, 0.1, v);
+    // Slow shifting accent highlights
+    float ac1 = smoothstep(0.2, 0.5, n1 * n2) * 0.6;
+    float ac2 = smoothstep(0.3, 0.55, n2 * n3) * 0.4;
+    aurora = mix(aurora, color4, ac1);
+    aurora = mix(aurora, color5, ac2);
 
-    gl_FragColor = vec4(finalColor, 1.0);
+    // Soft glow bands
+    float glow = pow(max(0.0, n1 * 0.5 + 0.5), 3.0) * 0.3;
+    aurora += vec3(0.3, 0.5, 1.0) * glow;
+
+    // Subtle sparkle
+    float shimmer = snoise(vec3(cUv * 15.0, time * 0.5));
+    shimmer = pow(max(0.0, shimmer), 8.0) * 0.15;
+    aurora += shimmer;
+
+    // Vignette
+    float dist = length(cUv);
+    float vig = 1.0 - smoothstep(0.3, 1.6, dist);
+    aurora *= vig;
+
+    // Film grain
+    float grain = (fract(sin(dot(uv * time * 0.01, vec2(12.9898, 78.233))) * 43758.5453) - 0.5) * 0.015;
+    aurora += grain;
+
+    // Tone mapping
+    aurora = aurora / (aurora + 0.5) * 1.3;
+    aurora = max(aurora, vec3(0.008, 0.005, 0.015));
+
+    gl_FragColor = vec4(aurora, 1.0);
   }
 `;
 
