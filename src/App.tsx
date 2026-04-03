@@ -149,48 +149,47 @@ const App = () => {
       {/* INTERACTIVE UI LAYER */}
       <main className="relative z-10 w-full">
         
-        <nav className="fixed top-0 left-0 w-full z-50 px-6 md:px-10 py-5 flex justify-between items-center border-b border-[#b6bac5]/20 backdrop-blur-xl bg-[#05060b]/60">
+        {/* FLOATING LEFT BUTTON */}
+        <button
+          onClick={() => setActivePage('home')}
+          className="fixed top-8 left-8 z-[100] text-2xl font-black tracking-tighter text-[#b6bac5] hover:text-[#94a3b8] hover:scale-110 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+        >
+          OM.
+        </button>
+
+        {/* FLOATING RIGHT BUTTONS */}
+        <div className="fixed top-8 right-8 z-[100] flex flex-col gap-4 text-[10px] uppercase tracking-widest text-[#b6bac5] font-bold items-end">
           <button
             onClick={() => setActivePage('home')}
-            className="text-xl font-black tracking-tighter text-[#b6bac5] border border-[#b6bac5]/30 px-4 py-2 rounded-lg hover:border-white/60 hover:text-white transition-colors"
+            className={`px-4 py-2 rounded-full border backdrop-blur-xl ${
+              activePage === 'home'
+                ? 'border-[#94a3b8]/70 text-white bg-[#94a3b8]/20 shadow-[0_0_20px_rgba(148,163,184,0.4)]'
+                : 'border-white/10 hover:border-[#94a3b8]/40 hover:text-white bg-[#05060b]/30'
+            } transition-all duration-300`}
           >
-            OM.
+            Portfolio
           </button>
-          <div className="hidden md:flex gap-4 text-[10px] uppercase tracking-widest text-[#b6bac5] font-bold">
-            <button
-              onClick={() => setActivePage('home')}
-              className={`px-3 py-1 rounded-full border ${
-                activePage === 'home'
-                  ? 'border-[#b6bac5]/70 text-white bg-[#b6bac5]/10'
-                  : 'border-[#b6bac5]/20 hover:border-[#b6bac5]/40 hover:text-white'
-              } transition-colors`}
-            >
-              Portfolio
-            </button>
-            <button
-              onClick={() => setActivePage('resume')}
-              className={`px-3 py-1 rounded-full border ${
-                activePage === 'resume'
-                  ? 'border-[#b6bac5]/70 text-white bg-[#b6bac5]/10'
-                  : 'border-[#b6bac5]/20 hover:border-[#b6bac5]/40 hover:text-white'
-              } transition-colors`}
-            >
-              Resume
-            </button>
-            <button
-              onClick={() => setActivePage('github')}
-              className={`px-3 py-1 rounded-full border ${
-                activePage === 'github'
-                  ? 'border-[#b6bac5]/70 text-white bg-[#b6bac5]/10'
-                  : 'border-[#b6bac5]/20 hover:border-[#b6bac5]/40 hover:text-white'
-              } transition-colors`}
-            >
-              GitHub Analysis
-            </button>
-          </div>
-        </nav>
-
-        {activePage === 'home' && (
+          <button
+            onClick={() => setActivePage('resume')}
+            className={`px-4 py-2 rounded-full border backdrop-blur-xl ${
+              activePage === 'resume'
+                ? 'border-[#94a3b8]/70 text-white bg-[#94a3b8]/20 shadow-[0_0_20px_rgba(148,163,184,0.4)]'
+                : 'border-white/10 hover:border-[#94a3b8]/40 hover:text-white bg-[#05060b]/30'
+            } transition-all duration-300`}
+          >
+            Resume
+          </button>
+          <button
+            onClick={() => setActivePage('github')}
+            className={`px-4 py-2 rounded-full border backdrop-blur-xl ${
+              activePage === 'github'
+                ? 'border-[#94a3b8]/70 text-white bg-[#94a3b8]/20 shadow-[0_0_20px_rgba(148,163,184,0.4)]'
+                : 'border-white/10 hover:border-[#94a3b8]/40 hover:text-white bg-[#05060b]/30'
+            } transition-all duration-300`}
+          >
+            GitHub Analysis
+          </button>
+        </div>        {activePage === 'home' && (
         <>
         <section className="min-h-screen relative flex flex-col items-center justify-center pointer-events-none">
             <div className="h-screen flex flex-col items-center justify-center text-center px-4 w-full">

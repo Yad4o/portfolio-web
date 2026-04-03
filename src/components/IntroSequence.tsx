@@ -1,31 +1,21 @@
 import { useEffect, useState } from 'react';
 import gsap from 'gsap';
 
-const BOOT_LOGS = [
-    "INITIALIZING KERNEL_CORE_V9.0...",
-    "LOADING WEBGL PARTICLE SHADERS...",
-    "MOUNTING NEON VIOLET GRAVITY...",
-    "ESTABLISHING C:\PORTFOLIO\ARCHIVE...",
-    "BYPASSING SECURITY PROTOCOLS...",
-    "AWWWARDS.SYS FULLY ONLINE."
-];
-
 export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
-    const [progress, setProgress] = useState(0);
-    const [activeLogs, setActiveLogs] = useState<string[]>([]);
+    const [numbers] = useState(Array.from({ length: 100 }, (_, i) => i + 1));
+    const [noisePositions, setNoisePositions] = useState<{x: number, y: number, scale: number, delay: number, rot: number}[]>([]);
 
     useEffect(() => {
-        // Disable scroll during intro
+        // Pre-calculate scattered random positions to avoid hydration/render mismatch
+        setNoisePositions(Array.from({ length: 100 }, () => ({
+            x: Math.random() * 95,
+            y: Math.random() * 95,
+            scale: Math.random() * 2.5 + 0.5,
+            delay: Math.random() * 0.5,
+            rot: (Math.random() - 0.5) * 45
+        })));
+        
         document.body.style.overflow = 'hidden';
-
-        // Terminal Log Animation Simulation
-        let logIndex = 0;
-        const logInterval = setInterval(() => {
-            if (logIndex < BOOT_LOGS.length) {
-                setActiveLogs(prev => [...prev, BOOT_LOGS[logIndex]]);
-                logIndex++;
-            }
-        }, 120);
 
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({
@@ -35,36 +25,49 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
                 }
             });
 
-            // 1) Fast progress bar filling
-            const rawProgress = { val: 0 };
-            tl.to(rawProgress, {
-                val: 100,
-                duration: 1.5,
-                ease: 'power4.inOut',
-                onUpdate: () => setProgress(Math.round(rawProgress.val))
-            });
+            // 1) Chaotic flicker of the scattered numbers
+            tl.fromTo('.scatter-num', 
+                { opacity: 0 },
+                { 
+                    opacity: 1, 
+                    duration: 0.05, 
+                    stagger: { each: 0.01, from: "random" },
+                    ease: "rough({ template: none.out, strength: 2, points: 20, taper: none, randomize: true, clamp: false })"
+                }
+            );
 
-            // 2) Chromatic Glitch Effect on Text
-            tl.to('.glitch-layer-1', { x: -5, opacity: 0.8, duration: 0.05, yoyo: true, repeat: 10 }, "-=1.0")
-              .to('.glitch-layer-2', { x: 5, opacity: 0.8, duration: 0.05, yoyo: true, repeat: 10 }, "-=1.0")
-              .to('.glitch-main', { scale: 1.1, duration: 0.1, ease: 'rough' }, "-=0.8")
-              .to('.glitch-main', { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.3)', textShadow: "0 0 40px rgba(148,163,184,0.8)" });
+            // 2) Horrific scale and glitch on the main text
+            tl.fromTo('.gothic-title',
+                { opacity: 0, scale: 0.8, filter: 'blur(10px)', letterSpacing: '0.5em' },
+                { opacity: 1, scale: 1, filter: 'blur(0px)', letterSpacing: '-0.05em', duration: 1.5, ease: "bounce.out" },
+                "-=1.0"
+            );
 
-            // 3) Pulling the UI away inward before breaking curtains
-            tl.to('.intro-text-wrapper', {
-                scale: 2,
+            // 3) Violent red flash
+            tl.to('.red-flash', {
+                opacity: 0.8,
+                duration: 0.1,
+                yoyo: true,
+                repeat: 3,
+                ease: 'power4.inOut'
+            }, "-=0.5");
+
+            // 4) Suck everything inward into the void
+            tl.to(['.scatter-wrapper', '.gothic-title'], {
+                scale: 0,
+                rotate: 15,
                 opacity: 0,
-                duration: 0.8,
-                ease: 'power3.in'
-            }, "+=0.3");
+                duration: 0.6,
+                ease: "power4.in"
+            }, "+=0.4");
             
-            // 4) 5 slicing vertical panels zooming out!
+            // 5) Gothic vertical slices tear apart
             tl.to('.slice-curtain', {
-                yPercent: (i) => (i % 2 === 0 ? -100 : 100), // Evens up, Odds down
-                duration: 1.2,
-                stagger: 0.1,
-                ease: 'expo.inOut'
-            }, "-=0.2");
+                yPercent: (i) => (i % 2 === 0 ? -100 : 100), 
+                duration: 1.0,
+                stagger: 0.05,
+                ease: "expo.inOut"
+            }, "-=0.1");
 
             tl.to('.intro-container', {
                 autoAlpha: 0,
@@ -74,89 +77,76 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
 
         return () => {
             document.body.style.overflow = 'auto';
-            clearInterval(logInterval);
             ctx.revert();
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Create 5 panels for the sliced background effect
-    const slices = Array.from({ length: 5 });
+    const slices = Array.from({ length: 9 });
 
     return (
-        <div className="intro-container fixed inset-0 z-[100] w-screen h-screen flex items-center justify-center pointer-events-none">
+        <div className="intro-container fixed inset-0 z-[200] w-screen h-screen flex items-center justify-center pointer-events-none bg-black overflow-hidden font-serif">
             
-            {/* Sliced Background Panels */}
-            <div className="absolute inset-0 flex w-full h-full z-[101]">
+            {/* Film/Horror Grain overlay */}
+            <div className="absolute inset-0 z-[205] opacity-20 pointer-events-none mix-blend-overlay bg-[url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png')] bg-repeat animate-pulse" />
+
+            {/* Violent Red Flash Overlay */}
+            <div className="red-flash absolute inset-0 z-[204] bg-[#ff0000] mix-blend-color-burn opacity-0 pointer-events-none" />
+
+            {/* Sliced Background Curtains */}
+            <div className="absolute inset-0 flex w-full h-full z-[201]">
                 {slices.map((_, i) => (
                     <div 
                         key={i} 
-                        className="slice-curtain flex-1 h-full bg-[#05060b] border-r border-[#94a3b8]/10 last:border-0 relative overflow-hidden pointer-events-auto"
+                        className="slice-curtain flex-1 h-full bg-[#030303] border-r border-white-[0.01] last:border-0 relative pointer-events-auto shadow-[inset_0_0_50px_rgba(0,0,0,1)]"
                     >
-                        {/* Terminal grid lines falling */}
-                        <div className="absolute top-0 left-0 w-full h-full bg-[repeating-linear-gradient(transparent_0%,transparent_98%,#94a3b820_98%,#94a3b820_100%)] bg-[length:100%_20px]" />
                     </div>
                 ))}
             </div>
             
-            {/* Main Content Layer */}
-            <div className="intro-text-wrapper relative z-[102] flex flex-col items-center pointer-events-none w-full max-w-4xl px-8">
-                
-                {/* Synthetic Terminal Logs (Top Left corner simulating boot) */}
-                <div className="absolute -top-32 -left-10 md:left-0 flex flex-col items-start gap-1">
-                    {activeLogs.map((log, i) => (
-                        <span key={i} className="text-[#00ff41] font-mono text-[8px] md:text-[10px] tracking-widest opacity-80 uppercase">
-                            &gt; {log}
-                        </span>
-                    ))}
-                    <span className="text-[#00ff41] font-mono text-[8px] md:text-[10px] tracking-widest animate-pulse">_</span>
-                </div>
-
-                {/* Glitching Title Container */}
-                <div className="relative mb-12">
-                    {/* Cyan Aberration */}
-                    <h1 className="glitch-layer-1 absolute inset-0 text-[#00ffff] mix-blend-screen text-5xl md:text-[8rem] font-black tracking-tighter opacity-0 scale-[1.01]">
-                        OM YADAV
-                    </h1>
-                    {/* Magenta Aberration */}
-                    <h1 className="glitch-layer-2 absolute inset-0 text-[#ff00ff] mix-blend-screen text-5xl md:text-[8rem] font-black tracking-tighter opacity-0 scale-[0.99]">
-                        OM YADAV
-                    </h1>
-                    {/* Core White Text */}
-                    <h1 className="glitch-main relative text-white text-5xl md:text-[8rem] font-black tracking-tighter">
-                        OM YADAV
-                    </h1>
-                </div>
-                
-                {/* Cyberpunk Loading Bar */}
-                <div className="w-full md:w-96 flex flex-col gap-4">
-                    <div className="flex justify-between items-end w-full">
-                        <span className="text-[#94a3b8] font-mono text-[10px] tracking-[0.4em] uppercase font-bold">
-                            SYSTEM LOAD
-                        </span>
-                        <span className="text-white font-mono text-[10px] tracking-widest font-black">
-                            {progress.toString().padStart(3, '0')}%
-                        </span>
+            {/* Chaotic 1 to 100 numbers scattered everywhere */}
+            <div className="scatter-wrapper absolute inset-0 z-[202] pointer-events-none">
+                {noisePositions.length > 0 && numbers.map((num, i) => (
+                    <div 
+                        key={i}
+                        className="scatter-num absolute text-[#4a4a4a] mix-blend-difference font-black tracking-tighter"
+                        style={{
+                            left: `${noisePositions[i].x}vw`,
+                            top: `${noisePositions[i].y}vh`,
+                            transform: `scale(${noisePositions[i].scale}) rotate(${noisePositions[i].rot}deg)`,
+                            opacity: 0,
+                            animation: `glitch-flicker 0.2s infinite alternate ${noisePositions[i].delay}s text-shadow-[0_0_10px_rgba(255,0,0,0.8)]`
+                        }}
+                    >
+                        {num}
+                        <span className="text-[0.4em] text-[#ff0033] absolute -bottom-2 -right-2 opacity-50">%</span>
                     </div>
-                    
-                    {/* Aggressive glowing progress bar */}
-                    <div className="w-full h-[2px] bg-white/10 relative overflow-hidden">
-                        {/* Glow head */}
-                        <div 
-                            className="absolute top-0 h-full bg-gradient-to-r from-transparent via-[#94a3b8] to-white shadow-[0_0_20px_#94a3b8]"
-                            style={{ width: `${progress}%`, transition: 'width 0.1s linear' }}
-                        />
-                    </div>
-                    
-                    {/* Grid decoration below bar */}
-                    <div className="flex w-full justify-between mt-1 opacity-30">
-                        {Array.from({length: 10}).map((_, i) => (
-                            <div key={i} className="w-[1px] h-1 bg-[#94a3b8]" />
-                        ))}
-                    </div>
-                </div>
-
+                ))}
             </div>
+
+            {/* Main Gothic Text Layer */}
+            <div className="relative z-[203] flex flex-col items-center pointer-events-none w-full px-8 text-center mix-blend-screen">
+                <h1 
+                    className="gothic-title text-transparent bg-clip-text bg-gradient-to-b from-white via-[#888] to-[#111] text-7xl md:text-[12rem] font-black uppercase tracking-tighter drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                    style={{ WebkitTextStroke: '2px rgba(255,255,255,0.1)' }}
+                >
+                    OM YADAV
+                </h1>
+                <p className="gothic-title mt-4 text-[#ff0033] text-sm md:text-xl font-bold tracking-[1em] uppercase shadow-black drop-shadow-[0_0_10px_#ff0033]">
+                    NO ESCAPE FROM THE ARCHIVE
+                </p>
+            </div>
+            
+            <style>{`
+                @keyframes glitch-flicker {
+                    0% { opacity: 0; transform: skewX(0deg); }
+                    10% { opacity: 1; transform: skewX(-10deg); color: #ff0033; }
+                    20% { opacity: 0; transform: skewX(0deg); }
+                    30% { opacity: 0.5; transform: skewX(20deg); }
+                    50% { opacity: 1; transform: skewX(0deg); color: #fff; }
+                    100% { opacity: 0; }
+                }
+            `}</style>
         </div>
     );
 };
