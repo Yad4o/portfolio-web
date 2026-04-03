@@ -7,9 +7,29 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, Mail, ArrowDown, ExternalLink } from 'lucide-react';
 
 import { BackgroundShader } from './components/BackgroundShader';
-import { ParticleMorpher } from './components/ParticleMorpher';
+
 import { BgOptionLiquid } from './components/BgOptionLiquid';
 import { BgOptionCyber } from './components/BgOptionCyber';
+import { 
+  BgOptionNeonGeometric, 
+  BgOptionCosmicDust, 
+  BgOptionQuantumFlow, 
+  BgOptionHoloTopography, 
+  BgOptionPrismaticGlass, 
+  BgOptionAbyssalVoid, 
+  BgOptionRetroSynthwave, 
+  BgOptionNeuralNetwork, 
+  BgOptionPlasmaOrbs, 
+  BgOptionEtherealAurora,
+  BgOptionHyperHelix,
+  BgOptionMobiusStrip,
+  BgOptionAstralRings,
+  BgOptionFractalSpine,
+  BgOptionChromaticWeb,
+  BgOptionLiquidMetal,
+  BgOptionDimensionalVortex,
+  BgOptionSerpentineFlow
+} from './components/ExtraBackgrounds';
 import { CameraRig } from './components/CameraRig';
 import { GitHubProjects } from './components/GitHubProjects';
 import { GithubInsights } from './components/GithubInsights';
@@ -29,12 +49,30 @@ const ImmersiveCore = ({ scroll, bgMode }: { scroll: number, bgMode: number }) =
       <CameraRig />
       {bgMode === 0 && <BackgroundShader />}
       
-      {bgMode === 0 && <ParticleMorpher scroll={scroll} />}
+
       {bgMode === 1 && <BgOptionLiquid scroll={scroll} />}
       {bgMode === 2 && <BgOptionCyber scroll={scroll} />}
+      {bgMode === 3 && <BgOptionNeonGeometric scroll={scroll} />}
+      {bgMode === 4 && <BgOptionCosmicDust scroll={scroll} />}
+      {bgMode === 5 && <BgOptionQuantumFlow scroll={scroll} />}
+      {bgMode === 6 && <BgOptionHoloTopography scroll={scroll} />}
+      {bgMode === 7 && <BgOptionPrismaticGlass scroll={scroll} />}
+      {bgMode === 8 && <BgOptionAbyssalVoid scroll={scroll} />}
+      {bgMode === 9 && <BgOptionRetroSynthwave scroll={scroll} />}
+      {bgMode === 10 && <BgOptionNeuralNetwork scroll={scroll} />}
+      {bgMode === 11 && <BgOptionPlasmaOrbs scroll={scroll} />}
+      {bgMode === 12 && <BgOptionEtherealAurora scroll={scroll} />}
+      {bgMode === 13 && <BgOptionHyperHelix scroll={scroll} />}
+      {bgMode === 14 && <BgOptionMobiusStrip scroll={scroll} />}
+      {bgMode === 15 && <BgOptionAstralRings scroll={scroll} />}
+      {bgMode === 16 && <BgOptionFractalSpine scroll={scroll} />}
+      {bgMode === 17 && <BgOptionChromaticWeb scroll={scroll} />}
+      {bgMode === 18 && <BgOptionLiquidMetal scroll={scroll} />}
+      {bgMode === 19 && <BgOptionDimensionalVortex scroll={scroll} />}
+      {bgMode === 20 && <BgOptionSerpentineFlow scroll={scroll} />}
       
       {/* Decorative stars always visible but restyled per mode */}
-      <Stars radius={100} depth={50} count={bgMode === 2 ? 0 : 1000} factor={4} saturation={0} fade speed={1} />
+      <Stars radius={100} depth={50} count={bgMode >= 2 ? 0 : 1000} factor={4} saturation={0} fade speed={1} />
     </Suspense>
   );
 };
@@ -161,11 +199,29 @@ const App = () => {
       {isIntroDone && (
           <div className="fixed bottom-6 left-6 z-[200] flex flex-col gap-2 pointer-events-auto bg-black/60 backdrop-blur-xl p-3 rounded-2xl border border-white/10 shadow-2xl">
             <span className="text-[9px] text-white/50 uppercase tracking-widest font-bold mb-1">Render Engine</span>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2 max-w-[calc(100vw-3rem)] sm:max-w-xl md:max-w-2xl max-h-[40vh] overflow-y-auto custom-scrollbar pr-2">
               {[
                 { id: 0, label: "Sacred Math" },
                 { id: 1, label: "Liquid Distort" },
-                { id: 2, label: "Cyber Matrix" }
+                { id: 2, label: "Cyber Matrix" },
+                { id: 3, label: "Neon Geometrics" },
+                { id: 4, label: "Cosmic Dust" },
+                { id: 5, label: "Quantum Flow" },
+                { id: 6, label: "Holo Topography" },
+                { id: 7, label: "Prismatic Glass" },
+                { id: 8, label: "Abyssal Void" },
+                { id: 9, label: "Retro Synthwave" },
+                { id: 10, label: "Neural Network" },
+                { id: 11, label: "Plasma Orbs" },
+                { id: 12, label: "Ethereal Aurora" },
+                { id: 13, label: "Hyper Helix" },
+                { id: 14, label: "Mobius Strip" },
+                { id: 15, label: "Astral Rings" },
+                { id: 16, label: "Fractal Spine" },
+                { id: 17, label: "Chromatic Web" },
+                { id: 18, label: "Liquid Metal" },
+                { id: 19, label: "Dimensional Vortex" },
+                { id: 20, label: "Serpentine Flow" }
               ].map(opt => (
                 <button 
                   key={opt.id}
