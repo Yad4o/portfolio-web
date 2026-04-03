@@ -59,7 +59,7 @@ export const GithubInsights = () => {
           <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.4em] mb-4 ml-1">
             GITHUB DEEP DIVE
           </p>
-          <h2 className="text-[5rem] md:text-[8rem] font-black tracking-tighter text-white leading-[0.8] mb-10 mix-blend-overlay opacity-90">
+          <h2 className="text-[5rem] md:text-[8rem] font-black tracking-tighter text-white leading-[0.8] mb-10 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
             AI & ML <br/> Profile.
           </h2>
           <p className="text-white/60 text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto border-l-2 border-white/20 pl-6 text-left backdrop-blur-[2px]">

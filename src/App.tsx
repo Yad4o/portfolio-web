@@ -205,7 +205,7 @@ const App = () => {
                     </p>
                 </div>
                 <div className="hero-reveal relative">
-                    <h1 className="text-[6rem] md:text-[14rem] font-black leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white/80 to-white/0 drop-shadow-2xl">
+                    <h1 className="text-[6rem] md:text-[14rem] font-black leading-[0.8] tracking-tighter text-white drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
                         OM<br/><span className="ml-[10%] opacity-90">YADAV</span>
                     </h1>
                 </div>
@@ -244,15 +244,15 @@ const App = () => {
             <div className="sticky top-0 h-screen flex items-center justify-center p-8 md:p-24 overflow-hidden pointer-events-none">
                 <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
                     <div className="md:col-span-7 flex flex-col justify-center">
-                        <h2 className="text-5xl md:text-[7rem] font-black tracking-tighter text-white leading-[0.8] mb-10 mix-blend-overlay opacity-90">
+                        <h2 className="text-5xl md:text-[7rem] font-black tracking-tighter text-white leading-[0.8] mb-10 drop-shadow-[0_10px_30px_rgba(0,0,0,0.9)]">
                             Pushing <br/>Boundaries.
                         </h2>
-                        <div className="space-y-8 text-lg md:text-xl text-white/60 leading-relaxed font-light max-w-xl pl-2 border-l-2 border-white/20 pointer-events-auto backdrop-blur-[2px]">
+                        <div className="space-y-6 text-lg md:text-xl text-white/80 leading-relaxed font-light max-w-xl pointer-events-auto bg-[#05060b]/80 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 shadow-2xl">
                             <p>
-                              A relentless pursuit of flawless interactive execution. Specialized in fusing high-performance code with bleeding-edge visual fidelity.
+                                A relentless pursuit of flawless interactive execution. Specialized in fusing high-performance code with bleeding-edge visual fidelity.
                             </p>
-                            <p className="text-white/40">
-                              Transforming static concepts into living, breathing fluid WebGL realities.
+                            <p className="text-white/50 text-base">
+                                Transforming static concepts into living, breathing fluid WebGL realities.
                             </p>
                         </div>
                     </div>
@@ -337,7 +337,7 @@ const App = () => {
 
         <section id="contact" className="h-screen flex items-center justify-center bg-transparent p-6 relative">
             <div className="max-w-4xl w-full text-center z-10 flex flex-col items-center">
-                <h2 className="text-[5rem] md:text-[10rem] font-black text-white leading-[0.8] tracking-tighter mix-blend-overlay opacity-90 mb-10">
+                <h2 className="text-[5rem] md:text-[10rem] font-black text-white leading-[0.8] tracking-tighter drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] mb-10">
                   LET'S TALK
                 </h2>
                 <div className="flex justify-center gap-6 mt-4">

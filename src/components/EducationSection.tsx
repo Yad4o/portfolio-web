@@ -3,9 +3,9 @@ import { GraduationCap } from 'lucide-react';
 
 export const EducationSection = () => {
     return (
-        <section className="relative py-24 z-20 pointer-events-none mix-blend-overlay">
+        <section className="relative py-24 z-20 pointer-events-none">
             <div className="max-w-7xl mx-auto px-8 pointer-events-auto">
-                <div className="flex flex-col md:flex-row justify-between items-center bg-white/[0.02] border border-white/10 rounded-[3rem] p-12 md:p-20 overflow-hidden relative group">
+                <div className="flex flex-col md:flex-row justify-between items-center bg-[#05060b]/80 border border-white/10 rounded-[3rem] p-12 md:p-20 overflow-hidden relative group backdrop-blur-2xl shadow-2xl">
                     <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-white/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-2xl" />
                     
                     <div className="relative z-10 md:w-1/2 mb-10 md:mb-0">

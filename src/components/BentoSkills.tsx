@@ -3,10 +3,10 @@ import { Layers, Zap, Cpu, Code2, Globe2, Shapes } from 'lucide-react';
 
 export const BentoSkills = () => {
     return (
-        <section className="relative min-h-screen py-32 z-20 mix-blend-overlay pointer-events-none">
+        <section className="relative min-h-screen py-32 z-20 pointer-events-none">
             <div className="max-w-7xl mx-auto px-8 pointer-events-auto">
                 <div className="mb-16">
-                    <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.4em] mb-4 ml-1">
+                    <p className="text-white/80 text-lg md:text-xl leading-relaxed font-light max-w-2xl bg-[#05060b]/80 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 shadow-2xl">
                         ARSENAL
                     </p>
                     <h2 className="text-5xl md:text-[6rem] font-black text-white leading-[0.8] tracking-tighter">
@@ -67,7 +67,7 @@ export const BentoSkills = () => {
                             <h3 className="text-2xl font-bold text-white">Frontend Dev</h3>
                             <p className="text-white/50 text-xs mt-2">React, Next.js, Modern UI Implementations</p>
                         </div>
-                        <h1 className="text-8xl font-black text-white/[0.03] tracking-tighter mix-blend-overlay hidden md:block">
+                        <h1 className="text-8xl font-black text-white/[0.05] tracking-tighter hidden md:block">
                             LOGIC
                         </h1>
                     </div>
