@@ -1,12 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import gsap from 'gsap';
 
+const BOOT_LOGS = [
+    "INITIALIZING KERNEL_CORE_V9.0...",
+    "LOADING WEBGL PARTICLE SHADERS...",
+    "MOUNTING NEON VIOLET GRAVITY...",
+    "ESTABLISHING C:\PORTFOLIO\ARCHIVE...",
+    "BYPASSING SECURITY PROTOCOLS...",
+    "AWWWARDS.SYS FULLY ONLINE."
+];
+
 export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
     const [progress, setProgress] = useState(0);
+    const [activeLogs, setActiveLogs] = useState<string[]>([]);
 
     useEffect(() => {
         // Disable scroll during intro
         document.body.style.overflow = 'hidden';
+
+        // Terminal Log Animation Simulation
+        let logIndex = 0;
+        const logInterval = setInterval(() => {
+            if (logIndex < BOOT_LOGS.length) {
+                setActiveLogs(prev => [...prev, BOOT_LOGS[logIndex]]);
+                logIndex++;
+            }
+        }, 120);
 
         const ctx = gsap.context(() => {
             const tl = gsap.timeline({
@@ -16,58 +35,37 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
                 }
             });
 
-            // Lightning fast Initialization Bar
+            // 1) Fast progress bar filling
             const rawProgress = { val: 0 };
             tl.to(rawProgress, {
                 val: 100,
-                duration: 1.0, // MUCH faster
-                ease: 'power3.inOut',
+                duration: 1.5,
+                ease: 'power4.inOut',
                 onUpdate: () => setProgress(Math.round(rawProgress.val))
             });
 
-            // Extreme Lightning Shock Flicker Effect
-            tl.to('.intro-text', { opacity: 1, duration: 0.02, scale: 1.05 }, "-=0.2")
-              .to('.intro-text', { opacity: 0, duration: 0.03, scale: 1.0 })
-              .to('.intro-text', { opacity: 1, duration: 0.01, scale: 1.1 })
-              .to('.intro-text', { opacity: 0, duration: 0.04, scale: 0.95 })
-              .to('.intro-text', { opacity: 0.8, duration: 0.02, scale: 1.02 })
-              .to('.intro-text', { opacity: 0, duration: 0.06 })
-              .to('.intro-text', { opacity: 1, duration: 0.01 })
-              .to('.intro-text', { opacity: 0, duration: 0.03 })
-              .to('.intro-text', { opacity: 0.5, duration: 0.02, x: -10 })
-              .to('.intro-text', { opacity: 0, duration: 0.02, x: 10 })
-              .to('.intro-text', { opacity: 1, duration: 0.02, x: 0 })
-              .to('.intro-text', { opacity: 0.2, duration: 0.08 })
-              .to('.intro-text', {
-                  letterSpacing: '0.3em',
-                  opacity: 1,
-                  textShadow: '0 0 30px rgba(255,255,255,1), 0 0 60px rgba(255,255,255,0.6)',
-                  scale: 1,
-                  duration: 0.8,
-                  ease: 'elastic.out(1, 0.3)' // Gives a slight shocking snap
-              });
+            // 2) Chromatic Glitch Effect on Text
+            tl.to('.glitch-layer-1', { x: -5, opacity: 0.8, duration: 0.05, yoyo: true, repeat: 10 }, "-=1.0")
+              .to('.glitch-layer-2', { x: 5, opacity: 0.8, duration: 0.05, yoyo: true, repeat: 10 }, "-=1.0")
+              .to('.glitch-main', { scale: 1.1, duration: 0.1, ease: 'rough' }, "-=0.8")
+              .to('.glitch-main', { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.3)', textShadow: "0 0 40px rgba(199,125,255,0.8)" });
 
-            // Curtains pull apart meaning transition
-            tl.to('.intro-curtain-top', {
-                yPercent: -100,
-                duration: 1.5,
-                ease: 'expo.inOut'
-            }, "+=0.2");
-            
-            tl.to('.intro-curtain-bottom', {
-                yPercent: 100,
-                duration: 1.5,
-                ease: 'expo.inOut'
-            }, "<"); // Run at the same time
-
-            // Fade the text into the background
+            // 3) Pulling the UI away inward before breaking curtains
             tl.to('.intro-text-wrapper', {
-                scale: 1.5,
+                scale: 2,
                 opacity: 0,
-                duration: 1.2,
-                ease: 'power3.out'
-            }, "-=1.2");
+                duration: 0.8,
+                ease: 'power3.in'
+            }, "+=0.3");
             
+            // 4) 5 slicing vertical panels zooming out!
+            tl.to('.slice-curtain', {
+                yPercent: (i) => (i % 2 === 0 ? -100 : 100), // Evens up, Odds down
+                duration: 1.2,
+                stagger: 0.1,
+                ease: 'expo.inOut'
+            }, "-=0.2");
+
             tl.to('.intro-container', {
                 autoAlpha: 0,
                 duration: 0.1
@@ -76,37 +74,88 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
 
         return () => {
             document.body.style.overflow = 'auto';
+            clearInterval(logInterval);
             ctx.revert();
         };
-    }, [onComplete]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    // Create 5 panels for the sliced background effect
+    const slices = Array.from({ length: 5 });
 
     return (
-        <div className="intro-container fixed inset-0 z-[100] flex items-center justify-center pointer-events-none">
-            {/* Top Split */}
-            <div className="intro-curtain-top absolute top-0 left-0 w-full h-1/2 bg-[#05060b] transform origin-top pointer-events-auto shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-[101]" />
-            {/* Bottom Split */}
-            <div className="intro-curtain-bottom absolute bottom-0 left-0 w-full h-1/2 bg-[#05060b] transform origin-bottom pointer-events-auto z-[101]" />
+        <div className="intro-container fixed inset-0 z-[100] w-screen h-screen flex items-center justify-center pointer-events-none">
             
-            {/* Loading Content */}
-            <div className="intro-text-wrapper relative z-[102] flex flex-col items-center pointer-events-none">
-                <div className="flex gap-8 items-end overflow-hidden mb-4">
-                    <h1 className="intro-text text-white text-5xl md:text-[8rem] font-black tracking-tighter opacity-0 uppercase">
+            {/* Sliced Background Panels */}
+            <div className="absolute inset-0 flex w-full h-full z-[101]">
+                {slices.map((_, i) => (
+                    <div 
+                        key={i} 
+                        className="slice-curtain flex-1 h-full bg-[#05060b] border-r border-[#c77dff]/10 last:border-0 relative overflow-hidden pointer-events-auto"
+                    >
+                        {/* Terminal grid lines falling */}
+                        <div className="absolute top-0 left-0 w-full h-full bg-[repeating-linear-gradient(transparent_0%,transparent_98%,#c77dff20_98%,#c77dff20_100%)] bg-[length:100%_20px]" />
+                    </div>
+                ))}
+            </div>
+            
+            {/* Main Content Layer */}
+            <div className="intro-text-wrapper relative z-[102] flex flex-col items-center pointer-events-none w-full max-w-4xl px-8">
+                
+                {/* Synthetic Terminal Logs (Top Left corner simulating boot) */}
+                <div className="absolute -top-32 -left-10 md:left-0 flex flex-col items-start gap-1">
+                    {activeLogs.map((log, i) => (
+                        <span key={i} className="text-[#00ff41] font-mono text-[8px] md:text-[10px] tracking-widest opacity-80 uppercase">
+                            &gt; {log}
+                        </span>
+                    ))}
+                    <span className="text-[#00ff41] font-mono text-[8px] md:text-[10px] tracking-widest animate-pulse">_</span>
+                </div>
+
+                {/* Glitching Title Container */}
+                <div className="relative mb-12">
+                    {/* Cyan Aberration */}
+                    <h1 className="glitch-layer-1 absolute inset-0 text-[#00ffff] mix-blend-screen text-5xl md:text-[8rem] font-black tracking-tighter opacity-0 scale-[1.01]">
+                        OM YADAV
+                    </h1>
+                    {/* Magenta Aberration */}
+                    <h1 className="glitch-layer-2 absolute inset-0 text-[#ff00ff] mix-blend-screen text-5xl md:text-[8rem] font-black tracking-tighter opacity-0 scale-[0.99]">
+                        OM YADAV
+                    </h1>
+                    {/* Core White Text */}
+                    <h1 className="glitch-main relative text-white text-5xl md:text-[8rem] font-black tracking-tighter">
                         OM YADAV
                     </h1>
                 </div>
                 
-                {/* Minimal Loading Bar & Percentage */}
-                <div className="w-64 flex flex-col items-center gap-4">
-                    <div className="w-full h-[1px] bg-white/20 relative overflow-hidden">
+                {/* Cyberpunk Loading Bar */}
+                <div className="w-full md:w-96 flex flex-col gap-4">
+                    <div className="flex justify-between items-end w-full">
+                        <span className="text-[#c77dff] font-mono text-[10px] tracking-[0.4em] uppercase font-bold">
+                            SYSTEM LOAD
+                        </span>
+                        <span className="text-white font-mono text-[10px] tracking-widest font-black">
+                            {progress.toString().padStart(3, '0')}%
+                        </span>
+                    </div>
+                    
+                    {/* Aggressive glowing progress bar */}
+                    <div className="w-full h-[2px] bg-white/10 relative overflow-hidden">
+                        {/* Glow head */}
                         <div 
-                            className="absolute top-0 left-0 h-full bg-white transition-all duration-100 ease-linear"
-                            style={{ width: `${progress}%` }}
+                            className="absolute top-0 h-full bg-gradient-to-r from-transparent via-[#c77dff] to-white shadow-[0_0_20px_#c77dff]"
+                            style={{ width: `${progress}%`, transition: 'width 0.1s linear' }}
                         />
                     </div>
-                    <span className="text-white/40 font-mono text-xs tracking-widest">
-                        {progress.toString().padStart(3, '0')}% - SYSTEM INITIALIZED
-                    </span>
+                    
+                    {/* Grid decoration below bar */}
+                    <div className="flex w-full justify-between mt-1 opacity-30">
+                        {Array.from({length: 10}).map((_, i) => (
+                            <div key={i} className="w-[1px] h-1 bg-[#c77dff]" />
+                        ))}
+                    </div>
                 </div>
+
             </div>
         </div>
     );
