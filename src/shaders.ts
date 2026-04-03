@@ -59,8 +59,29 @@ export const noiseFragmentShader = /* glsl */`
   }
 
   void main() {
-    float n = snoise(vec3(vUv * 2.0, uTime * 0.2));
-    vec3 color = mix(vec3(0.08, 0.09, 0.12), vec3(0.15, 0.17, 0.20), n * 0.5 + 0.5);
+    vec2 p = vUv * 2.0 - 1.0;
+    
+    // Add multiple octaves of noise for a liquid fluid dynamic
+    float n1 = snoise(vec3(p * 1.5, uTime * 0.15));
+    float n2 = snoise(vec3(p * 3.0 - n1, uTime * 0.1));
+    float n3 = snoise(vec3(p * 5.0 + n2, uTime * 0.05));
+    
+    float intensity = n1 * 0.5 + n2 * 0.25 + n3 * 0.125 + 0.5;
+    
+    // Premium liquid gradient palette: Deep Indigo -> Vibrant Magenta -> Electric Cyan
+    vec3 c1 = vec3(0.04, 0.0, 0.12);  // Deep background
+    vec3 c2 = vec3(0.2, 0.05, 0.35);  // Deep purple
+    vec3 c3 = vec3(0.8, 0.0, 0.4);    // Magenta bloom
+    vec3 c4 = vec3(0.0, 0.6, 0.9);    // Cyan splash
+
+    vec3 color = mix(c1, c2, smoothstep(0.0, 0.3, intensity));
+    color = mix(color, c3, smoothstep(0.3, 0.7, intensity));
+    color = mix(color, c4, smoothstep(0.7, 1.0, intensity));
+    
+    // Subtle animated vignette or radial glow
+    float dist = length(p);
+    color *= smoothstep(1.5, 0.2, dist); // darker at edges
+
     gl_FragColor = vec4(color, 1.0);
   }
 `;
@@ -130,19 +151,36 @@ export const particleMorphVertexShader = /* glsl */`
     vec3 pos;
     float progress = uMorphProgress;
     
+    // Smooth out the interpolation for buttery morphing
+    float p1 = smoothstep(0.0, 1.0, progress);
+    float p2 = smoothstep(1.0, 2.0, progress);
+    float p3 = smoothstep(2.0, 3.0, progress);
+    float p4 = smoothstep(3.0, 4.0, progress);
+    float p5 = smoothstep(4.0, 5.0, progress);
+
     if (progress <= 1.0) {
-      pos = mix(position, aPosition2, progress);
+      pos = mix(position, aPosition2, p1);
     } else if (progress <= 2.0) {
-      pos = mix(aPosition2, aPosition3, progress - 1.0);
+      pos = mix(aPosition2, aPosition3, p2);
     } else if (progress <= 3.0) {
-      pos = mix(aPosition3, aPosition4, progress - 2.0);
+      pos = mix(aPosition3, aPosition4, p3);
     } else if (progress <= 4.0) {
-      pos = mix(aPosition4, aPosition5, progress - 3.0);
+      pos = mix(aPosition4, aPosition5, p4);
     } else if (progress <= 5.0) {
-      pos = mix(aPosition5, aPosition6, progress - 4.0);
+      pos = mix(aPosition5, aPosition6, p5);
     } else {
       pos = aPosition6;
     }
+
+    // Organic curl noise drift / fluid motion
+    // To keep it clean without importing huge noise library, use trigonometric chaos
+    vec3 curl = vec3(
+       sin(pos.y * 1.5 + uTime * 0.4) * cos(pos.z * 1.3 - uTime * 0.2),
+       sin(pos.z * 1.2 - uTime * 0.5) * cos(pos.x * 1.1 + uTime * 0.3),
+       sin(pos.x * 1.4 + uTime * 0.6) * cos(pos.y * 1.6 - uTime * 0.1)
+    );
+    // Add turbulence scale based on scrolling
+    pos += curl * (0.3 + sin(uTime * 0.5) * 0.15);
 
     // 4D transformations
     vec4 pos4D = vec4(pos, 0.0);
@@ -168,17 +206,15 @@ export const particleMorphVertexShader = /* glsl */`
     float hyperScale = uHyperScale * (1.0 + w * 0.5);
     pos *= hyperScale;
     
-    // Enhanced professional animations with 4D influence
-    float professionalBreathe = sin(uTime * 0.3 + w) * 0.02 * hyperScale;
-    float elegantGlide = cos(uTime * 0.5 + w * 0.5) * 0.015 * hyperScale;
-    
-    // Apply professional motion
+    // Extra organic breathing
+    float professionalBreathe = sin(uTime * 0.6 + w * 2.0 + vShapeSeed * 6.28) * 0.08 * hyperScale;
+    float elegantGlide = cos(uTime * 0.4 + w * 1.5 - vShapeSeed * 6.28) * 0.08 * hyperScale;
     pos.y += professionalBreathe;
     pos.x += elegantGlide;
-    pos.z += elegantGlide;
+    pos.z -= professionalBreathe;
 
-    // 4D burst effects
-    float burstPhase = uTime * 2.0 + length(pos) * 0.5;
+    // Burst effects
+    float burstPhase = uTime * 2.5 + length(pos) * 0.8;
     vec3 burstOffset = vec3(
       sin(burstPhase) * uBurstIntensity,
       cos(burstPhase * 1.3) * uSecondaryIntensity,
@@ -186,15 +222,31 @@ export const particleMorphVertexShader = /* glsl */`
     );
     pos += burstOffset;
 
-    // Larger on-screen points so background sparkles stay visible
+    // Scale down points a bit because there are so many of them now.
     vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-    float baseSize = 9.0 * hyperScale;
+    float baseSize = 4.0 * hyperScale * (1.0 + vShapeSeed);
     gl_PointSize = baseSize * (22.0 / (max(0.1, -mvPosition.z)));
     gl_Position = projectionMatrix * mvPosition;
 
-    // Brighter base tint (still cool / soft)
-    float colorIntensity = 0.35 + abs(w) * 0.25;
-    vColor = vec3(colorIntensity, colorIntensity * 0.88, colorIntensity * 1.08);
+    // Premium Iridescent Colors
+    vec3 c1 = vec3(0.5, 0.5, 0.5);
+    vec3 c2 = vec3(0.5, 0.5, 0.5);
+    vec3 c3 = vec3(1.0, 1.0, 1.0);
+    vec3 c4 = vec3(0.2, 0.4, 0.8);
+    
+    float tColor = uTime * 0.15 + length(pos) * 0.12 + w * 0.4;
+    vec3 iridescence = c1 + c2 * cos(6.28318 * (c3 * tColor + c4));
+    
+    // Blend with a hot/cyan premium palette depending on shape/seed
+    vec3 hotPink = vec3(1.0, 0.1, 0.6);
+    vec3 neonCyan = vec3(0.0, 0.8, 1.0);
+    vec3 neonPurple = vec3(0.6, 0.1, 0.9);
+    
+    float colorMix = sin(uTime * 0.3 + vShapeSeed * 6.28) * 0.5 + 0.5;
+    vec3 premiumBase = mix(neonCyan, mix(hotPink, neonPurple, vShapeSeed), colorMix);
+    
+    vColor = mix(iridescence, premiumBase, 0.65);
+    vColor *= (1.2 + abs(w) * 0.3); // Brightness pop based on 4D depth
   }
 `;
 
@@ -261,14 +313,17 @@ export const particleMorphFragmentShader = /* glsl */`
     vec3 baseColor = vColor;
     float slowWave = sin(uTime * 0.6 + u4DRotation * 0.2);
     float radialFade = 1.0 - smoothstep(0.0, 0.88, dist * 2.0);
-    float sparkleTwinkle = 0.82 + 0.18 * sin(uTime * 1.2 + gl_PointCoord.x * 20.0 + gl_PointCoord.y * 14.0);
+    float sparkleTwinkle = 0.6 + 0.4 * sin(uTime * 3.0 + gl_PointCoord.x * 20.0 + gl_PointCoord.y * 14.0);
 
-    vec3 accentColor = vec3(0.18, 0.22, 0.34);
-    vec3 mixed = mix(baseColor, accentColor, 0.42 + 0.12 * slowWave);
+    // Keep the premium vibrant colors, only slightly modulate
+    vec3 mixed = baseColor * (0.85 + 0.25 * slowWave);
 
     float coreGlow = 1.0 - smoothstep(0.0, 0.22, dist);
-    vec3 sparkleColor = mixed + vec3(0.12, 0.14, 0.2) * coreGlow * 0.55;
-    float finalAlpha = alpha * radialFade * 0.65 * sparkleTwinkle;
+    // Give the core a bright white/blue intense glow
+    vec3 sparkleColor = mixed + vec3(0.8, 0.9, 1.0) * coreGlow * 0.8;
+    
+    // Higher transparency for a more ethereal feel
+    float finalAlpha = alpha * radialFade * 0.8 * sparkleTwinkle;
 
     gl_FragColor = vec4(sparkleColor, finalAlpha);
   }

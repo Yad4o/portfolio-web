@@ -3,11 +3,11 @@ import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { particleMorphVertexShader, particleMorphFragmentShader } from '../shaders';
 
-const COUNT = 1800;
+const COUNT = 12000;
 
 /**
- * 2,000 GPU-morphed particles.
- * Minimal morphing between geometric shapes for subtle effect.
+ * 12,000 GPU-morphed particles.
+ * Crazy morphing between organic attractors and energy fields.
  */
 export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
   const pointsRef = useRef<THREE.Points>(null);
@@ -23,181 +23,85 @@ export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
     const p6 = new Float32Array(COUNT * 3);
 
     for (let i = 0; i < COUNT; i++) {
+        // Shared randomizers
         const t = i / COUNT;
-        const angle = t * Math.PI * 2;
-        const spiralFactor = i / COUNT;
-        
-        // --- Hero Section: Hypersphere with Fibonacci Spiral ---
-        const phi = Math.acos(1 - 2 * t);
-        const theta = Math.PI * (1 + Math.sqrt(5)) * i; // Golden angle
-        const sphereRadius = 2.5 + Math.sin(angle * 3) * 0.3;
-        p1[i * 3 + 0] = sphereRadius * Math.sin(phi) * Math.cos(theta) * (1 + spiralFactor * 0.2);
-        p1[i * 3 + 1] = sphereRadius * Math.cos(phi) * (1 + Math.sin(angle * 2) * 0.1);
-        p1[i * 3 + 2] = sphereRadius * Math.sin(phi) * Math.sin(theta) * (1 + spiralFactor * 0.2);
+        const r1 = Math.random();
+        const r2 = Math.random();
 
-        // --- About Section: Dynamic Star with Inner Core ---
-        const starPoints = 8; // 8-pointed star
-        const starAngle = angle;
-        const starStep = Math.floor(starAngle / (Math.PI * 2 / starPoints));
-        const coreRadius = 0.5 + Math.sin(angle * 8) * 0.2;
-        
-        if (i % 3 === 0) { // Core particles
-            const coreAngle = angle * 4;
-            p2[i * 3 + 0] = Math.cos(coreAngle) * coreRadius;
-            p2[i * 3 + 1] = Math.sin(coreAngle) * coreRadius;
-            p2[i * 3 + 2] = Math.sin(angle * 6) * 0.1;
-        } else { // Star formation
-            const outerRadius = 2.8 + Math.sin(angle * 4) * 0.4;
-            const innerRadius = 1.2 + Math.cos(angle * 3) * 0.2;
-            const radius = (starStep % 2 === 0) ? outerRadius : innerRadius;
-            
-            p2[i * 3 + 0] = Math.cos(starAngle) * radius;
-            p2[i * 3 + 1] = Math.sin(starAngle) * radius * 0.3;
-            p2[i * 3 + 2] = Math.sin(starAngle) * radius;
+        // --- SHAPE 1: Massive Double-Spiral Galaxy ---
+        const arms = 3;
+        const armOffset = (Math.floor(r1 * arms) / arms) * Math.PI * 2;
+        const galaxyRadius = Math.pow(r2, 0.5) * 4.5; 
+        const galaxyTheta = galaxyRadius * 2.0 + armOffset;
+        p1[i * 3 + 0] = Math.cos(galaxyTheta) * galaxyRadius + (Math.random() - 0.5) * 0.4;
+        p1[i * 3 + 1] = (Math.random() - 0.5) * 0.3 * (4.5 - galaxyRadius) + (Math.random() - 0.5) * 0.1;
+        p1[i * 3 + 2] = Math.sin(galaxyTheta) * galaxyRadius + (Math.random() - 0.5) * 0.4;
+
+        // --- SHAPE 2: Clifford-style Strange Attractor Swirl ---
+        // Generates cool twisted ribbon clouds
+        let cx = (Math.random() - 0.5) * 2;
+        let cy = (Math.random() - 0.5) * 2;
+        let cz = (Math.random() - 0.5) * 2;
+        const a = 1.4, b = 1.56, c = 1.4, d = -1.56;
+        // Warm up iteration
+        for(let j=0; j<8; j++) {
+            let nx = Math.sin(a * cy) + c * Math.cos(a * cx);
+            let ny = Math.sin(b * cx) + d * Math.cos(b * cy);
+            let nz = Math.sin(c * cz) + a * Math.cos(d * cx);
+            cx = nx; cy = ny; cz = nz;
+        }
+        p2[i * 3 + 0] = cx * 1.8;
+        p2[i * 3 + 1] = cy * 1.8;
+        p2[i * 3 + 2] = cz * 1.8;
+
+        // --- SHAPE 3: Deep Vortex Tornado ---
+        const vortexHeight = (r1 * 2.0 - 1.0) * 3.5;
+        const vortexRad = Math.exp(vortexHeight * 0.6) * 0.4 + 0.1;
+        const vortexAngle = t * Math.PI * 150.0 + vortexHeight * 3.0;
+        p3[i * 3 + 0] = Math.cos(vortexAngle) * vortexRad + (Math.random()-0.5) * 0.2;
+        p3[i * 3 + 1] = vortexHeight;
+        p3[i * 3 + 2] = Math.sin(vortexAngle) * vortexRad + (Math.random()-0.5) * 0.2;
+
+        // --- SHAPE 4: Organic Dual DNA Helix Network ---
+        const dnaLength = (r1 * 2.0 - 1.0) * 4.0;
+        const dnaPhase = t * Math.PI * 8.0;
+        const strand = Math.random() > 0.5 ? 1 : -1;
+        const dnaRadius = 1.5;
+        p4[i * 3 + 0] = Math.cos(dnaPhase + (strand > 0 ? 0 : Math.PI)) * dnaRadius + (Math.random() - 0.5)*0.3;
+        p4[i * 3 + 1] = dnaLength;
+        p4[i * 3 + 2] = Math.sin(dnaPhase + (strand > 0 ? 0 : Math.PI)) * dnaRadius + (Math.random() - 0.5)*0.3;
+
+        // Add bridging bonds randomly
+        if (Math.random() > 0.85) {
+            const bridgeT = Math.random();
+            const bX1 = Math.cos(dnaPhase) * dnaRadius;
+            const bZ1 = Math.sin(dnaPhase) * dnaRadius;
+            const bX2 = Math.cos(dnaPhase + Math.PI) * dnaRadius;
+            const bZ2 = Math.sin(dnaPhase + Math.PI) * dnaRadius;
+            p4[i * 3 + 0] = bX1 + (bX2 - bX1) * bridgeT;
+            p4[i * 3 + 2] = bZ1 + (bZ2 - bZ1) * bridgeT;
         }
 
-        // --- Projects Section: Enhanced Globe with Energy Grid ---
-        const globeSection = Math.floor(i / (COUNT / 4)); // 4 sections
-        const globeProgress = (i % (COUNT / 4)) / (COUNT / 4);
-        const globeTime = globeProgress * Math.PI * 2;
-        
-        if (globeSection === 0) { // Globe surface with waves
-            const globeTheta = globeProgress * Math.PI * 2;
-            const globePhi = Math.acos(2 * globeProgress - 1);
-            const waveRadius = 2.2 + Math.sin(globeTheta * 8 + globePhi * 4) * 0.15;
-            p3[i * 3 + 0] = waveRadius * Math.sin(globePhi) * Math.cos(globeTheta);
-            p3[i * 3 + 1] = waveRadius * Math.cos(globePhi);
-            p3[i * 3 + 2] = waveRadius * Math.sin(globePhi) * Math.sin(globeTheta);
-        } else if (globeSection === 1) { // Energy latitude lines
-            const latLines = 12;
-            const latIndex = Math.floor(globeProgress * latLines);
-            const latAngle = (latIndex / latLines) * Math.PI - Math.PI/2;
-            const lineTheta = globeTime * 6;
-            const lineRadius = 2.2 * Math.cos(latAngle) * (1 + Math.sin(lineTheta) * 0.1);
-            p3[i * 3 + 0] = lineRadius * Math.cos(lineTheta);
-            p3[i * 3 + 1] = 2.2 * Math.sin(latAngle);
-            p3[i * 3 + 2] = lineRadius * Math.sin(lineTheta);
-        } else if (globeSection === 2) { // Energy longitude lines
-            const lonLines = 16;
-            const lonIndex = Math.floor(globeProgress * lonLines);
-            const lonAngle = (lonIndex / lonLines) * Math.PI * 2;
-            const linePhi = globeTime * 4 - Math.PI/2;
-            const lineRadius = 2.2 * Math.cos(linePhi) * (1 + Math.cos(lonAngle * 2) * 0.1);
-            p3[i * 3 + 0] = lineRadius * Math.cos(lonAngle);
-            p3[i * 3 + 1] = 2.2 * Math.sin(linePhi);
-            p3[i * 3 + 2] = lineRadius * Math.sin(lonAngle);
-        } else { // Orbital particles
-            const orbitRadius = 2.8 + Math.sin(globeTime * 3) * 0.3;
-            const orbitHeight = Math.sin(globeTime * 2) * 0.5;
-            p3[i * 3 + 0] = Math.cos(globeTime * 8) * orbitRadius;
-            p3[i * 3 + 1] = orbitHeight;
-            p3[i * 3 + 2] = Math.sin(globeTime * 8) * orbitRadius;
-        }
+        // --- SHAPE 5: Parametric Math Rose / Lotus ---
+        const roseT = t * Math.PI * 2 * 7;
+        const pMod = 5.0 / 3.0;
+        const rRad = Math.cos(pMod * roseT) * 3.5;
+        const rTh = roseT;
+        const rPhi = r1 * Math.PI;
+        p5[i * 3 + 0] = rRad * Math.cos(rTh) * Math.sin(rPhi) + (Math.random() - 0.5)*0.1;
+        p5[i * 3 + 1] = rRad * Math.sin(rTh) * Math.sin(rPhi) + (Math.random() - 0.5)*0.1;
+        p5[i * 3 + 2] = rRad * Math.cos(rPhi) + (Math.random() - 0.5)*0.1;
 
-        // --- Contact Section: Enhanced Diamond with Energy Core ---
-        const diamondLayer = Math.floor(i / (COUNT / 3)); // 3 layers
-        const diamondProgress = (i % (COUNT / 3)) / (COUNT / 3);
-        const diamondSize = 2.8;
-        
-        if (diamondLayer === 0) { // Upper diamond with curves
-            const curve = Math.sin(diamondProgress * Math.PI) * 0.3;
-            p4[i * 3 + 0] = (diamondProgress - 0.5) * diamondSize * 2.2;
-            p4[i * 3 + 1] = (diamondProgress * diamondSize + curve);
-            p4[i * 3 + 2] = Math.sin(diamondProgress * Math.PI * 2) * 0.3;
-        } else if (diamondLayer === 1) { // Energy core
-            const coreAngle = diamondProgress * Math.PI * 4;
-            const coreRadius = 0.3 + Math.sin(coreAngle * 3) * 0.2;
-            p4[i * 3 + 0] = Math.cos(coreAngle) * coreRadius;
-            p4[i * 3 + 1] = 0;
-            p4[i * 3 + 2] = Math.sin(coreAngle) * coreRadius;
-        } else { // Lower diamond with curves
-            const curve = Math.sin(diamondProgress * Math.PI) * 0.3;
-            p4[i * 3 + 0] = (diamondProgress - 0.5) * diamondSize * 2.2;
-            p4[i * 3 + 1] = ((1 - diamondProgress) * -diamondSize - curve);
-            p4[i * 3 + 2] = Math.sin(diamondProgress * Math.PI * 2) * 0.3;
-        }
-
-        // --- Footer: Enhanced Cube with Energy Flow ---
-        const cubeFace = Math.floor(i / (COUNT / 8)); // 8 sections for edges
-        const cubeProgress = (i % (COUNT / 8)) / (COUNT / 8);
-        const cubeSize = 2.0;
-        
-        if (cubeFace < 6) { // 6 faces
-            const face = cubeFace;
-            const flowOffset = Math.sin(angle * 4) * 0.1;
-            
-            if (face === 0) { // Front face with grid
-                p5[i * 3 + 0] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
-                p5[i * 3 + 1] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
-                p5[i * 3 + 2] = cubeSize;
-            } else if (face === 1) { // Back face
-                p5[i * 3 + 0] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
-                p5[i * 3 + 1] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
-                p5[i * 3 + 2] = -cubeSize;
-            } else if (face === 2) { // Left face
-                p5[i * 3 + 0] = -cubeSize;
-                p5[i * 3 + 1] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
-                p5[i * 3 + 2] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
-            } else if (face === 3) { // Right face
-                p5[i * 3 + 0] = cubeSize;
-                p5[i * 3 + 1] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
-                p5[i * 3 + 2] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
-            } else if (face === 4) { // Top face
-                p5[i * 3 + 0] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
-                p5[i * 3 + 1] = cubeSize;
-                p5[i * 3 + 2] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
-            } else { // Bottom face
-                p5[i * 3 + 0] = (Math.floor(cubeProgress * 4) / 4 - 0.5) * cubeSize * 2;
-                p5[i * 3 + 1] = -cubeSize;
-                p5[i * 3 + 2] = (cubeProgress - 0.5) * cubeSize * 2 + flowOffset;
-            }
-        } else { // Edge particles with energy flow
-            const edgeType = cubeFace - 6;
-            const edgeProgress = cubeProgress;
-            const energyPulse = Math.sin(angle * 8) * 0.2;
-            
-            if (edgeType === 0) { // Vertical edges
-                p5[i * 3 + 0] = cubeSize * (edgeProgress < 0.5 ? 1 : -1) + energyPulse;
-                p5[i * 3 + 1] = (edgeProgress - 0.5) * cubeSize * 2;
-                p5[i * 3 + 2] = cubeSize * (edgeProgress < 0.5 ? 1 : -1);
-            } else { // Horizontal edges
-                p5[i * 3 + 0] = (edgeProgress - 0.5) * cubeSize * 2;
-                p5[i * 3 + 1] = cubeSize * (edgeType === 1 ? 1 : -1) + energyPulse;
-                p5[i * 3 + 2] = cubeSize * (edgeProgress < 0.5 ? 1 : -1);
-            }
-        }
-
-        // --- Default: Enhanced Moon with Crater Field ---
-        const moonSection = Math.floor(i / (COUNT / 4)); // 4 sections
-        const moonProgress = (i % (COUNT / 4)) / (COUNT / 4);
-        const moonAngle = moonProgress * Math.PI * 2;
-        
-        if (moonSection === 0) { // Moon surface with enhanced detail
-            const moonRadius = 2.2 + Math.sin(moonAngle * 6) * 0.15;
-            p6[i * 3 + 0] = Math.cos(moonAngle) * moonRadius;
-            p6[i * 3 + 1] = Math.sin(moonAngle * 8) * 0.25; // Enhanced craters
-            p6[i * 3 + 2] = Math.sin(moonAngle) * moonRadius;
-        } else if (moonSection === 1) { // Detailed crater field
-            const craterAngle = moonAngle * 12;
-            const craterRadius = 0.4 + Math.sin(moonProgress * Math.PI * 8) * 0.25;
-            const craterX = Math.cos(craterAngle) * (1.5 + Math.sin(moonAngle * 4) * 0.6);
-            const craterZ = Math.sin(craterAngle) * (1.5 + Math.sin(moonAngle * 4) * 0.6);
-            p6[i * 3 + 0] = craterX + Math.cos(moonAngle) * craterRadius;
-            p6[i * 3 + 1] = Math.sin(moonAngle * 3) * 0.15;
-            p6[i * 3 + 2] = craterZ + Math.sin(moonAngle) * craterRadius;
-        } else if (moonSection === 2) { // Moon atmosphere/glow
-            const glowRadius = 2.8 + Math.sin(moonProgress * Math.PI * 6) * 0.4;
-            const glowHeight = Math.sin(moonAngle * 4) * 0.2;
-            p6[i * 3 + 0] = Math.cos(moonAngle) * glowRadius;
-            p6[i * 3 + 1] = glowHeight;
-            p6[i * 3 + 2] = Math.sin(moonAngle) * glowRadius;
-        } else { // Orbital ring particles
-            const orbitAngle = moonAngle * 3;
-            const orbitRadius = 3.2 + Math.sin(orbitAngle * 2) * 0.3;
-            p6[i * 3 + 0] = Math.cos(orbitAngle) * orbitRadius;
-            p6[i * 3 + 1] = Math.sin(moonAngle * 5) * 0.1;
-            p6[i * 3 + 2] = Math.sin(orbitAngle) * orbitRadius;
-        }
+        // --- SHAPE 6: Expanding Nova Sphere (Porous Core) ---
+        const thetaSp = Math.random() * Math.PI * 2;
+        const phiSp = Math.acos((Math.random() * 2) - 1);
+        const R = 3.5 * Math.pow(Math.random(), 0.3) + 0.5; // Core clustered, expands out
+        // Punchholes via sin function
+        const holePunch = Math.sin(thetaSp * 6) * Math.cos(phiSp * 6);
+        const finalR = holePunch > 0.3 ? R * 1.5 : R;
+        p6[i * 3 + 0] = finalR * Math.sin(phiSp) * Math.cos(thetaSp);
+        p6[i * 3 + 1] = finalR * Math.cos(phiSp);
+        p6[i * 3 + 2] = finalR * Math.sin(phiSp) * Math.sin(thetaSp);
     }
     return { pos1: p1, pos2: p2, pos3: p3, pos4: p4, pos5: p5, pos6: p6 };
   }, []);
@@ -219,14 +123,18 @@ export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
     if (matRef.current) {
         const time = state.clock.getElapsedTime();
         // Dampen scroll-driven morphing for buttery transitions.
-        smoothScrollRef.current = THREE.MathUtils.lerp(smoothScrollRef.current, scroll, 0.06);
+        smoothScrollRef.current = THREE.MathUtils.lerp(smoothScrollRef.current, scroll, 0.04);
         const smoothScroll = smoothScrollRef.current;
-        const ambientMorph = 0.28 + Math.sin(time * 0.08) * 0.06;
-        const scrollInfluence = smoothScroll * 0.12;
+        
+        // Continuous ping-pong morph mapped to scroll and time
+        const rawProgress = (time * 0.15) + (smoothScroll * 5.0);
+        let morphVal = rawProgress % 10.0;
+        if (morphVal > 5.0) {
+            morphVal = 10.0 - morphVal;
+        }
 
         matRef.current.uniforms.uTime.value = time * 0.6;
-        // Keep particles as ambient background floaters with only slight scroll response.
-        matRef.current.uniforms.uMorphProgress.value = ambientMorph + scrollInfluence;
+        matRef.current.uniforms.uMorphProgress.value = morphVal;
         
         // 4D animation effects based on scroll
         matRef.current.uniforms.u4DRotation.value = time * 0.12 + smoothScroll * Math.PI * 0.18;
