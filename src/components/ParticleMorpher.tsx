@@ -25,94 +25,106 @@ export const ParticleMorpher = ({ scroll }: { scroll: number }) => {
     for (let i = 0; i < COUNT; i++) {
         // Shared Variables
         const t = i / COUNT;
-        // Use Golden Ratio for visually perfect distribution
+        // Use Golden Ratio for visually perfect uniform distribution points
         const goldenRatio = (1 + Math.sqrt(5)) / 2;
 
-        // --- SHAPE 1: 'Vision' - The Elegant Iris/Eye ---
-        // Represents "Visionary creative developer"
-        const eyeAspect = 2.5; 
-        const eyeT = t * Math.PI * 2 * 30; // spiral tracking
-        const irisRad = 1.0 + Math.random() * 2.0; 
-        // Create an almond eye shape contour
-        const eyeX = Math.cos(eyeT) * irisRad;
-        const eyeZ = Math.sin(eyeT) * irisRad / eyeAspect;
-        // Make the outer edges curve inward and taper
-        const taper = Math.pow(Math.abs(Math.cos(eyeT)), 1.5) * 1.5;
-        p1[i * 3 + 0] = eyeX * 1.5;
-        p1[i * 3 + 1] = (Math.random() - 0.5) * 0.2 + (irisRad < 1.4 ? (Math.random() - 0.5)*1.5 : 0); // Pupil noise
-        p1[i * 3 + 2] = eyeZ * (1.0 + taper);
+        // --- SHAPE 1: Perfect Spherical Lattice ---
+        // A flawless uniform sphere using Fibonacci mapping
+        const phi1 = Math.acos(1 - 2 * t);
+        const theta1 = Math.PI * 2 * i / goldenRatio;
+        const rSphere = 2.8;
+        p1[i * 3 + 0] = rSphere * Math.sin(phi1) * Math.cos(theta1);
+        p1[i * 3 + 1] = rSphere * Math.cos(phi1);
+        p1[i * 3 + 2] = rSphere * Math.sin(phi1) * Math.sin(theta1);
 
-        // --- SHAPE 2: 'Logic' - The React / Atomic Orbitals ---
-        // Represents "React / Code"
-        const atomType = i % 3;
-        const atomT = (i / COUNT) * Math.PI * 2 * (COUNT / 3);
-        const rAtom = 3.0;
-        const tilt = Math.PI / 3; // 60 degrees intersect
-        if (atomType === 0) {
-            p2[i * 3 + 0] = Math.cos(atomT) * rAtom;
-            p2[i * 3 + 1] = Math.sin(atomT) * rAtom * Math.cos(tilt);
-            p2[i * 3 + 2] = Math.sin(atomT) * rAtom * Math.sin(tilt);
-        } else if (atomType === 1) {
-            p2[i * 3 + 0] = Math.cos(atomT) * rAtom * Math.cos(tilt) - Math.sin(atomT) * rAtom * Math.sin(tilt);
-            p2[i * 3 + 1] = Math.sin(atomT) * rAtom;
-            p2[i * 3 + 2] = Math.cos(atomT) * rAtom * Math.sin(tilt) + Math.sin(atomT) * rAtom * Math.cos(tilt);
+        // --- SHAPE 2: Ordered Concentric Gyroscope Rings ---
+        // Flawlessly aligned nested rings rotated smoothly
+        const rings = 8;
+        const ptsPerRing = COUNT / rings;
+        const ringIdx = Math.floor(i / ptsPerRing);
+        const ringT = (i % ptsPerRing) / ptsPerRing * Math.PI * 2;
+        const rRing = 1.0 + ringIdx * 0.3; // Nested out
+        // Tilt each ring perfectly
+        const tiltY = ringIdx * (Math.PI / rings); 
+        const ringX = Math.cos(ringT) * rRing;
+        const ringZ = Math.sin(ringT) * rRing;
+        // Rotate around Y
+        p2[i * 3 + 0] = ringX * Math.cos(tiltY) - ringZ * Math.sin(tiltY);
+        p2[i * 3 + 1] = ringX * Math.sin(tiltY) + ringZ * Math.cos(tiltY);
+        p2[i * 3 + 2] = ringZ;
+
+        // --- SHAPE 3: Flawless Fibonacci Torus ---
+        // A perfectly ordered donut shape
+        const torusR1 = 2.2;
+        const torusR2 = 0.8;
+        const torusTheta = t * Math.PI * 2 * 34.0; // Wraps around
+        const torusPhi = t * Math.PI * 2 * 21.0; 
+        p3[i * 3 + 0] = (torusR1 + torusR2 * Math.cos(torusTheta)) * Math.cos(torusPhi);
+        p3[i * 3 + 1] = (torusR1 + torusR2 * Math.cos(torusTheta)) * Math.sin(torusPhi);
+        p3[i * 3 + 2] = torusR2 * Math.sin(torusTheta);
+
+        // --- SHAPE 4: Strict Cartesian Voxel Grid ---
+        // A perfect 3D cube grid structure
+        const gridSize = Math.floor(Math.cbrt(COUNT)); 
+        const step = 4.0 / (gridSize - 1.0);
+        // Ensure i is bounded within the perfect cube size, otherwise stack in middle
+        if (i < gridSize * gridSize * gridSize) {
+            const gx = i % gridSize;
+            const gy = Math.floor(i / gridSize) % gridSize;
+            const gz = Math.floor(i / (gridSize * gridSize));
+            p4[i * 3 + 0] = -2.0 + gx * step;
+            p4[i * 3 + 1] = -2.0 + gy * step;
+            p4[i * 3 + 2] = -2.0 + gz * step;
         } else {
-            p2[i * 3 + 0] = Math.cos(atomT) * rAtom * Math.cos(-tilt) - Math.sin(atomT) * rAtom * Math.sin(-tilt);
-            p2[i * 3 + 1] = Math.sin(atomT) * rAtom;
-            p2[i * 3 + 2] = Math.cos(atomT) * rAtom * Math.sin(-tilt) + Math.sin(atomT) * rAtom * Math.cos(-tilt);
+            // Leftover points sit precisely at 0
+            p4[i * 3 + 0] = 0; p4[i * 3 + 1] = 0; p4[i * 3 + 2] = 0;
         }
 
-        // --- SHAPE 3: 'Fluidity' - The Double Helix DNA ---
-        // Represents "Organic growth and adaptation"
-        const dnaLen = (t - 0.5) * 8.0;
-        const dnaAng = t * Math.PI * 12.0;
-        const strandId = i % 2;
-        const rDna = 1.4;
-        p3[i * 3 + 0] = Math.cos(dnaAng + (strandId * Math.PI)) * rDna;
-        p3[i * 3 + 1] = dnaLen;
-        p3[i * 3 + 2] = Math.sin(dnaAng + (strandId * Math.PI)) * rDna;
-        // Connectors
-        if (i % 25 === 0) {
-            p3[i * 3 + 0] = 0; p3[i * 3 + 2] = 0; // pull to center for rung
+        // --- SHAPE 5: Mathematical Plane Wave ---
+        // A highly ordered horizontal grid of points undulating perfectly
+        const planeSize = Math.floor(Math.sqrt(COUNT));
+        const pStep = 6.0 / (planeSize - 1);
+        if (i < planeSize * planeSize) {
+            const px = i % planeSize;
+            const py = Math.floor(i / planeSize);
+            const xPos = -3.0 + px * pStep;
+            const zPos = -3.0 + py * pStep;
+            p5[i * 3 + 0] = xPos;
+            p5[i * 3 + 1] = Math.sin(xPos * 1.5) * Math.cos(zPos * 1.5) * 0.8;
+            p5[i * 3 + 2] = zPos;
+        } else {
+            p5[i * 3 + 0] = 0; p5[i * 3 + 1] = 0; p5[i * 3 + 2] = 0;
         }
 
-        // --- SHAPE 4: 'Connectivity' - The Brain / Neural Cloud ---
-        // Represents "Architecture and intelligence"
-        const phi4 = Math.acos(1 - 2 * t);
-        const theta4 = Math.PI * 2 * i / goldenRatio;
-        // Make it slightly bi-lobed like a brain hemisphere!
-        const rBrain = 2.5 + Math.pow(Math.abs(Math.sin(theta4)), 4) * 0.5 - Math.abs(Math.sin(phi4)) * 0.4;
-        p4[i * 3 + 0] = rBrain * Math.sin(phi4) * Math.cos(theta4);
-        p4[i * 3 + 1] = rBrain * Math.cos(phi4) * 0.8; // flattened
-        p4[i * 3 + 2] = rBrain * Math.sin(phi4) * Math.sin(theta4) * 1.2; // elongated back to front
-        // Create sulci/gyri (brain folds) using high frequency math
-        const fold = Math.sin(theta4 * 12) * Math.cos(phi4 * 12) * 0.15;
-        p4[i * 3 + 0] += fold; p4[i * 3 + 1] += fold; p4[i * 3 + 2] += fold;
+        // --- SHAPE 6: Sacred Geometry (Octahedron Lattice) ---
+        // Exactly mapping points to perfectly straight lines along octahedron edges
+        const R6 = 3.0;
+        const edges = 12;
+        const ptsPerEdge = COUNT / edges;
+        const edgeIdx = Math.floor(i / ptsPerEdge);
+        const eT = (i % ptsPerEdge) / ptsPerEdge; 
+        
+        let v1 = [0,0,0], v2 = [0,0,0];
+        // The 6 vertices of an octahedron
+        const top = [0, R6, 0], bot = [0, -R6, 0];
+        const fR = [R6, 0, 0], fL = [-R6, 0, 0], fF = [0, 0, R6], fB = [0, 0, -R6];
+        
+        if(edgeIdx === 0) { v1 = top; v2 = fR; }
+        else if(edgeIdx === 1) { v1 = top; v2 = fF; }
+        else if(edgeIdx === 2) { v1 = top; v2 = fL; }
+        else if(edgeIdx === 3) { v1 = top; v2 = fB; }
+        else if(edgeIdx === 4) { v1 = bot; v2 = fR; }
+        else if(edgeIdx === 5) { v1 = bot; v2 = fF; }
+        else if(edgeIdx === 6) { v1 = bot; v2 = fL; }
+        else if(edgeIdx === 7) { v1 = bot; v2 = fB; }
+        else if(edgeIdx === 8) { v1 = fR;  v2 = fF; }
+        else if(edgeIdx === 9) { v1 = fF;  v2 = fL; }
+        else if(edgeIdx === 10){ v1 = fL;  v2 = fB; }
+        else { v1 = fB;  v2 = fR; }
 
-        // --- SHAPE 5: 'Resonance' - Sound Wave / Data Cylinder ---
-        // Represents "Data & Signal Processing"
-        const cRad = 2.2;
-        const cHeight = (t - 0.5) * 6.0;
-        const cAng = i * 0.1; 
-        const waveform = Math.sin(cAng * 5.0) * Math.cos(cHeight * 4.0) * 0.6;
-        p5[i * 3 + 0] = Math.cos(cAng) * (cRad + waveform);
-        p5[i * 3 + 1] = cHeight;
-        p5[i * 3 + 2] = Math.sin(cAng) * (cRad + waveform);
-
-        // --- SHAPE 6: 'Excellence' - The Flawless Diamond ---
-        // Represents "Premium Output"
-        const R6 = 2.8; 
-        const isTop = t < 0.5;
-        const dT = isTop ? t * 2.0 : (t - 0.5) * 2.0;
-        const currentY = isTop ? (1.0 - dT) * R6 : (dT - 1.0) * R6; 
-        // Max radius at Y=0 is R6, converging to 0 at poles
-        const sliceRad = R6 * (1.0 - Math.abs(currentY)/R6);
-        // Diamond has 4 corners at slice (octahedron)
-        const dAng = Math.floor(Math.random() * 4) * (Math.PI / 2) + ((Math.random()-0.5)*0.2); // Snap to 4 points with slight jitter to draw edges
-        const mixCenter = Math.random(); 
-        p6[i * 3 + 0] = Math.cos(dAng) * sliceRad * mixCenter;
-        p6[i * 3 + 1] = currentY;
-        p6[i * 3 + 2] = Math.sin(dAng) * sliceRad * mixCenter;
+        p6[i * 3 + 0] = v1[0] + (v2[0] - v1[0]) * eT;
+        p6[i * 3 + 1] = v1[1] + (v2[1] - v1[1]) * eT;
+        p6[i * 3 + 2] = v1[2] + (v2[2] - v1[2]) * eT;
     }
     return { pos1: p1, pos2: p2, pos3: p3, pos4: p4, pos5: p5, pos6: p6 };
   }, []);

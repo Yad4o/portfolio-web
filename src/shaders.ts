@@ -172,15 +172,10 @@ export const particleMorphVertexShader = /* glsl */`
       pos = aPosition6;
     }
 
-    // Organic curl noise drift / fluid motion
-    // To keep it clean without importing huge noise library, use trigonometric chaos
-    vec3 curl = vec3(
-       sin(pos.y * 1.5 + uTime * 0.4) * cos(pos.z * 1.3 - uTime * 0.2),
-       sin(pos.z * 1.2 - uTime * 0.5) * cos(pos.x * 1.1 + uTime * 0.3),
-       sin(pos.x * 1.4 + uTime * 0.6) * cos(pos.y * 1.6 - uTime * 0.1)
-    );
-    // Add turbulence scale based on scrolling
-    pos += curl * (0.3 + sin(uTime * 0.5) * 0.15);
+    // Disable organic curl noise drift for clean geometric fidelity
+    vec3 curl = vec3(0.0);
+    // Add turbulence scale based on scrolling entirely removed.
+    pos += curl;
 
     // 4D transformations
     vec4 pos4D = vec4(pos, 0.0);

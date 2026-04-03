@@ -11,6 +11,10 @@ import { ParticleMorpher } from './components/ParticleMorpher';
 import { CameraRig } from './components/CameraRig';
 import { GitHubProjects } from './components/GitHubProjects';
 import { GithubInsights } from './components/GithubInsights';
+import { BentoSkills } from './components/BentoSkills';
+import { ExperienceTimeline } from './components/ExperienceTimeline';
+import { EducationSection } from './components/EducationSection';
+import { IntroSequence } from './components/IntroSequence';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -35,7 +39,8 @@ const ImmersiveCore = ({ scroll }: { scroll: number }) => {
 // ─────────────────────────────────────────────
 const App = () => {
   const [scroll, setScroll] = useState(0);
-  const [activePage, setActivePage] = useState<'home' | 'github'>('home');
+  const [activePage, setActivePage] = useState<'home' | 'resume' | 'github'>('home');
+  const [isIntroDone, setIsIntroDone] = useState(false);
 
   // ── Smooth Scroll (Lenis) ──────────────────
   useEffect(() => {
@@ -57,9 +62,10 @@ const App = () => {
     };
   }, []);
 
-  // ── Reveal Animations ─────────────────────
+  // ── GSAP Reveal & Parallax Animations ──
   useEffect(() => {
     const ctx = gsap.context(() => {
+        // Hero Entrance
         gsap.from('.hero-reveal', {
             y: 100,
             opacity: 0,
@@ -68,12 +74,58 @@ const App = () => {
             ease: 'expo.out',
             delay: 0.5
         });
+
+        // Infinite Scroller Parallax
+        gsap.to('.marquee-track', {
+            xPercent: -50,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.marquee-section',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1.5
+            }
+        });
+
+        // Animated Metric Counters
+        const metrics = document.querySelectorAll('.metric-number');
+        metrics.forEach((metric: any) => {
+            const target = parseInt(metric.getAttribute('data-target') || '0', 10);
+            gsap.fromTo(metric, 
+                { innerText: 0 },
+                {
+                    innerText: target,
+                    duration: 2.5,
+                    snap: { innerText: 1 },
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: metric,
+                        start: 'top 85%'
+                    }
+                }
+            );
+        });
+
+        // Parallax Floating Elements in Data
+        gsap.to('.parallax-float', {
+            y: -100,
+            ease: 'none',
+            scrollTrigger: {
+                trigger: '.data-section',
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 1
+            }
+        });
     });
     return () => ctx.revert();
   }, []);
 
   return (
     <div className="bg-[#05060b]">
+      {/* MASSIVE CINEMATIC INTRO SEQUENCE */}
+      {!isIntroDone && <IntroSequence onComplete={() => setIsIntroDone(true)} />}
+
       {/* FIXED IMMERSIVE CANVAS */}
       <div className="fixed inset-0 z-0 w-screen h-screen">
         <Canvas
@@ -121,6 +173,16 @@ const App = () => {
               Portfolio
             </button>
             <button
+              onClick={() => setActivePage('resume')}
+              className={`px-3 py-1 rounded-full border ${
+                activePage === 'resume'
+                  ? 'border-[#b6bac5]/70 text-white bg-[#b6bac5]/10'
+                  : 'border-[#b6bac5]/20 hover:border-[#b6bac5]/40 hover:text-white'
+              } transition-colors`}
+            >
+              Resume
+            </button>
+            <button
               onClick={() => setActivePage('github')}
               className={`px-3 py-1 rounded-full border ${
                 activePage === 'github'
@@ -147,8 +209,8 @@ const App = () => {
                         OM<br/><span className="ml-[10%] opacity-90">YADAV</span>
                     </h1>
                 </div>
-                <p className="hero-reveal text-white/60 text-sm md:text-base max-w-md mt-10 font-light tracking-[0.1em] leading-relaxed">
-                    Forging immersive digital experiences perfectly balanced strictly between engineering and breathtaking art.
+                <p className="hero-reveal text-white/50 text-sm md:text-lg max-w-md mt-10 font-medium tracking-[0.1em] leading-relaxed uppercase">
+                    Forging immersive digital experiences perfectly balanced strictly between engineering and visual art.
                 </p>
                 <div className="hero-reveal absolute bottom-12 flex flex-col items-center gap-3 text-white/30">
                     <span className="text-[8px] uppercase font-bold tracking-[0.4em]">DISCOVER MORE</span>
@@ -157,14 +219,35 @@ const App = () => {
             </div>
         </section>
 
-        <section id="about" className="h-[200vh] relative">
+        {/* MARQUEE SECTION - HYPER GEN-Z TYPOGRAPHY */}
+        <section className="marquee-section relative h-[50vh] flex items-center overflow-hidden bg-transparent z-10 pointer-events-none mix-blend-overlay">
+            <div className="absolute top-1/2 -translate-y-1/2 w-[200vw] flex marquee-track">
+                {/* Track repeated twice for infinite effect */}
+                <div className="flex shrink-0 w-[100vw] justify-around items-center space-x-16 px-8">
+                    {['WEBGL', 'THREE.JS', 'REACT', 'GSAP', 'GLSL', 'VITE'].map((text, i) => (
+                        <span key={i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
+                            {text}
+                        </span>
+                    ))}
+                </div>
+                <div className="flex shrink-0 w-[100vw] justify-around items-center space-x-16 px-8">
+                    {['WEBGL', 'THREE.JS', 'REACT', 'GSAP', 'GLSL', 'VITE'].map((text, i) => (
+                        <span key={'b'+i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
+                            {text}
+                        </span>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <section id="about" className="h-[200vh] relative mt-20">
             <div className="sticky top-0 h-screen flex items-center justify-center p-8 md:p-24 overflow-hidden pointer-events-none">
                 <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16">
                     <div className="md:col-span-7 flex flex-col justify-center">
                         <h2 className="text-5xl md:text-[7rem] font-black tracking-tighter text-white leading-[0.8] mb-10 mix-blend-overlay opacity-90">
                             Pushing <br/>Boundaries.
                         </h2>
-                        <div className="space-y-8 text-lg md:text-xl text-white/60 leading-relaxed font-light max-w-xl pl-2 border-l border-white/20 pointer-events-auto">
+                        <div className="space-y-8 text-lg md:text-xl text-white/60 leading-relaxed font-light max-w-xl pl-2 border-l-2 border-white/20 pointer-events-auto backdrop-blur-[2px]">
                             <p>
                               A relentless pursuit of flawless interactive execution. Specialized in fusing high-performance code with bleeding-edge visual fidelity.
                             </p>
@@ -177,18 +260,45 @@ const App = () => {
                         {['React.js', 'WebGL', 'Three.js', 'Animation'].map((t, i) => (
                             <div
                               key={i}
-                              className="group p-6 bg-white/[0.02] border border-white/5 backdrop-blur-xl hover:bg-white/[0.05] hover:border-white/20 transition-all duration-500 hover:-translate-y-1"
+                              className="group p-6 bg-white/[0.02] border border-white/5 backdrop-blur-3xl hover:bg-white/[0.08] hover:border-white/30 transition-all duration-700 hover:-translate-y-2 hover:scale-105 shadow-2xl"
                             >
-                                <span className="text-white/20 font-black text-xs inline-block mb-8">0{i+1}</span>
-                                <h3 className="text-white/80 font-medium tracking-wide text-sm uppercase">
+                                <span className="text-white/20 font-black text-xs inline-block mb-8 transition-transform group-hover:translate-x-2 duration-500">0{i+1}</span>
+                                <h3 className="text-white/80 font-bold tracking-[0.2em] text-sm uppercase transition-all duration-500 group-hover:text-white">
                                   {t}
                                 </h3>
-                                <div className="w-0 group-hover:w-full h-[1px] bg-white/40 mt-4 transition-all duration-500"></div>
+                                <div className="w-0 group-hover:w-full h-[2px] bg-white mt-4 transition-all duration-700 ease-out"></div>
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
+        </section>
+
+        {/* EXTREME DATA METRICS SECTION */}
+        <section className="data-section relative min-h-screen py-32 flex flex-col items-center justify-center pointer-events-none z-10 overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#05060b] via-transparent to-transparent opacity-80" />
+            <div className="max-w-7xl mx-auto px-8 relative w-full grid grid-cols-1 md:grid-cols-3 gap-12 text-center pointer-events-auto">
+                <div className="parallax-float backdrop-blur-2xl bg-white/[0.01] border border-white/10 p-12 rounded-3xl group hover:bg-white/[0.05] transition-all duration-500">
+                    <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-white overflow-hidden">
+                        <span className="metric-number" data-target="9">0</span>
+                    </h4>
+                    <p className="text-white/40 text-sm font-bold tracking-[0.4em] uppercase mt-6 group-hover:text-white/80 transition-colors">Repositories</p>
+                </div>
+                <div className="parallax-float backdrop-blur-2xl bg-white/[0.01] border border-white/10 p-12 rounded-3xl group hover:bg-white/[0.05] transition-all duration-500 md:mt-24">
+                    <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-white overflow-hidden">
+                        <span className="metric-number" data-target="4">0</span><span className="text-white/30 font-light">M</span>
+                    </h4>
+                    <p className="text-white/40 text-sm font-bold tracking-[0.4em] uppercase mt-6 group-hover:text-white/80 transition-colors">Lines of Code</p>
+                </div>
+                <div className="parallax-float backdrop-blur-2xl bg-white/[0.01] border border-white/10 p-12 rounded-3xl group hover:bg-white/[0.05] transition-all duration-500">
+                    <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-white overflow-hidden">
+                        <span className="text-white/30 font-light">∞</span>
+                    </h4>
+                    <p className="text-white/40 text-sm font-bold tracking-[0.4em] uppercase mt-6 group-hover:text-white/80 transition-colors">Energy Level</p>
+                </div>
+            </div>
+            {/* Interactive Cyber grid background element */}
+            <div className="absolute bottom-0 w-full h-[40vh] border-t border-white/[0.02] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.03)_0%,transparent_70%)]" />
         </section>
 
         <section id="projects-section" className="min-h-screen relative py-32 z-20 bg-black/20 backdrop-blur-[2px]">
@@ -252,8 +362,21 @@ const App = () => {
         </>
         )}
 
+        {activePage === 'resume' && (
+          <div className="pt-24 pb-24 relative z-10 transition-opacity duration-1000">
+            {/* BENTO SKILLS GRID */}
+            <BentoSkills />
+
+            {/* EDUCATION SECTION */}
+            <EducationSection />
+
+            {/* EXPERIENCE TIMELINE */}
+            <ExperienceTimeline />
+          </div>
+        )}
+
         {activePage === 'github' && (
-          <div className="pt-24">
+          <div className="pt-24 transition-opacity duration-1000">
             <GithubInsights />
           </div>
         )}
