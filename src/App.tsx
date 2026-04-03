@@ -222,19 +222,18 @@ const App = () => {
         </section>
 
         {/* MARQUEE SECTION - HYPER GEN-Z TYPOGRAPHY */}
-        <section className="marquee-section relative h-[50vh] flex items-center overflow-hidden bg-transparent z-10 pointer-events-none mix-blend-overlay">
-            <div className="absolute top-1/2 -translate-y-1/2 w-[200vw] flex marquee-track">
-                {/* Track repeated twice for infinite effect */}
+        <section className="marquee-section relative h-[50vh] flex items-center overflow-hidden bg-transparent z-10 pointer-events-auto mix-blend-overlay cursor-none group">
+            <div className="absolute top-1/2 -translate-y-1/2 w-[200vw] flex marquee-track group-hover:[animation-play-state:paused]">
                 <div className="flex shrink-0 w-[100vw] justify-around items-center space-x-16 px-8">
                     {['WEBGL', 'THREE.JS', 'REACT', 'GSAP', 'GLSL', 'VITE'].map((text, i) => (
-                        <span key={i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
+                        <span key={i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent hover:text-white hover:scale-110 hover:-rotate-3 hover:drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] transition-all duration-300" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
                             {text}
                         </span>
                     ))}
                 </div>
                 <div className="flex shrink-0 w-[100vw] justify-around items-center space-x-16 px-8">
                     {['WEBGL', 'THREE.JS', 'REACT', 'GSAP', 'GLSL', 'VITE'].map((text, i) => (
-                        <span key={'b'+i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
+                        <span key={'b'+i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent hover:text-white hover:scale-110 hover:-rotate-3 hover:drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] transition-all duration-300" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
                             {text}
                         </span>
                     ))}
@@ -305,16 +304,16 @@ const App = () => {
 
         <section id="projects-section" className="min-h-screen relative py-32 z-20 bg-black/20 backdrop-blur-[2px]">
             <div className="max-w-7xl mx-auto px-8">
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8 group">
                     <div>
-                        <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.4em] mb-4 ml-1">
+                        <p className="text-[#e0aaff] text-[10px] uppercase font-bold tracking-[0.4em] mb-4 ml-1 group-hover:tracking-[0.8em] transition-all duration-700 pointer-events-auto">
                             SELECTED WORKS
                         </p>
-                        <h2 className="text-5xl md:text-[6rem] font-black text-white leading-[0.8] tracking-tighter">
+                        <h2 className="text-5xl md:text-[6rem] font-black leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-white to-white group-hover:from-white group-hover:to-[#c77dff] transition-all duration-700 pointer-events-auto drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
                             ARCHIVE.
                         </h2>
                     </div>
-                    <p className="text-white/50 text-sm md:text-base max-w-sm font-light leading-relaxed">
+                    <p className="text-white/50 text-sm md:text-base max-w-sm font-light leading-relaxed group-hover:text-white/80 transition-colors pointer-events-auto bg-[#10002b]/80 border-l-4 border-[#9d4edd] p-6 rounded-r-2xl backdrop-blur-2xl shadow-[0_10px_30px_rgba(0,0,0,0.9)]">
                         A curated selection of complex technical challenges transformed into elegant front-end architectures.
                     </p>
                 </div>
@@ -326,32 +325,32 @@ const App = () => {
                         href="https://github.com/Yad4o" 
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group relative inline-flex items-center gap-4 px-8 py-4 bg-white/5 border border-white/10 hover:bg-white hover:text-black transition-all duration-500 overflow-hidden"
+                        className="group relative inline-flex items-center gap-4 px-12 py-6 bg-transparent border-2 border-[#9d4edd] rounded-2xl hover:scale-110 hover:-rotate-2 transition-all duration-500 overflow-hidden shadow-[0_0_20px_rgba(157,78,221,0.2)] hover:shadow-[0_0_60px_rgba(199,125,255,0.6)]"
                     >
-                        <div className="absolute inset-0 bg-white translate-y-[100%] group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-                        <Github className="w-5 h-5 relative z-10" />
-                        <span className="text-xs font-bold tracking-[0.2em] relative z-10 uppercase">Full Repository</span>
-                        <ExternalLink className="w-4 h-4 relative z-10 opacity-50 group-hover:opacity-100" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#9d4edd] to-[#c77dff] translate-y-[101%] group-hover:translate-y-0 transition-transform duration-500 ease-out" />
+                        <Github className="w-6 h-6 relative z-10 text-[#c77dff] group-hover:text-black group-hover:scale-125 transition-all duration-500" />
+                        <span className="text-sm font-black tracking-[0.3em] relative z-10 text-white group-hover:text-black uppercase transition-colors duration-500">Full Repository</span>
+                        <ExternalLink className="w-5 h-5 relative z-10 text-[#c77dff] group-hover:text-black opacity-50 group-hover:opacity-100 transition-all duration-500" />
                     </a>
                 </div>
             </div>
         </section>
 
         <section id="contact" className="h-screen flex items-center justify-center bg-transparent p-6 relative">
-            <div className="max-w-4xl w-full text-center z-10 flex flex-col items-center">
-                <h2 className="text-[5rem] md:text-[10rem] font-black text-white leading-[0.8] tracking-tighter drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] mb-10">
+            <div className="max-w-4xl w-full text-center z-10 flex flex-col items-center group pointer-events-auto">
+                <h2 className="text-[5rem] md:text-[10rem] font-black text-white leading-[0.8] tracking-tighter drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] mb-10 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-b group-hover:from-white group-hover:to-[#9d4edd] group-hover:scale-105 group-hover:italic transition-all duration-700 cursor-default">
                   LET'S TALK
                 </h2>
-                <div className="flex justify-center gap-6 mt-4">
-                    <a href="mailto:omyadao@gmail.com" className="w-16 h-16 border border-white/20 bg-white/[0.02] backdrop-blur-xl flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500 hover:-translate-y-2">
-                        <Mail className="w-5 h-5" />
+                <div className="flex justify-center gap-8 mt-4">
+                    <a href="mailto:omyadao@gmail.com" className="group/btn w-20 h-20 rounded-3xl border-2 border-[#5a189a] bg-[#10002b] backdrop-blur-xl flex items-center justify-center hover:bg-gradient-to-br hover:from-[#c77dff] hover:to-[#5a189a] hover:border-white transition-all duration-500 hover:-translate-y-4 hover:-rotate-6 hover:scale-110 shadow-[0_10px_30px_rgba(0,0,0,0.9)] hover:shadow-[0_0_50px_rgba(157,78,221,0.6)]">
+                        <Mail className="w-8 h-8 text-[#c77dff] group-hover/btn:text-white transition-colors duration-500" />
                     </a>
-                    <a href="https://github.com/Yad4o" target="_blank" className="w-16 h-16 border border-white/20 bg-white/[0.02] backdrop-blur-xl flex items-center justify-center hover:bg-white hover:text-black transition-all duration-500 hover:-translate-y-2">
-                        <Github className="w-5 h-5" />
+                    <a href="https://github.com/Yad4o" target="_blank" className="group/btn w-20 h-20 rounded-3xl border-2 border-[#5a189a] bg-[#10002b] backdrop-blur-xl flex items-center justify-center hover:bg-gradient-to-br hover:from-[#c77dff] hover:to-[#5a189a] hover:border-white transition-all duration-500 hover:-translate-y-4 hover:rotate-6 hover:scale-110 shadow-[0_10px_30px_rgba(0,0,0,0.9)] hover:shadow-[0_0_50px_rgba(157,78,221,0.6)]">
+                        <Github className="w-8 h-8 text-[#c77dff] group-hover/btn:text-white transition-colors duration-500" />
                     </a>
                 </div>
-                <div className="mt-20 overflow-hidden">
-                    <p className="text-white/30 text-[10px] font-bold tracking-[0.4em] uppercase">
+                <div className="mt-24 overflow-hidden px-8 py-3 rounded-full border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] transition-colors cursor-default">
+                    <p className="text-white/30 text-[12px] font-bold tracking-[0.4em] uppercase group-hover:text-[#e0aaff] group-hover:tracking-[0.8em] transition-all duration-1000">
                       Open for visionary opportunities
                     </p>
                 </div>
