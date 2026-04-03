@@ -27,6 +27,28 @@ import {
   BgOptionOscilloscope,
   BgOptionFluidBlob
 } from './components/ExtraBackgrounds';
+import {
+  BgOptionDNAHelix,
+  BgOptionMeteorShower,
+  BgOptionCrystalLattice,
+  BgOptionFireflies,
+  BgOptionPulseRadar,
+  BgOptionConstellationMap,
+  BgOptionMagneticField,
+  BgOptionHexGrid,
+  BgOptionSoundBars,
+  BgOptionRipplePool,
+  BgOptionOrbitSystem,
+  BgOptionLightningStorm,
+  BgOptionWaveGrid,
+  BgOptionSmokeWisps,
+  BgOptionPrismBeams,
+  BgOptionParticleFountain,
+  BgOptionHologramCube,
+  BgOptionAuroraCurtain,
+  BgOptionBokehLights,
+  BgOptionDigitalMatrix
+} from './components/ExtraBackgrounds2';
 import { CameraRig } from './components/CameraRig';
 import { GitHubProjects } from './components/GitHubProjects';
 import { GithubInsights } from './components/GithubInsights';
@@ -64,6 +86,26 @@ const ImmersiveCore = ({ scroll, bgMode }: { scroll: number, bgMode: number }) =
       {bgMode === 15 && <BgOptionTunnelVision scroll={scroll} />}
       {bgMode === 16 && <BgOptionOscilloscope scroll={scroll} />}
       {bgMode === 17 && <BgOptionFluidBlob scroll={scroll} />}
+      {bgMode === 18 && <BgOptionDNAHelix scroll={scroll} />}
+      {bgMode === 19 && <BgOptionMeteorShower scroll={scroll} />}
+      {bgMode === 20 && <BgOptionCrystalLattice scroll={scroll} />}
+      {bgMode === 21 && <BgOptionFireflies scroll={scroll} />}
+      {bgMode === 22 && <BgOptionPulseRadar scroll={scroll} />}
+      {bgMode === 23 && <BgOptionConstellationMap scroll={scroll} />}
+      {bgMode === 24 && <BgOptionMagneticField scroll={scroll} />}
+      {bgMode === 25 && <BgOptionHexGrid scroll={scroll} />}
+      {bgMode === 26 && <BgOptionSoundBars scroll={scroll} />}
+      {bgMode === 27 && <BgOptionRipplePool scroll={scroll} />}
+      {bgMode === 28 && <BgOptionOrbitSystem scroll={scroll} />}
+      {bgMode === 29 && <BgOptionLightningStorm scroll={scroll} />}
+      {bgMode === 30 && <BgOptionWaveGrid scroll={scroll} />}
+      {bgMode === 31 && <BgOptionSmokeWisps scroll={scroll} />}
+      {bgMode === 32 && <BgOptionPrismBeams scroll={scroll} />}
+      {bgMode === 33 && <BgOptionParticleFountain scroll={scroll} />}
+      {bgMode === 34 && <BgOptionHologramCube scroll={scroll} />}
+      {bgMode === 35 && <BgOptionAuroraCurtain scroll={scroll} />}
+      {bgMode === 36 && <BgOptionBokehLights scroll={scroll} />}
+      {bgMode === 37 && <BgOptionDigitalMatrix scroll={scroll} />}
       
       {/* Decorative stars always visible but restyled per mode */}
       <Stars radius={100} depth={50} count={bgMode >= 2 ? 0 : 1000} factor={4} saturation={0} fade speed={1} />
@@ -212,7 +254,27 @@ const App = () => {
                 { id: 14, label: "Voxel City" },
                 { id: 15, label: "Tunnel Vision" },
                 { id: 16, label: "Oscilloscope" },
-                { id: 17, label: "Fluid Blob" }
+                { id: 17, label: "Fluid Blob" },
+                { id: 18, label: "DNA Helix" },
+                { id: 19, label: "Meteor Shower" },
+                { id: 20, label: "Crystal Lattice" },
+                { id: 21, label: "Fireflies" },
+                { id: 22, label: "Pulse Radar" },
+                { id: 23, label: "Constellation" },
+                { id: 24, label: "Magnetic Field" },
+                { id: 25, label: "Hex Grid" },
+                { id: 26, label: "Sound Bars" },
+                { id: 27, label: "Ripple Pool" },
+                { id: 28, label: "Orbit System" },
+                { id: 29, label: "Lightning" },
+                { id: 30, label: "Wave Grid" },
+                { id: 31, label: "Smoke Wisps" },
+                { id: 32, label: "Prism Beams" },
+                { id: 33, label: "Fountain" },
+                { id: 34, label: "Hologram Cube" },
+                { id: 35, label: "Aurora Curtain" },
+                { id: 36, label: "Bokeh Lights" },
+                { id: 37, label: "Digital Matrix" }
               ].map(opt => (
                 <button 
                   key={opt.id}
