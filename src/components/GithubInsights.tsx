@@ -56,37 +56,38 @@ export const GithubInsights = () => {
     <section className="min-h-screen relative py-24" id="github-insights">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
         <div className="text-center mb-24 pointer-events-none">
-          <p className="text-white/40 text-[10px] uppercase font-bold tracking-[0.4em] mb-4 ml-1">
+          <p className="text-[#00d4ff] text-[10px] uppercase font-bold tracking-[0.4em] mb-4 ml-1 drop-shadow-[0_0_10px_rgba(0,212,255,0.8)] animate-pulse">
             GITHUB DEEP DIVE
           </p>
-          <h2 className="text-[5rem] md:text-[8rem] font-black tracking-tighter text-white leading-[0.8] mb-10 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
+          <h2 className="text-[5rem] md:text-[8rem] font-black tracking-tighter text-white leading-[0.8] mb-10 drop-shadow-[0_20px_40px_rgba(0,212,255,0.2)]">
             AI & ML <br/> Profile.
           </h2>
-          <p className="text-white/80 text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto border border-[#b6bac5]/20 bg-[#0b0d16]/90 px-8 py-6 rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.8)] backdrop-blur-3xl text-left pointer-events-auto">
+          <p className="text-white/80 text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto border border-[#00d4ff]/20 bg-[#001018]/90 px-8 py-6 rounded-2xl shadow-[0_15px_40px_rgba(0,212,255,0.1)] backdrop-blur-3xl text-left pointer-events-auto hover:border-[#00d4ff]/60 hover:shadow-[0_0_50px_rgba(0,212,255,0.2)] hover:-translate-y-2 transition-all duration-700">
             A curated snapshot of GitHub work – highlighting multi‑agent systems, recommendation engines,
             computer vision, and data‑driven projects demonstrating capability as an applied AI engineer.
           </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-[1.2fr,0.8fr] mb-20 pointer-events-auto">
-          <div className="bg-[#0b0d16]/95 border-b-4 border-[#b6bac5]/40 p-8 md:p-12 rounded-t-3xl backdrop-blur-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)]">
+          <div className="group bg-[#001018]/95 border-t-4 border-[#00d4ff]/50 p-8 md:p-12 rounded-b-3xl backdrop-blur-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)] hover:bg-[#001824] hover:shadow-[0_0_80px_rgba(0,212,255,0.15)] hover:scale-[1.02] transition-all duration-700">
             <div className="flex items-center gap-6 mb-10">
-              <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02]">
-                <BrainCog className="w-8 h-8 text-white/50" />
+              <div className="p-4 rounded-2xl border border-[#00d4ff]/30 bg-[#00d4ff]/10 group-hover:bg-[#00d4ff]/20 group-hover:scale-110 transition-all duration-500">
+                <BrainCog className="w-8 h-8 text-[#00d4ff]" />
               </div>
               <div className="text-left">
-                <p className="font-mono text-xs uppercase tracking-[0.3em] text-white/40 font-bold mb-2">
+                <p className="font-mono text-xs uppercase tracking-[0.3em] text-[#00d4ff]/60 font-bold mb-2">
                   Core Themes
                 </p>
-                <p className="text-xl md:text-2xl text-white/90 font-bold tracking-tight">
+                <p className="text-xl md:text-2xl text-white font-bold tracking-tight">
                   Applied AI, multi‑agent systems, and practical analytics.
                 </p>
               </div>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2 text-sm text-white/60 font-light leading-loose">
-              <div className="border border-white/5 rounded-[1.5rem] p-6 bg-white/[0.01]">
-                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold mb-4">
+              <div className="border border-[#00d4ff]/10 rounded-[1.5rem] p-6 bg-white/[0.01] hover:border-[#00d4ff]/40 hover:bg-[#00d4ff]/5 transition-all duration-500 hover:-translate-y-1">
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#00d4ff]/60 font-bold mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#00d4ff] animate-pulse"></span>
                   AI SYSTEMS
                 </p>
                 <p>
@@ -95,8 +96,9 @@ export const GithubInsights = () => {
                   and ship end‑to‑end AI products.
                 </p>
               </div>
-              <div className="border border-white/5 rounded-[1.5rem] p-6 bg-white/[0.01]">
-                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40 font-bold mb-4">
+              <div className="border border-[#00d4ff]/10 rounded-[1.5rem] p-6 bg-white/[0.01] hover:border-[#00d4ff]/40 hover:bg-[#00d4ff]/5 transition-all duration-500 hover:-translate-y-1">
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#00d4ff]/60 font-bold mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-[#ff00a0] animate-pulse"></span>
                   RESEARCH → REAL WORLD
                 </p>
                 <p>
@@ -108,15 +110,15 @@ export const GithubInsights = () => {
             </div>
           </div>
 
-          <div className="bg-[#0b0d16]/95 border-b-4 border-[#b6bac5]/40 p-8 md:p-12 rounded-t-3xl backdrop-blur-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)] flex flex-col justify-between">
+          <div className="group bg-[#001018]/95 border-t-4 border-[#ff00a0]/50 p-8 md:p-12 rounded-b-3xl backdrop-blur-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)] hover:bg-[#001824] hover:shadow-[0_0_80px_rgba(255,0,160,0.15)] hover:scale-[1.02] transition-all duration-700 flex flex-col justify-between">
             <div className="flex items-center justify-between mb-10">
               <div className="flex items-center gap-4">
-                <div className="p-4 rounded-2xl border border-white/10 bg-white/[0.02]">
-                  <Github className="w-6 h-6 text-white/50" />
+                <div className="p-4 rounded-2xl border border-[#ff00a0]/30 bg-[#ff00a0]/10 group-hover:bg-[#ff00a0]/20 group-hover:scale-110 transition-all duration-500">
+                  <Github className="w-6 h-6 text-[#ff00a0]" />
                 </div>
                 <div>
                   <p className="text-xl font-black text-white tracking-tight">GitHub</p>
-                  <p className="font-mono text-xs text-white/40 tracking-[0.2em] uppercase mt-1">
+                  <p className="font-mono text-xs text-[#ff00a0]/60 tracking-[0.2em] uppercase mt-1">
                     8+ Public · AI/ML
                   </p>
                 </div>
@@ -125,28 +127,28 @@ export const GithubInsights = () => {
                 href="https://github.com/Yad4o"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 font-mono text-[10px] uppercase font-bold text-white border border-white/20 rounded-full px-4 py-2 hover:bg-white hover:text-black transition-all"
+                className="hover-trigger inline-flex items-center gap-2 font-mono text-[10px] uppercase font-bold text-[#ff00a0] border border-[#ff00a0]/30 rounded-full px-4 py-2 hover:bg-[#ff00a0] hover:text-black hover:shadow-[0_0_20px_rgba(255,0,160,0.4)] transition-all duration-300"
               >
-                Profile <ExternalLink className="w-3 h-3 opacity-50 group-hover:opacity-100" />
+                Profile <ExternalLink className="w-3 h-3 transition-transform duration-300" />
               </a>
             </div>
 
             <div className="space-y-4 text-xs md:text-sm text-white/60 font-light">
-              <div className="flex items-center justify-between border border-white/5 rounded-2xl px-5 py-4 bg-white/[0.01]">
+              <div className="group/item flex items-center justify-between border border-[#ff00a0]/10 rounded-2xl px-5 py-4 bg-white/[0.01] hover:border-[#ff00a0]/40 transition-all duration-300 hover:bg-[#ff00a0]/5 hover:pl-6">
                 <div className="flex items-center gap-3">
-                  <Cpu className="w-4 h-4 text-white/40" />
-                  <span className="font-bold tracking-widest uppercase text-white/80">Stack</span>
+                  <Cpu className="w-4 h-4 text-[#ff00a0]/80 group-hover/item:text-[#ff00a0] group-hover/item:scale-125 transition-all" />
+                  <span className="font-bold tracking-widest uppercase text-white group-hover/item:text-[#ff00a0] transition-colors">Stack</span>
                 </div>
-                <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest text-right">
+                <span className="font-mono text-[10px] text-[#ff00a0]/60 uppercase tracking-widest text-right">
                   Python · C++ · FastAPI<br/>Docker · Redis
                 </span>
               </div>
-              <div className="flex items-center justify-between border border-white/5 rounded-2xl px-5 py-4 bg-white/[0.01]">
+              <div className="group/item flex items-center justify-between border border-[#ff00a0]/10 rounded-2xl px-5 py-4 bg-white/[0.01] hover:border-[#ff00a0]/40 transition-all duration-300 hover:bg-[#ff00a0]/5 hover:pl-6">
                 <div className="flex items-center gap-3">
-                  <LineChart className="w-4 h-4 text-white/40" />
-                  <span className="font-bold tracking-widest uppercase text-white/80">Domains</span>
+                  <LineChart className="w-4 h-4 text-[#ff00a0]/80 group-hover/item:text-[#ff00a0] group-hover/item:scale-125 transition-all" />
+                  <span className="font-bold tracking-widest uppercase text-white group-hover/item:text-[#ff00a0] transition-colors">Domains</span>
                 </div>
-                <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest text-right">
+                <span className="font-mono text-[10px] text-[#ff00a0]/60 uppercase tracking-widest text-right">
                   Agents · Vision<br/>Algorithms
                 </span>
               </div>
@@ -161,29 +163,29 @@ export const GithubInsights = () => {
               href={repo.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group bg-[#0b0d16]/90 border border-[#b6bac5]/10 border-b-2 hover:border-b-[#b6bac5] p-8 rounded-2xl backdrop-blur-2xl transition-all duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_20px_50px_rgba(0,0,0,0.9)] hover:-translate-y-1"
+              className="group bg-[#001018]/90 border border-[#00d4ff]/10 border-l-4 hover:border-l-[#00d4ff] hover:bg-[#001018] p-8 rounded-r-3xl backdrop-blur-2xl transition-all duration-500 shadow-[0_15px_40px_rgba(0,0,0,0.7)] hover:shadow-[0_0_50px_rgba(0,212,255,0.2)] hover:scale-[1.03] hover:-translate-y-2"
             >
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
-                  <span className="w-10 h-10 rounded-xl border border-white/10 bg-white/[0.02] flex items-center justify-center font-black text-white/30 group-hover:text-white/80 transition-colors">
+                  <span className="w-10 h-10 rounded-xl border border-[#00d4ff]/20 bg-[#00d4ff]/10 flex items-center justify-center font-black text-[#00d4ff] group-hover:scale-110 group-hover:bg-[#00d4ff] group-hover:text-black transition-all duration-500 shadow-[0_0_10px_rgba(0,212,255,0.2)]">
                     {repo.name[0]}
                   </span>
-                  <p className="text-xl font-black text-white group-hover:text-white/80 transition-colors tracking-tighter">
+                  <p className="text-xl font-black text-white group-hover:text-[#00d4ff] transition-colors tracking-tighter">
                     {repo.name.replace(/-/g, ' ')}
                   </p>
                 </div>
-                <span className="font-mono text-[9px] uppercase tracking-[0.3em] font-bold text-white/40 border border-white/10 rounded-full px-3 py-1">
+                <span className="font-mono text-[9px] uppercase tracking-[0.3em] font-bold text-[#00d4ff]/60 border border-[#00d4ff]/20 rounded-full px-3 py-1 group-hover:border-[#00d4ff] group-hover:text-[#00d4ff] transition-colors duration-500">
                   {repo.tag}
                 </span>
               </div>
-              <p className="text-sm text-white/50 mb-8 font-light leading-relaxed h-16">
+              <p className="text-sm text-white/50 mb-8 font-light leading-relaxed h-16 group-hover:text-white/80 transition-colors duration-500">
                 {repo.summary}
               </p>
               <div className="flex flex-wrap gap-2">
-                {repo.focus.map((f) => (
+                {repo.focus.map((f, idx) => (
                   <span
                     key={f}
-                    className="font-mono text-[9px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border border-white/10 text-white/60 bg-white/[0.02]"
+                    className={`font-mono text-[9px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border ${idx === 0 ? 'border-[#00d4ff]/40 text-[#00d4ff]' : 'border-[#ff00a0]/40 text-[#ff00a0]'} bg-[#001824]/50 group-hover:bg-black transition-colors duration-500 shadow-[0_0_10px_rgba(0,0,0,0.5)]`}
                   >
                     {f}
                   </span>
