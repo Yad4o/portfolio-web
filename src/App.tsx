@@ -204,10 +204,35 @@ const App = () => {
                         VISIONARY CREATIVE DEVELOPER
                     </p>
                 </div>
-                <div className="hero-reveal relative">
-                    <h1 className="text-[6rem] md:text-[14rem] font-black leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-[#9d4edd] drop-shadow-[0_0_60px_rgba(157,78,221,0.5)] hover:scale-105 hover:rotate-1 transition-all duration-700 cursor-default">
-                        OM<br/><span className="ml-[10%] opacity-90">YADAV</span>
-                    </h1>
+                <div className="hero-reveal relative z-50 pointer-events-auto">
+                    <div className="flex flex-col items-center md:items-start group cursor-crosshair">
+                        {/* FIRST NAME */}
+                        <div className="flex overflow-visible relative">
+                            {"OM".split('').map((char, i) => (
+                                <span 
+                                    key={i} 
+                                    className="text-[8rem] md:text-[18rem] font-black leading-[0.75] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 hover:from-[#00d4ff] hover:to-[#c77dff] transition-all duration-300 ease-out hover:-translate-y-8 hover:translate-x-2 hover:-rotate-12 hover:scale-[1.2] inline-block drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:drop-shadow-[0_0_80px_rgba(0,212,255,0.8)] z-10 hover:z-50 will-change-transform"
+                                >
+                                    {char}
+                                </span>
+                            ))}
+                            {/* Hover accent dot */}
+                            <span className="text-[#00d4ff] text-[8rem] md:text-[18rem] font-black leading-[0.75] opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse hidden md:block ml-4 drop-shadow-[0_0_40px_#00d4ff]">
+                                .
+                            </span>
+                        </div>
+                        {/* LAST NAME */}
+                        <div className="flex ml-0 md:ml-40 overflow-visible relative">
+                            {"YADAV".split('').map((char, i) => (
+                                <span 
+                                    key={i} 
+                                    className="text-[8rem] md:text-[18rem] font-black leading-[0.75] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#e0aaff] to-[#5a189a] hover:from-[#ff00a0] hover:to-[#c77dff] transition-all duration-300 ease-out hover:-translate-y-12 hover:-translate-x-2 hover:rotate-12 hover:scale-[1.3] inline-block drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:drop-shadow-[0_0_100px_rgba(255,0,160,0.8)] z-10 hover:z-50 will-change-transform"
+                                >
+                                    {char}
+                                </span>
+                            ))}
+                        </div>
+                    </div>
                 </div>
                 <div className="hero-reveal mt-10 bg-gradient-to-r from-[#3c096c]/80 to-transparent border-l-4 border-[#e0aaff] rounded-r-3xl p-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(60,9,108,0.5)] pointer-events-auto hover:translate-x-4 hover:bg-[#5a189a]/80 transition-all duration-500">
                     <p className="text-[#e0aaff] text-sm md:text-lg max-w-md font-medium tracking-[0.1em] leading-relaxed uppercase">
