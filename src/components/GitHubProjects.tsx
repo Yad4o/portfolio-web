@@ -64,44 +64,6 @@ export const GitHubProjects = () => {
     return colors[language || ''] || '#c77dff';
   };
 
-  const cardStyles = [
-    {
-      // Animation 1: The Massive Scale Up
-      wrapperAnim: "hover:scale-110 hover:-translate-y-4 hover:shadow-[0_30px_60px_rgba(157,78,221,0.5)]",
-      titleAnim: "group-hover:tracking-widest group-hover:scale-110",
-      iconAnim: "group-hover:rotate-[360deg] group-hover:scale-125"
-    },
-    {
-      // Animation 2: The Squeezed Skew
-      wrapperAnim: "hover:scale-[0.98] hover:skew-x-3 hover:translate-x-4 hover:shadow-[-20px_20px_50px_rgba(157,78,221,0.4)]",
-      titleAnim: "group-hover:-skew-x-6 group-hover:translate-x-4",
-      iconAnim: "group-hover:-rotate-12 group-hover:-translate-x-4"
-    },
-    {
-      // Animation 3: The Heavy Rotate
-      wrapperAnim: "hover:rotate-6 hover:scale-105 hover:-translate-y-2 hover:shadow-[30px_30px_50px_rgba(157,78,221,0.4)] origin-bottom-left",
-      titleAnim: "group-hover:rotate-[-6deg]",
-      iconAnim: "group-hover:scale-[2] group-hover:rotate-90 group-hover:opacity-20 translate-y-4"
-    },
-    {
-      // Animation 4: The Deep Depress
-      wrapperAnim: "hover:scale-90 hover:translate-y-4 hover:shadow-[0_0_15px_rgba(157,78,221,0.8)] opacity-90 hover:opacity-100",
-      titleAnim: "group-hover:tracking-tighter group-hover:scale-95",
-      iconAnim: "group-hover:scale-75 group-hover:translate-y-4"
-    },
-    {
-      // Animation 5: The Vertical Stretch
-      wrapperAnim: "hover:scale-y-110 hover:scale-x-95 hover:-translate-y-6 hover:shadow-[0_40px_40px_rgba(157,78,221,0.3)]",
-      titleAnim: "group-hover:scale-y-150 group-hover:translate-y-4",
-      iconAnim: "group-hover:scale-y-50 group-hover:-translate-y-2"
-    },
-    {
-      // Animation 6: The Left Slide
-      wrapperAnim: "hover:-translate-x-6 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-[40px_20px_60px_rgba(157,78,221,0.3)]",
-      titleAnim: "group-hover:translate-x-6 group-hover:text-white",
-      iconAnim: "group-hover:translate-x-12 group-hover:scale-110"
-    }
-  ];
 
   if (loading) {
     return (

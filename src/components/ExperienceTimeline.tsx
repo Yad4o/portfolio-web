@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Briefcase } from 'lucide-react';
@@ -19,7 +19,7 @@ export const ExperienceTimeline = () => {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-            gsap.utils.toArray('.timeline-item').forEach((item: any, i) => {
+            gsap.utils.toArray('.timeline-item').forEach((item: any) => {
                 gsap.from(item, {
                     y: 50,
                     opacity: 0,

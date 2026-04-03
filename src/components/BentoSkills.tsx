@@ -1,5 +1,4 @@
-import React from 'react';
-import { Layers, Zap, Cpu, Code2, Globe2, Shapes } from 'lucide-react';
+import { Layers, Zap, Cpu, Globe2, Shapes } from 'lucide-react';
 
 export const BentoSkills = () => {
     return (
