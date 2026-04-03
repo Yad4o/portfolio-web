@@ -21,14 +21,11 @@ import {
   BgOptionNeuralNetwork, 
   BgOptionPlasmaOrbs, 
   BgOptionEtherealAurora,
-  BgOptionHyperHelix,
-  BgOptionMobiusStrip,
-  BgOptionAstralRings,
-  BgOptionFractalSpine,
-  BgOptionChromaticWeb,
-  BgOptionLiquidMetal,
-  BgOptionDimensionalVortex,
-  BgOptionSerpentineFlow
+  BgOptionGalacticSpiral,
+  BgOptionVoxelCity,
+  BgOptionTunnelVision,
+  BgOptionOscilloscope,
+  BgOptionFluidBlob
 } from './components/ExtraBackgrounds';
 import { CameraRig } from './components/CameraRig';
 import { GitHubProjects } from './components/GitHubProjects';
@@ -62,14 +59,11 @@ const ImmersiveCore = ({ scroll, bgMode }: { scroll: number, bgMode: number }) =
       {bgMode === 10 && <BgOptionNeuralNetwork scroll={scroll} />}
       {bgMode === 11 && <BgOptionPlasmaOrbs scroll={scroll} />}
       {bgMode === 12 && <BgOptionEtherealAurora scroll={scroll} />}
-      {bgMode === 13 && <BgOptionHyperHelix scroll={scroll} />}
-      {bgMode === 14 && <BgOptionMobiusStrip scroll={scroll} />}
-      {bgMode === 15 && <BgOptionAstralRings scroll={scroll} />}
-      {bgMode === 16 && <BgOptionFractalSpine scroll={scroll} />}
-      {bgMode === 17 && <BgOptionChromaticWeb scroll={scroll} />}
-      {bgMode === 18 && <BgOptionLiquidMetal scroll={scroll} />}
-      {bgMode === 19 && <BgOptionDimensionalVortex scroll={scroll} />}
-      {bgMode === 20 && <BgOptionSerpentineFlow scroll={scroll} />}
+      {bgMode === 13 && <BgOptionGalacticSpiral scroll={scroll} />}
+      {bgMode === 14 && <BgOptionVoxelCity scroll={scroll} />}
+      {bgMode === 15 && <BgOptionTunnelVision scroll={scroll} />}
+      {bgMode === 16 && <BgOptionOscilloscope scroll={scroll} />}
+      {bgMode === 17 && <BgOptionFluidBlob scroll={scroll} />}
       
       {/* Decorative stars always visible but restyled per mode */}
       <Stars radius={100} depth={50} count={bgMode >= 2 ? 0 : 1000} factor={4} saturation={0} fade speed={1} />
@@ -214,14 +208,11 @@ const App = () => {
                 { id: 10, label: "Neural Network" },
                 { id: 11, label: "Plasma Orbs" },
                 { id: 12, label: "Ethereal Aurora" },
-                { id: 13, label: "Hyper Helix" },
-                { id: 14, label: "Mobius Strip" },
-                { id: 15, label: "Astral Rings" },
-                { id: 16, label: "Fractal Spine" },
-                { id: 17, label: "Chromatic Web" },
-                { id: 18, label: "Liquid Metal" },
-                { id: 19, label: "Dimensional Vortex" },
-                { id: 20, label: "Serpentine Flow" }
+                { id: 13, label: "Galactic Spiral" },
+                { id: 14, label: "Voxel City" },
+                { id: 15, label: "Tunnel Vision" },
+                { id: 16, label: "Oscilloscope" },
+                { id: 17, label: "Fluid Blob" }
               ].map(opt => (
                 <button 
                   key={opt.id}

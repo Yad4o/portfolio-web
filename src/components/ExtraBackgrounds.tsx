@@ -232,173 +232,237 @@ export const BgOptionEtherealAurora = ({ scroll }: { scroll: number }) => {
 };
 
 // ────────────────────────────────────────────────────────
-// NEW HIGH-IMPACT ANIMATIONS (QUANTUM FLOW STYLE)
+// NEW TRULY UNIQUE ANIMATIONS
 // ────────────────────────────────────────────────────────
 
-// 13. Hyper Helix
-export const BgOptionHyperHelix = ({ scroll }: { scroll: number }) => {
-    const meshRef = useRef<THREE.Mesh>(null!);
-    useFrame(({ clock }) => {
-        if(meshRef.current) {
-            meshRef.current.rotation.z = clock.getElapsedTime() * 0.2;
-            meshRef.current.rotation.y = clock.getElapsedTime() * 0.3;
-            meshRef.current.position.y = -scroll * 12;
+// 13. Galactic Spiral (Complex Particle System)
+export const BgOptionGalacticSpiral = ({ scroll }: { scroll: number }) => {
+    const pointsRef = useRef<THREE.Points>(null!);
+    const count = 15000;
+    const positions = useMemo(() => {
+        const pos = new Float32Array(count * 3);
+        for(let i=0; i<count; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const radius = Math.pow(Math.random(), 2) * 50; // Dense center
+            const branchOffset = (i % 5) * ((Math.PI * 2) / 5);
+            const spiralAngle = angle + radius * 0.1 + branchOffset;
+            
+            pos[i*3] = Math.cos(spiralAngle) * radius;
+            pos[i*3+1] = (Math.random() - 0.5) * (10 - radius * 0.15); // Flatter at edges
+            pos[i*3+2] = Math.sin(spiralAngle) * radius;
         }
-    });
-    return (
-        <TorusKnot ref={meshRef} args={[10, 1.5, 400, 64, 5, 8]} position={[0, 0, -20]}>
-            <meshNormalMaterial wireframe={false} />
-        </TorusKnot>
-    );
-};
+        return pos;
+    }, []);
 
-// 14. Mobius Strip
-export const BgOptionMobiusStrip = ({ scroll }: { scroll: number }) => {
-    const meshRef = useRef<THREE.Mesh>(null!);
     useFrame(({ clock }) => {
-        if(meshRef.current) {
-            meshRef.current.rotation.x = clock.getElapsedTime() * 0.4;
-            meshRef.current.rotation.y = clock.getElapsedTime() * 0.2;
-            meshRef.current.position.y = -scroll * 15;
+        if(pointsRef.current) {
+            pointsRef.current.rotation.y = clock.getElapsedTime() * 0.1;
+            pointsRef.current.rotation.x = clock.getElapsedTime() * 0.05 + 0.5;
+            pointsRef.current.position.y = -scroll * 10;
         }
     });
-    return (
-        <TorusKnot ref={meshRef} args={[12, 3, 300, 64, 1, 3]} position={[0, 0, -25]}>
-            <meshNormalMaterial wireframe={false} />
-        </TorusKnot>
-    );
-};
 
-// 15. Astral Rings
-export const BgOptionAstralRings = ({ scroll }: { scroll: number }) => {
-    const groupRef = useRef<THREE.Group>(null!);
-    useFrame(({ clock }) => {
-        if(groupRef.current) {
-            groupRef.current.rotation.y = clock.getElapsedTime() * 0.1;
-            groupRef.current.position.y = -scroll * 10;
-        }
-    });
     return (
-        <group ref={groupRef} position={[0, 0, -25]}>
-            <Torus args={[15, 1, 64, 100]} rotation={[Math.PI/2, 0, 0]}>
-                <meshNormalMaterial />
-            </Torus>
-            <Torus args={[12, 1, 64, 100]} rotation={[0, Math.PI/2, 0]}>
-                <meshNormalMaterial />
-            </Torus>
-            <Torus args={[9, 1, 64, 100]} rotation={[Math.PI/4, Math.PI/4, 0]}>
-                <meshNormalMaterial />
-            </Torus>
-            <Torus args={[20, 0.5, 64, 100]} rotation={[-Math.PI/4, -Math.PI/4, 0]}>
-                <meshNormalMaterial />
-            </Torus>
+        <group position={[0, -5, -40]}>
+            <points ref={pointsRef}>
+                <bufferGeometry>
+                    <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
+                </bufferGeometry>
+                <pointsMaterial size={0.15} color="#e0aaff" transparent opacity={0.6} blending={THREE.AdditiveBlending} />
+            </points>
         </group>
     );
 };
 
-// 16. Fractal Spine
-export const BgOptionFractalSpine = ({ scroll }: { scroll: number }) => {
+// 14. Voxel City (Dynamic Grid Equalizer)
+export const BgOptionVoxelCity = ({ scroll }: { scroll: number }) => {
     const groupRef = useRef<THREE.Group>(null!);
+    const gridSize = 15;
+    const spacing = 1.2;
+
     useFrame(({ clock }) => {
         if(groupRef.current) {
-            groupRef.current.rotation.z = clock.getElapsedTime() * 0.2;
-            groupRef.current.rotation.x = clock.getElapsedTime() * 0.1;
-            groupRef.current.position.y = -scroll * 15;
+            groupRef.current.position.y = -8 - scroll * 12;
+            groupRef.current.position.z = -15 + (clock.getElapsedTime() * 2) % spacing;
+            const children = groupRef.current.children;
+            let i = 0;
+            const time = clock.getElapsedTime();
+            for (let x = -gridSize; x < gridSize; x++) {
+                for (let z = -gridSize; z < gridSize; z++) {
+                    const child = children[i] as THREE.Mesh;
+                    if (child) {
+                        // Wave physics
+                        const wave = Math.sin(x * 0.5 + time) * Math.cos(z * 0.5 + time) * 3;
+                        child.scale.y = Math.max(0.1, wave + 4);
+                    }
+                    i++;
+                }
+            }
         }
     });
+
+    const boxes = [];
+    for (let x = -gridSize; x < gridSize; x++) {
+        for (let z = -gridSize; z < gridSize; z++) {
+            boxes.push(
+                <mesh key={`${x}-${z}`} position={[x * spacing, 0, z * spacing]}>
+                    <boxGeometry args={[1, 1, 1]} />
+                    <meshBasicMaterial color="#00d4ff" wireframe transparent opacity={0.3} />
+                </mesh>
+            );
+        }
+    }
+
     return (
-        <group ref={groupRef} position={[0, 0, -20]}>
-            <Cylinder args={[8, 1, 30, 64, 64]}>
-                <meshNormalMaterial />
-            </Cylinder>
-            <Cylinder args={[1, 8, 30, 64, 64]} rotation={[0, 0, Math.PI/2]}>
-                <meshNormalMaterial />
-            </Cylinder>
+        <group rotation={[Math.PI / 8, Math.PI / 4, 0]}>
+            <group ref={groupRef}>
+                {boxes}
+            </group>
+            <fog attach="fog" args={["#05060b", 10, 40]} />
         </group>
     );
 };
 
-// 17. Chromatic Web
-export const BgOptionChromaticWeb = ({ scroll }: { scroll: number }) => {
+// 15. Tunnel Vision (Infinite Flythrough)
+export const BgOptionTunnelVision = ({ scroll }: { scroll: number }) => {
     const groupRef = useRef<THREE.Group>(null!);
+    const ringsCount = 40;
+    const spacing = 2;
+
     useFrame(({ clock }) => {
         if(groupRef.current) {
-            groupRef.current.rotation.y = clock.getElapsedTime() * 0.2;
-            groupRef.current.rotation.x = clock.getElapsedTime() * 0.15;
-            groupRef.current.position.y = -scroll * 12;
+            groupRef.current.position.z = (clock.getElapsedTime() * 15) % spacing;
+            groupRef.current.position.y = -scroll * 5;
+            
+            // Wobble the tunnel
+            groupRef.current.children.forEach((child, i) => {
+                const zOffset = i * spacing;
+                child.position.x = Math.sin(zOffset * 0.1 + clock.getElapsedTime()) * 5;
+                child.position.y = Math.cos(zOffset * 0.15 + clock.getElapsedTime()) * 5;
+            });
         }
     });
+
     return (
-        <group ref={groupRef} position={[0, 0, -15]}>
-            <Icosahedron args={[12, 2]}>
-                <meshNormalMaterial wireframe={true} />
-            </Icosahedron>
-            <Icosahedron args={[6, 3]}>
-                <meshNormalMaterial />
-            </Icosahedron>
+        <group position={[0, 0, 5]}>
+            <group ref={groupRef}>
+                {[...Array(ringsCount)].map((_, i) => (
+                    <mesh key={i} position={[0, 0, -i * spacing]}>
+                        <torusGeometry args={[8, 0.1, 16, 64]} />
+                        <meshBasicMaterial color={new THREE.Color().setHSL(0.8 - i*0.02, 1, 0.6)} wireframe transparent opacity={Math.max(0, 1 - i/ringsCount)} />
+                    </mesh>
+                ))}
+            </group>
         </group>
     );
 };
 
-// 18. Liquid Metal
-export const BgOptionLiquidMetal = ({ scroll }: { scroll: number }) => {
-    const meshRef = useRef<THREE.Mesh>(null!);
+// 16. Oscilloscope Waves (Line based visualization)
+export const BgOptionOscilloscope = ({ scroll }: { scroll: number }) => {
+    const linesRef = useRef<THREE.Group>(null!);
+    
     useFrame(({ clock }) => {
-        if(meshRef.current) {
-            meshRef.current.rotation.y = clock.getElapsedTime() * 0.3;
-            meshRef.current.rotation.x = clock.getElapsedTime() * 0.2;
-            meshRef.current.position.y = -scroll * 10;
+        if (linesRef.current) {
+            linesRef.current.position.y = -scroll * 8;
+            linesRef.current.rotation.x = Math.PI / 6;
+            const time = clock.getElapsedTime();
+            
+            linesRef.current.children.forEach((child: any, i) => {
+                const geom = child.geometry;
+                const pos = geom.attributes.position;
+                for (let j = 0; j < pos.count; j++) {
+                    const x = pos.getX(j);
+                    // Add wild sin waves mixing
+                    const y = Math.sin(x * 0.5 + time * 2 + i) * 3 
+                            + Math.sin(x * 1.5 - time * 3) * 1.5 
+                            + Math.cos(x * 0.2 + time);
+                    pos.setY(j, y);
+                }
+                pos.needsUpdate = true;
+            });
         }
     });
-    return (
-        <group position={[0, 0, -15]}>
-            <TorusKnot ref={meshRef} args={[7, 3, 200, 64]}>
-                <meshStandardMaterial 
-                    color="#ffffff" 
-                    metalness={1} 
-                    roughness={0.1}
-                />
-            </TorusKnot>
-            <ambientLight intensity={2} />
-            <directionalLight position={[10, 20, 10]} intensity={5} color="#c77dff" />
-            <directionalLight position={[-10, -20, -10]} intensity={5} color="#00d4ff" />
-        </group>
-    );
-};
 
-// 19. Dimensional Vortex
-export const BgOptionDimensionalVortex = ({ scroll }: { scroll: number }) => {
-    const groupRef = useRef<THREE.Group>(null!);
-    useFrame(({ clock }) => {
-        if(groupRef.current) {
-            groupRef.current.rotation.z = clock.getElapsedTime() * 0.5;
-            groupRef.current.position.y = -scroll * 15;
-        }
-    });
+    const lines = useMemo(() => {
+        return [...Array(5)].map((_, i) => {
+            const points = [];
+            for (let x = -30; x <= 30; x += 0.5) {
+                points.push(new THREE.Vector3(x, 0, i * 2 - 4));
+            }
+            return points;
+        });
+    }, []);
+
     return (
-        <group ref={groupRef} position={[0, 0, -25]}>
-            {[...Array(8)].map((_, i) => (
-                <Torus key={i} args={[2 + i * 3, 0.5 + i*0.2, 32, 100]} rotation={[Math.PI/2 + (i*0.1), i*0.2, 0]}>
-                    <meshNormalMaterial />
-                </Torus>
+        <group ref={linesRef} position={[0, 0, -15]}>
+            {lines.map((pts, i) => (
+                <Line key={i} points={pts} color={i % 2 === 0 ? "#ff00a0" : "#c77dff"} lineWidth={2} transparent opacity={0.8} />
             ))}
         </group>
     );
 };
 
-// 20. Serpentine Flow
-export const BgOptionSerpentineFlow = ({ scroll }: { scroll: number }) => {
-    const meshRef = useRef<THREE.Mesh>(null!);
+// 17. Fluid Blob (Custom Shader Vertex Displacement)
+const blobVertexShader = `
+  uniform float uTime;
+  varying vec3 vNormal;
+  
+  // Classic 3D Noise loosely
+  float noise(vec3 p) {
+      return fract(sin(dot(p, vec3(12.9898, 78.233, 45.164))) * 43758.5453);
+  }
+
+  void main() {
+    vNormal = normal;
+    
+    vec3 p = position;
+    // Displace heavily based on normal and sine waves + time
+    float displacement = sin(p.x * 2.0 + uTime * 2.0) * sin(p.y * 2.0 + uTime) * sin(p.z * 1.5 + uTime * 1.5);
+    p += normal * displacement * 1.5;
+    
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+  }
+`;
+
+const blobFragmentShader = `
+  varying vec3 vNormal;
+  
+  void main() {
+    // Normal color mapping but highly saturated
+    vec3 color = normalize(vNormal) * 0.5 + 0.5;
+    
+    // Mix with a hot pink/purple aesthetic
+    vec3 target = vec3(1.0, 0.0, 0.8);
+    color = mix(color, target, 0.3);
+    
+    gl_FragColor = vec4(color, 1.0);
+  }
+`;
+
+export const BgOptionFluidBlob = ({ scroll }: { scroll: number }) => {
+    const materialRef = useRef<THREE.ShaderMaterial>(null!);
     useFrame(({ clock }) => {
-        if(meshRef.current) {
-            meshRef.current.rotation.x = clock.getElapsedTime() * 0.2;
-            meshRef.current.rotation.y = clock.getElapsedTime() * 0.4;
-            meshRef.current.position.y = -scroll * 12;
+        if(materialRef.current) {
+            materialRef.current.uniforms.uTime.value = clock.getElapsedTime();
         }
     });
+
+    const uniforms = useMemo(() => ({
+        uTime: { value: 0 }
+    }), []);
+
     return (
-        <TorusKnot ref={meshRef} args={[15, 1.5, 600, 64, 2, 7]} position={[0, 0, -30]}>
-            <meshNormalMaterial />
-        </TorusKnot>
+        <group position={[0, 0, -15]}>
+            <mesh position={[0, -scroll * 8, 0]}>
+                <icosahedronGeometry args={[8, 128]} />
+                <shaderMaterial 
+                    ref={materialRef}
+                    vertexShader={blobVertexShader}
+                    fragmentShader={blobFragmentShader}
+                    uniforms={uniforms}
+                    wireframe={false}
+                />
+            </mesh>
+        </group>
     );
 };
