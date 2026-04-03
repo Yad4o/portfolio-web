@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Sphere, MeshDistortMaterial, Environment } from '@react-three/drei';
+import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
 export const BgOptionLiquid = ({ scroll }: { scroll: number }) => {
@@ -26,7 +26,6 @@ export const BgOptionLiquid = ({ scroll }: { scroll: number }) => {
 
   return (
     <>
-      <Environment preset="city" />
       {/* High intensity cyan sphere */}
       <Sphere ref={sphere1} args={[2.5, 64, 64]} position={[-3, 2, -10]}>
         <MeshDistortMaterial color="#00ffff" emissive="#002222" emissiveIntensity={0.5} roughness={0.1} metalness={1} distort={0.6} speed={2} />
