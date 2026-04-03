@@ -48,7 +48,7 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
             tl.to('.glitch-layer-1', { x: -5, opacity: 0.8, duration: 0.05, yoyo: true, repeat: 10 }, "-=1.0")
               .to('.glitch-layer-2', { x: 5, opacity: 0.8, duration: 0.05, yoyo: true, repeat: 10 }, "-=1.0")
               .to('.glitch-main', { scale: 1.1, duration: 0.1, ease: 'rough' }, "-=0.8")
-              .to('.glitch-main', { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.3)', textShadow: "0 0 40px rgba(199,125,255,0.8)" });
+              .to('.glitch-main', { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.3)', textShadow: "0 0 40px rgba(148,163,184,0.8)" });
 
             // 3) Pulling the UI away inward before breaking curtains
             tl.to('.intro-text-wrapper', {
@@ -91,10 +91,10 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
                 {slices.map((_, i) => (
                     <div 
                         key={i} 
-                        className="slice-curtain flex-1 h-full bg-[#05060b] border-r border-[#c77dff]/10 last:border-0 relative overflow-hidden pointer-events-auto"
+                        className="slice-curtain flex-1 h-full bg-[#05060b] border-r border-[#94a3b8]/10 last:border-0 relative overflow-hidden pointer-events-auto"
                     >
                         {/* Terminal grid lines falling */}
-                        <div className="absolute top-0 left-0 w-full h-full bg-[repeating-linear-gradient(transparent_0%,transparent_98%,#c77dff20_98%,#c77dff20_100%)] bg-[length:100%_20px]" />
+                        <div className="absolute top-0 left-0 w-full h-full bg-[repeating-linear-gradient(transparent_0%,transparent_98%,#94a3b820_98%,#94a3b820_100%)] bg-[length:100%_20px]" />
                     </div>
                 ))}
             </div>
@@ -131,7 +131,7 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
                 {/* Cyberpunk Loading Bar */}
                 <div className="w-full md:w-96 flex flex-col gap-4">
                     <div className="flex justify-between items-end w-full">
-                        <span className="text-[#c77dff] font-mono text-[10px] tracking-[0.4em] uppercase font-bold">
+                        <span className="text-[#94a3b8] font-mono text-[10px] tracking-[0.4em] uppercase font-bold">
                             SYSTEM LOAD
                         </span>
                         <span className="text-white font-mono text-[10px] tracking-widest font-black">
@@ -143,7 +143,7 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
                     <div className="w-full h-[2px] bg-white/10 relative overflow-hidden">
                         {/* Glow head */}
                         <div 
-                            className="absolute top-0 h-full bg-gradient-to-r from-transparent via-[#c77dff] to-white shadow-[0_0_20px_#c77dff]"
+                            className="absolute top-0 h-full bg-gradient-to-r from-transparent via-[#94a3b8] to-white shadow-[0_0_20px_#94a3b8]"
                             style={{ width: `${progress}%`, transition: 'width 0.1s linear' }}
                         />
                     </div>
@@ -151,7 +151,7 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
                     {/* Grid decoration below bar */}
                     <div className="flex w-full justify-between mt-1 opacity-30">
                         {Array.from({length: 10}).map((_, i) => (
-                            <div key={i} className="w-[1px] h-1 bg-[#c77dff]" />
+                            <div key={i} className="w-[1px] h-1 bg-[#94a3b8]" />
                         ))}
                     </div>
                 </div>

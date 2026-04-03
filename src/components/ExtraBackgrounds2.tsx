@@ -40,12 +40,12 @@ export const BgOptionDNAHelix = ({ scroll }: { scroll: number }) => {
                         <meshBasicMaterial color="#00d4ff" />
                     </Sphere>
                     <Sphere args={[0.3, 16, 16]} position={d.pos2}>
-                        <meshBasicMaterial color="#ff00a0" />
+                        <meshBasicMaterial color="#64748b" />
                     </Sphere>
                     {i % 4 === 0 && (
                         <Line
                             points={[new THREE.Vector3(...d.pos1), new THREE.Vector3(...d.pos2)]}
-                            color="#c77dff"
+                            color="#94a3b8"
                             lineWidth={1}
                             transparent
                             opacity={0.4}
@@ -90,7 +90,7 @@ export const BgOptionMeteorShower = ({ scroll }: { scroll: number }) => {
             {meteors.map((m, i) => (
                 <mesh key={i}>
                     <sphereGeometry args={[m.size, 8, 8]} />
-                    <meshBasicMaterial color="#e0aaff" transparent opacity={0.8} />
+                    <meshBasicMaterial color="#e2e8f0" transparent opacity={0.8} />
                 </mesh>
             ))}
         </group>
@@ -129,7 +129,7 @@ export const BgOptionCrystalLattice = ({ scroll }: { scroll: number }) => {
             ))}
             {nodes.map((p, i) =>
                 i > 0 && p.distanceTo(nodes[i - 1]) <= spacing + 0.5 ? (
-                    <Line key={'e' + i} points={[nodes[i - 1], p]} color="#5a189a" lineWidth={1} transparent opacity={0.3} />
+                    <Line key={'e' + i} points={[nodes[i - 1], p]} color="#334155" lineWidth={1} transparent opacity={0.3} />
                 ) : null
             )}
         </group>
@@ -341,7 +341,7 @@ export const BgOptionHexGrid = ({ scroll }: { scroll: number }) => {
             {hexes.map((h, i) => (
                 <mesh key={i} position={[h.x, 0, h.z]}>
                     <cylinderGeometry args={[1, 1, 0.2, 6]} />
-                    <meshBasicMaterial color="#c77dff" wireframe transparent opacity={0.3} />
+                    <meshBasicMaterial color="#94a3b8" wireframe transparent opacity={0.3} />
                 </mesh>
             ))}
         </group>
@@ -420,7 +420,7 @@ export const BgOptionOrbitSystem = ({ scroll }: { scroll: number }) => {
     const groupRef = useRef<THREE.Group>(null!);
     const orbits = [4, 7, 10, 14, 18];
     const speeds = [1.2, 0.8, 0.5, 0.35, 0.2];
-    const colors = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#9d4edd'];
+    const colors = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#475569'];
 
     useFrame(({ clock }) => {
         if (groupRef.current) {
@@ -497,7 +497,7 @@ export const BgOptionLightningStorm = ({ scroll }: { scroll: number }) => {
                 <Line
                     key={i}
                     points={pts}
-                    color="#e0aaff"
+                    color="#e2e8f0"
                     lineWidth={2 + Math.random() * 2}
                     transparent
                     opacity={0.9}
@@ -550,7 +550,7 @@ export const BgOptionWaveGrid = ({ scroll }: { scroll: number }) => {
             <bufferGeometry>
                 <bufferAttribute attach="attributes-position" count={count} array={basePositions} itemSize={3} />
             </bufferGeometry>
-            <pointsMaterial size={0.15} color="#c77dff" transparent opacity={0.8} blending={THREE.AdditiveBlending} />
+            <pointsMaterial size={0.15} color="#94a3b8" transparent opacity={0.8} blending={THREE.AdditiveBlending} />
         </points>
     );
 };
@@ -722,12 +722,12 @@ export const BgOptionHologramCube = ({ scroll }: { scroll: number }) => {
             {/* Inner cube */}
             <mesh rotation={[Math.PI / 4, Math.PI / 4, 0]}>
                 <boxGeometry args={[10, 10, 10]} />
-                <meshBasicMaterial color="#c77dff" wireframe transparent opacity={0.3} />
+                <meshBasicMaterial color="#94a3b8" wireframe transparent opacity={0.3} />
             </mesh>
             {/* Innermost cube */}
             <mesh rotation={[Math.PI / 3, 0, Math.PI / 6]}>
                 <boxGeometry args={[6, 6, 6]} />
-                <meshBasicMaterial color="#ff00a0" wireframe transparent opacity={0.5} />
+                <meshBasicMaterial color="#64748b" wireframe transparent opacity={0.5} />
             </mesh>
             {/* Corner spheres on outer cube */}
             {[[-1, -1, -1], [-1, -1, 1], [-1, 1, -1], [-1, 1, 1],

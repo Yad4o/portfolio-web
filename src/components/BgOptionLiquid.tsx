@@ -38,12 +38,12 @@ export const BgOptionLiquid = ({ scroll }: { scroll: number }) => {
       
       {/* Electric Violet sphere */}
       <Sphere ref={sphere3} args={[4, 64, 64]} position={[0, -5, -15]}>
-        <MeshDistortMaterial color="#9d4edd" emissive="#110022" emissiveIntensity={0.5} roughness={0.2} metalness={0.9} distort={0.5} speed={3} />
+        <MeshDistortMaterial color="#475569" emissive="#110022" emissiveIntensity={0.5} roughness={0.2} metalness={0.9} distort={0.5} speed={3} />
       </Sphere>
       
       <ambientLight intensity={1} />
       <directionalLight position={[10, 10, 5]} intensity={2} color="#ffffff" />
-      <pointLight position={[-10, -10, -10]} intensity={5} color="#c77dff" />
+      <pointLight position={[-10, -10, -10]} intensity={5} color="#94a3b8" />
     </>
   );
 };

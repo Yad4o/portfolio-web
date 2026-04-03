@@ -101,7 +101,7 @@ export const BgOptionPrismaticGlass = ({ scroll }: { scroll: number }) => {
                     roughness={0.1} 
                     transmission={1} 
                     thickness={4} 
-                    color="#e0aaff" 
+                    color="#e2e8f0" 
                     emissive="#110022"
                     emissiveIntensity={0.5}
                 />
@@ -126,10 +126,10 @@ export const BgOptionAbyssalVoid = ({ scroll }: { scroll: number }) => {
     return (
         <group ref={groupRef} position={[0,0,-15]}>
             <Cylinder args={[5, 10, 40, 32, 10]}>
-                <meshBasicMaterial color="#5a189a" wireframe transparent opacity={0.6} />
+                <meshBasicMaterial color="#334155" wireframe transparent opacity={0.6} />
             </Cylinder>
             <Cylinder args={[10, 5, 40, 32, 10]} rotation={[Math.PI/2, 0, 0]}>
-                <meshBasicMaterial color="#9d4edd" wireframe transparent opacity={0.3} />
+                <meshBasicMaterial color="#475569" wireframe transparent opacity={0.3} />
             </Cylinder>
         </group>
     );
@@ -148,7 +148,7 @@ export const BgOptionRetroSynthwave = ({ scroll }: { scroll: number }) => {
         <group>
             <mesh ref={gridRef} rotation={[-Math.PI/2, 0, 0]} position={[0, -10, -20]}>
                 <planeGeometry args={[200, 200, 100, 100]} />
-                <meshBasicMaterial color="#ff00a0" wireframe transparent opacity={0.6} />
+                <meshBasicMaterial color="#64748b" wireframe transparent opacity={0.6} />
             </mesh>
             <Sphere args={[25, 32, 32]} position={[0, 10, -60]}>
                 <meshBasicMaterial color="#ffaa00" />
@@ -182,7 +182,7 @@ export const BgOptionNeuralNetwork = ({ scroll }: { scroll: number }) => {
                     <meshBasicMaterial color="#00d4ff" />
                 </Sphere>
             ))}
-            {points.map((p, i) => i > 0 && <Line key={'l'+i} points={[points[i-1], p]} color="#c77dff" transparent opacity={0.8} lineWidth={2} />)}
+            {points.map((p, i) => i > 0 && <Line key={'l'+i} points={[points[i-1], p]} color="#94a3b8" transparent opacity={0.8} lineWidth={2} />)}
             {points.map((p, i) => i < points.length - 2 && <Line key={'c'+i} points={[p, points[i+2]]} color="#00d4ff" transparent opacity={0.4} lineWidth={1.5} />)}
         </group>
     );
@@ -268,7 +268,7 @@ export const BgOptionGalacticSpiral = ({ scroll }: { scroll: number }) => {
                 <bufferGeometry>
                     <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
                 </bufferGeometry>
-                <pointsMaterial size={0.15} color="#e0aaff" transparent opacity={0.6} blending={THREE.AdditiveBlending} />
+                <pointsMaterial size={0.15} color="#e2e8f0" transparent opacity={0.6} blending={THREE.AdditiveBlending} />
             </points>
         </group>
     );
@@ -396,7 +396,7 @@ export const BgOptionOscilloscope = ({ scroll }: { scroll: number }) => {
     return (
         <group ref={linesRef} position={[0, 0, -15]}>
             {lines.map((pts, i) => (
-                <Line key={i} points={pts} color={i % 2 === 0 ? "#ff00a0" : "#c77dff"} lineWidth={2} transparent opacity={0.8} />
+                <Line key={i} points={pts} color={i % 2 === 0 ? "#64748b" : "#94a3b8"} lineWidth={2} transparent opacity={0.8} />
             ))}
         </group>
     );

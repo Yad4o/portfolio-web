@@ -98,7 +98,7 @@ export const GithubInsights = () => {
               </div>
               <div className="border border-[#00d4ff]/10 rounded-[1.5rem] p-6 bg-white/[0.01] hover:border-[#00d4ff]/40 hover:bg-[#00d4ff]/5 transition-all duration-500 hover:-translate-y-1">
                 <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#00d4ff]/60 font-bold mb-4 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-[#ff00a0] animate-pulse"></span>
+                  <span className="w-2 h-2 rounded-full bg-[#64748b] animate-pulse"></span>
                   RESEARCH → REAL WORLD
                 </p>
                 <p>
@@ -110,15 +110,15 @@ export const GithubInsights = () => {
             </div>
           </div>
 
-          <div className="group bg-[#001018]/95 border-t-4 border-[#ff00a0]/50 p-8 md:p-12 rounded-b-3xl backdrop-blur-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)] hover:bg-[#001824] hover:shadow-[0_0_80px_rgba(255,0,160,0.15)] hover:scale-[1.02] transition-all duration-700 flex flex-col justify-between">
+          <div className="group bg-[#001018]/95 border-t-4 border-[#64748b]/50 p-8 md:p-12 rounded-b-3xl backdrop-blur-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)] hover:bg-[#001824] hover:shadow-[0_0_80px_rgba(100,116,139,0.15)] hover:scale-[1.02] transition-all duration-700 flex flex-col justify-between">
             <div className="flex items-center justify-between mb-10">
               <div className="flex items-center gap-4">
-                <div className="p-4 rounded-2xl border border-[#ff00a0]/30 bg-[#ff00a0]/10 group-hover:bg-[#ff00a0]/20 group-hover:scale-110 transition-all duration-500">
-                  <Github className="w-6 h-6 text-[#ff00a0]" />
+                <div className="p-4 rounded-2xl border border-[#64748b]/30 bg-[#64748b]/10 group-hover:bg-[#64748b]/20 group-hover:scale-110 transition-all duration-500">
+                  <Github className="w-6 h-6 text-[#64748b]" />
                 </div>
                 <div>
                   <p className="text-xl font-black text-white tracking-tight">GitHub</p>
-                  <p className="font-mono text-xs text-[#ff00a0]/60 tracking-[0.2em] uppercase mt-1">
+                  <p className="font-mono text-xs text-[#64748b]/60 tracking-[0.2em] uppercase mt-1">
                     8+ Public · AI/ML
                   </p>
                 </div>
@@ -127,28 +127,28 @@ export const GithubInsights = () => {
                 href="https://github.com/Yad4o"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover-trigger inline-flex items-center gap-2 font-mono text-[10px] uppercase font-bold text-[#ff00a0] border border-[#ff00a0]/30 rounded-full px-4 py-2 hover:bg-[#ff00a0] hover:text-black hover:shadow-[0_0_20px_rgba(255,0,160,0.4)] transition-all duration-300"
+                className="hover-trigger inline-flex items-center gap-2 font-mono text-[10px] uppercase font-bold text-[#64748b] border border-[#64748b]/30 rounded-full px-4 py-2 hover:bg-[#64748b] hover:text-black hover:shadow-[0_0_20px_rgba(100,116,139,0.4)] transition-all duration-300"
               >
                 Profile <ExternalLink className="w-3 h-3 transition-transform duration-300" />
               </a>
             </div>
 
             <div className="space-y-4 text-xs md:text-sm text-white/60 font-light">
-              <div className="group/item flex items-center justify-between border border-[#ff00a0]/10 rounded-2xl px-5 py-4 bg-white/[0.01] hover:border-[#ff00a0]/40 transition-all duration-300 hover:bg-[#ff00a0]/5 hover:pl-6">
+              <div className="group/item flex items-center justify-between border border-[#64748b]/10 rounded-2xl px-5 py-4 bg-white/[0.01] hover:border-[#64748b]/40 transition-all duration-300 hover:bg-[#64748b]/5 hover:pl-6">
                 <div className="flex items-center gap-3">
-                  <Cpu className="w-4 h-4 text-[#ff00a0]/80 group-hover/item:text-[#ff00a0] group-hover/item:scale-125 transition-all" />
-                  <span className="font-bold tracking-widest uppercase text-white group-hover/item:text-[#ff00a0] transition-colors">Stack</span>
+                  <Cpu className="w-4 h-4 text-[#64748b]/80 group-hover/item:text-[#64748b] group-hover/item:scale-125 transition-all" />
+                  <span className="font-bold tracking-widest uppercase text-white group-hover/item:text-[#64748b] transition-colors">Stack</span>
                 </div>
-                <span className="font-mono text-[10px] text-[#ff00a0]/60 uppercase tracking-widest text-right">
+                <span className="font-mono text-[10px] text-[#64748b]/60 uppercase tracking-widest text-right">
                   Python · C++ · FastAPI<br/>Docker · Redis
                 </span>
               </div>
-              <div className="group/item flex items-center justify-between border border-[#ff00a0]/10 rounded-2xl px-5 py-4 bg-white/[0.01] hover:border-[#ff00a0]/40 transition-all duration-300 hover:bg-[#ff00a0]/5 hover:pl-6">
+              <div className="group/item flex items-center justify-between border border-[#64748b]/10 rounded-2xl px-5 py-4 bg-white/[0.01] hover:border-[#64748b]/40 transition-all duration-300 hover:bg-[#64748b]/5 hover:pl-6">
                 <div className="flex items-center gap-3">
-                  <LineChart className="w-4 h-4 text-[#ff00a0]/80 group-hover/item:text-[#ff00a0] group-hover/item:scale-125 transition-all" />
-                  <span className="font-bold tracking-widest uppercase text-white group-hover/item:text-[#ff00a0] transition-colors">Domains</span>
+                  <LineChart className="w-4 h-4 text-[#64748b]/80 group-hover/item:text-[#64748b] group-hover/item:scale-125 transition-all" />
+                  <span className="font-bold tracking-widest uppercase text-white group-hover/item:text-[#64748b] transition-colors">Domains</span>
                 </div>
-                <span className="font-mono text-[10px] text-[#ff00a0]/60 uppercase tracking-widest text-right">
+                <span className="font-mono text-[10px] text-[#64748b]/60 uppercase tracking-widest text-right">
                   Agents · Vision<br/>Algorithms
                 </span>
               </div>
@@ -185,7 +185,7 @@ export const GithubInsights = () => {
                 {repo.focus.map((f, idx) => (
                   <span
                     key={f}
-                    className={`font-mono text-[9px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border ${idx === 0 ? 'border-[#00d4ff]/40 text-[#00d4ff]' : 'border-[#ff00a0]/40 text-[#ff00a0]'} bg-[#001824]/50 group-hover:bg-black transition-colors duration-500 shadow-[0_0_10px_rgba(0,0,0,0.5)]`}
+                    className={`font-mono text-[9px] uppercase tracking-[0.2em] px-3 py-1.5 rounded-full border ${idx === 0 ? 'border-[#00d4ff]/40 text-[#00d4ff]' : 'border-[#64748b]/40 text-[#64748b]'} bg-[#001824]/50 group-hover:bg-black transition-colors duration-500 shadow-[0_0_10px_rgba(0,0,0,0.5)]`}
                   >
                     {f}
                   </span>
