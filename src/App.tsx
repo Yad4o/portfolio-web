@@ -189,8 +189,9 @@ const App = () => {
           >
             GitHub Analysis
           </button>
-        </div>        {activePage === 'home' && (
-        <>
+        </div>
+        
+        <div style={{ display: activePage === 'home' ? 'block' : 'none' }}>
         <section className="min-h-screen relative flex flex-col items-center justify-center pointer-events-none">
             <div className="h-screen flex flex-col items-center justify-center text-center px-4 w-full">
                 <div className="hero-reveal mb-6 overflow-hidden">
@@ -387,10 +388,9 @@ const App = () => {
         <footer className="p-12 text-center text-white/15 text-[10px] uppercase font-black tracking-widest border-t-2 border-[#b6bac5]/20">
             © 2024 OM YADAV. CRAFTED WITH PASSION.
         </footer>
-        </>
-        )}
+        </div>
 
-        {activePage === 'resume' && (
+        <div style={{ display: activePage === 'resume' ? 'block' : 'none' }}>
           <div className="pt-24 pb-24 relative z-10 transition-opacity duration-1000">
             {/* BENTO SKILLS GRID */}
             <BentoSkills />
@@ -401,13 +401,13 @@ const App = () => {
             {/* EXPERIENCE TIMELINE */}
             <ExperienceTimeline />
           </div>
-        )}
+        </div>
 
-        {activePage === 'github' && (
+        <div style={{ display: activePage === 'github' ? 'block' : 'none' }}>
           <div className="pt-24 transition-opacity duration-1000">
             <GithubInsights />
           </div>
-        )}
+        </div>
       </main>
     </div>
   );

@@ -1,20 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import gsap from 'gsap';
 
 export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
-    const [numbers] = useState(Array.from({ length: 100 }, (_, i) => i + 1));
-    const [noisePositions, setNoisePositions] = useState<{x: number, y: number, scale: number, delay: number, rot: number}[]>([]);
-
+    
     useEffect(() => {
-        // Pre-calculate scattered random positions to avoid hydration/render mismatch
-        setNoisePositions(Array.from({ length: 100 }, () => ({
-            x: Math.random() * 95,
-            y: Math.random() * 95,
-            scale: Math.random() * 2.5 + 0.5,
-            delay: Math.random() * 0.5,
-            rot: (Math.random() - 0.5) * 45
-        })));
-        
         document.body.style.overflow = 'hidden';
 
         const ctx = gsap.context(() => {
@@ -25,54 +14,32 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
                 }
             });
 
-            // 1) Chaotic flicker of the scattered numbers
-            tl.fromTo('.scatter-num', 
-                { opacity: 0 },
+            // 1. Terminals snap into existence aggressively
+            tl.fromTo('.term-box', 
+                { opacity: 0, scale: 0.9, y: (i) => i === 1 ? 150 : -150 },
                 { 
                     opacity: 1, 
-                    duration: 0.05, 
-                    stagger: { each: 0.01, from: "random" },
-                    ease: "rough({ template: none.out, strength: 2, points: 20, taper: none, randomize: true, clamp: false })"
+                    scale: 1, 
+                    y: 0, 
+                    duration: 0.3, 
+                    stagger: 0.1,
+                    ease: "expo.out"
                 }
             );
 
-            // 2) Horrific scale and glitch on the main text
-            tl.fromTo('.gothic-title',
-                { opacity: 0, scale: 0.8, filter: 'blur(10px)', letterSpacing: '0.5em' },
-                { opacity: 1, scale: 1, filter: 'blur(0px)', letterSpacing: '-0.05em', duration: 1.5, ease: "bounce.out" },
-                "-=1.0"
-            );
+            // 2. Glitch white flash at the very end to transition abruptly
+            tl.to('.intro-container', {
+                backgroundColor: '#ffffff',
+                duration: 0.05,
+                ease: 'power4.in'
+            }, 0.8);
 
-            // 3) Violent red flash
-            tl.to('.red-flash', {
-                opacity: 0.8,
-                duration: 0.1,
-                yoyo: true,
-                repeat: 3,
-                ease: 'power4.inOut'
-            }, "-=0.5");
-
-            // 4) Suck everything inward into the void
-            tl.to(['.scatter-wrapper', '.gothic-title'], {
-                scale: 0,
-                rotate: 15,
-                opacity: 0,
-                duration: 0.6,
-                ease: "power4.in"
-            }, "+=0.4");
-            
-            // 5) Gothic vertical slices tear apart
-            tl.to('.slice-curtain', {
-                yPercent: (i) => (i % 2 === 0 ? -100 : 100), 
-                duration: 1.0,
-                stagger: 0.05,
-                ease: "expo.inOut"
-            }, "-=0.1");
-
+            // 3. Very sudden snap out to reveal the site using CSS autoAlpha
             tl.to('.intro-container', {
                 autoAlpha: 0,
-                duration: 0.1
-            });
+                duration: 0.1,
+                ease: "power4.out"
+            }, 0.9);
         });
 
         return () => {
@@ -82,69 +49,69 @@ export const IntroSequence = ({ onComplete }: { onComplete: () => void }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const slices = Array.from({ length: 9 });
+    // Synthetic rapidly jumping code for the terminals (massive blocks for hyper-fast scrolling)
+    const generateGarbage = (lines: number) => 
+        Array.from({length: lines}).map(() => 
+            Array.from({length: 8}).map(() => Math.random().toString(16).substr(2, 8)).join(' ')
+        ).join('\n');
+
+    const jiberish1 = generateGarbage(100);
+    const jiberish2 = generateGarbage(200);
+    const jiberish3 = generateGarbage(150);
 
     return (
-        <div className="intro-container fixed inset-0 z-[200] w-screen h-screen flex items-center justify-center pointer-events-none bg-black overflow-hidden font-serif">
+        <div className="intro-container fixed inset-0 z-[200] w-screen h-screen flex items-center justify-center bg-[#05060b] overflow-hidden pointer-events-none">
             
-            {/* Film/Horror Grain overlay */}
-            <div className="absolute inset-0 z-[205] opacity-20 pointer-events-none mix-blend-overlay bg-[url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png')] bg-repeat animate-pulse" />
+            {/* Very faint background noise / grid lines for cold dark theme */}
+            <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-[repeating-linear-gradient(transparent_0%,transparent_98%,#94a3b8_98%,#94a3b8_100%)] bg-[length:100%_4px]" />
 
-            {/* Violent Red Flash Overlay */}
-            <div className="red-flash absolute inset-0 z-[204] bg-[#ff0000] mix-blend-color-burn opacity-0 pointer-events-none" />
+            <div className="flex flex-col md:flex-row gap-6 p-8 w-full max-w-7xl h-full md:h-auto items-center md:items-stretch justify-center">
+                
+                {/* TERMINAL BOX 1 */}
+                <div className="term-box w-full md:w-1/3 h-48 md:h-96 border border-[#334155] bg-white/[0.02] p-4 rounded-lg shadow-[0_0_30px_rgba(148,163,184,0.05)] relative overflow-hidden flex flex-col justify-start">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#94a3b8] to-transparent opacity-30 z-10" />
+                    <span className="text-[#e2e8f0] font-mono text-xs md:text-sm font-bold mb-2 bg-[#05060b]/90 px-2 absolute top-4 left-4 z-10 border-b border-[#334155]/50 pb-1">
+                        INIT_BOOT()
+                    </span>
+                    <pre className="text-[#94a3b8] font-mono text-[8px] md:text-[10px] leading-tight opacity-50 m-0 break-all w-full animate-code-scroll absolute top-14">
+                        {jiberish1}
+                    </pre>
+                </div>
 
-            {/* Sliced Background Curtains */}
-            <div className="absolute inset-0 flex w-full h-full z-[201]">
-                {slices.map((_, i) => (
-                    <div 
-                        key={i} 
-                        className="slice-curtain flex-1 h-full bg-[#030303] border-r border-white-[0.01] last:border-0 relative pointer-events-auto shadow-[inset_0_0_50px_rgba(0,0,0,1)]"
-                    >
-                    </div>
-                ))}
-            </div>
-            
-            {/* Chaotic 1 to 100 numbers scattered everywhere */}
-            <div className="scatter-wrapper absolute inset-0 z-[202] pointer-events-none">
-                {noisePositions.length > 0 && numbers.map((num, i) => (
-                    <div 
-                        key={i}
-                        className="scatter-num absolute text-[#4a4a4a] mix-blend-difference font-black tracking-tighter"
-                        style={{
-                            left: `${noisePositions[i].x}vw`,
-                            top: `${noisePositions[i].y}vh`,
-                            transform: `scale(${noisePositions[i].scale}) rotate(${noisePositions[i].rot}deg)`,
-                            opacity: 0,
-                            animation: `glitch-flicker 0.2s infinite alternate ${noisePositions[i].delay}s text-shadow-[0_0_10px_rgba(255,0,0,0.8)]`
-                        }}
-                    >
-                        {num}
-                        <span className="text-[0.4em] text-[#ff0033] absolute -bottom-2 -right-2 opacity-50">%</span>
-                    </div>
-                ))}
+                {/* TERMINAL BOX 2 */}
+                <div className="term-box w-full md:w-1/3 h-48 md:h-96 border border-[#334155] bg-white/[0.02] p-4 rounded-lg shadow-[0_0_50px_rgba(148,163,184,0.1)] relative overflow-hidden flex flex-col justify-start md:mt-12 backdrop-blur-sm">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#cbd5e1] to-transparent opacity-40 z-10" />
+                    <span className="text-white font-mono text-xs md:text-sm font-black mb-2 bg-[#05060b]/90 px-2 absolute top-4 left-4 z-10 border-b border-[#64748b]/50 pb-1 tracking-[0.2em]">
+                        DECRYPTING ARCHIVE
+                    </span>
+                    <pre className="text-[#64748b] font-mono text-[8px] md:text-[10px] leading-tight opacity-60 m-0 break-all w-full animate-code-scroll-fast absolute top-14">
+                        {jiberish2}
+                    </pre>
+                </div>
+
+                {/* TERMINAL BOX 3 */}
+                <div className="term-box w-full md:w-1/3 h-48 md:h-96 border border-[#334155] bg-white/[0.02] p-4 rounded-lg shadow-[0_0_30px_rgba(148,163,184,0.05)] relative overflow-hidden flex flex-col justify-start">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#94a3b8] to-transparent opacity-30 z-10" />
+                    <span className="text-[#e2e8f0] font-mono text-xs md:text-sm font-bold mb-2 bg-[#05060b]/90 px-2 absolute top-4 left-4 z-10 border-b border-[#334155]/50 pb-1">
+                        ALLOCATING_MEM
+                    </span>
+                    <pre className="text-[#94a3b8] font-mono text-[8px] md:text-[10px] leading-tight opacity-50 m-0 break-all w-full animate-code-scroll absolute top-14 border-l border-[#334155] pl-2">
+                        {jiberish3}
+                    </pre>
+                </div>
+
             </div>
 
-            {/* Main Gothic Text Layer */}
-            <div className="relative z-[203] flex flex-col items-center pointer-events-none w-full px-8 text-center mix-blend-screen">
-                <h1 
-                    className="gothic-title text-transparent bg-clip-text bg-gradient-to-b from-white via-[#888] to-[#111] text-7xl md:text-[12rem] font-black uppercase tracking-tighter drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]"
-                    style={{ WebkitTextStroke: '2px rgba(255,255,255,0.1)' }}
-                >
-                    OM YADAV
-                </h1>
-                <p className="gothic-title mt-4 text-[#ff0033] text-sm md:text-xl font-bold tracking-[1em] uppercase shadow-black drop-shadow-[0_0_10px_#ff0033]">
-                    NO ESCAPE FROM THE ARCHIVE
-                </p>
-            </div>
-            
             <style>{`
-                @keyframes glitch-flicker {
-                    0% { opacity: 0; transform: skewX(0deg); }
-                    10% { opacity: 1; transform: skewX(-10deg); color: #ff0033; }
-                    20% { opacity: 0; transform: skewX(0deg); }
-                    30% { opacity: 0.5; transform: skewX(20deg); }
-                    50% { opacity: 1; transform: skewX(0deg); color: #fff; }
-                    100% { opacity: 0; }
+                @keyframes scrollCodeBlur {
+                    0% { transform: translateY(0); filter: blur(0px); }
+                    100% { transform: translateY(-70%); filter: blur(1px); }
+                }
+                .animate-code-scroll {
+                    animation: scrollCodeBlur 1.2s linear infinite;
+                }
+                .animate-code-scroll-fast {
+                    animation: scrollCodeBlur 0.8s linear infinite reverse;
                 }
             `}</style>
         </div>
