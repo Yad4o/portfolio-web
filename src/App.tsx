@@ -151,35 +151,35 @@ const App = () => {
       {/* INTERACTIVE UI LAYER */}
       <main className="relative z-10 w-full">
 
-        {/* SMALL NAVIGATION MENU (LEFT BOTTOM) */}
-        <div className="fixed bottom-8 left-8 md:bottom-12 md:left-12 z-[100] flex items-center bg-[#020617]/50 backdrop-blur-xl border border-white/10 rounded-full p-2 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+        {/* NAVIGATION OPTIONS (TOP RIGHT) */}
+        <div className="fixed top-8 right-8 z-[100] flex flex-col gap-3 font-mono items-end pointer-events-auto">
           <button
             onClick={() => setActivePage('home')}
-            className={`px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 ${
+            className={`px-6 py-2 rounded-full border backdrop-blur-xl transition-all duration-500 ${
               activePage === 'home'
-                ? 'bg-[#00d4ff]/20 text-[#00d4ff] shadow-[0_0_15px_rgba(0,212,255,0.3)]'
-                : 'text-[#94a3b8] hover:text-white hover:bg-white/5'
-            }`}
+                ? 'border-[#00d4ff]/50 bg-[#00d4ff]/10 text-[#00d4ff] shadow-[0_0_20px_rgba(0,212,255,0.3)]'
+                : 'border-white/10 text-[#94a3b8] hover:text-white hover:border-white/30 hover:bg-white/5'
+            } text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase`}
           >
             Portfolio
           </button>
           <button
             onClick={() => setActivePage('resume')}
-            className={`px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 ${
+            className={`px-6 py-2 rounded-full border backdrop-blur-xl transition-all duration-500 ${
               activePage === 'resume'
-                ? 'bg-[#00d4ff]/20 text-[#00d4ff] shadow-[0_0_15px_rgba(0,212,255,0.3)]'
-                : 'text-[#94a3b8] hover:text-white hover:bg-white/5'
-            }`}
+                ? 'border-[#00d4ff]/50 bg-[#00d4ff]/10 text-[#00d4ff] shadow-[0_0_20px_rgba(0,212,255,0.3)]'
+                : 'border-white/10 text-[#94a3b8] hover:text-white hover:border-white/30 hover:bg-white/5'
+            } text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase`}
           >
             Resume
           </button>
           <button
             onClick={() => setActivePage('github')}
-            className={`px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 ${
+            className={`px-6 py-2 rounded-full border backdrop-blur-xl transition-all duration-500 ${
               activePage === 'github'
-                ? 'bg-[#00d4ff]/20 text-[#00d4ff] shadow-[0_0_15px_rgba(0,212,255,0.3)]'
-                : 'text-[#94a3b8] hover:text-white hover:bg-white/5'
-            }`}
+                ? 'border-[#00d4ff]/50 bg-[#00d4ff]/10 text-[#00d4ff] shadow-[0_0_20px_rgba(0,212,255,0.3)]'
+                : 'border-white/10 text-[#94a3b8] hover:text-white hover:border-white/30 hover:bg-white/5'
+            } text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase`}
           >
             Github
           </button>
