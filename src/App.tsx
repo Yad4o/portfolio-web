@@ -6,28 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, Mail, ArrowDown, ExternalLink, Linkedin, Instagram } from 'lucide-react';
 
 import { BgOptionCyber } from './components/BgOptionCyber';
-import { 
-  BgOptionHoloTopography, 
-  BgOptionNeuralNetwork, 
-  BgOptionQuantumFlow, 
-  BgOptionRetroSynthwave, 
-  BgOptionPrismaticGlass,
-  BgOptionGalacticSpiral,
-  BgOptionVoxelCity,
-  BgOptionFluidBlob,
-  BgOptionPlasmaOrbs,
-  BgOptionTunnelVision
-} from './components/ExtraBackgrounds';
-import {
-  BgOptionDNAHelix,
-  BgOptionMeteorShower,
-  BgOptionFireflies,
-  BgOptionOrbitSystem,
-  BgOptionLightningStorm,
-  BgOptionPrismBeams,
-  BgOptionParticleFountain,
-  BgOptionHologramCube
-} from './components/ExtraBackgrounds2';
+import { BgOptionHoloTopography, BgOptionGalacticSpiral } from './components/ExtraBackgrounds';
+import { BgOptionWaveGrid } from './components/ExtraBackgrounds2';
 import { CameraRig } from './components/CameraRig';
 import { GitHubProjects } from './components/GitHubProjects';
 import { GithubInsights } from './components/GithubInsights';
@@ -39,28 +19,13 @@ import { IntroSequence } from './components/IntroSequence';
 gsap.registerPlugin(ScrollTrigger);
 
 // IMMERSIVE 3D BACKGROUND
-const ImmersiveCore = ({ scroll, activeBg }: { scroll: number, activeBg: string }) => {
+const ImmersiveCore = ({ scroll, activePage }: { scroll: number, activePage: string }) => {
   return (
     <Suspense fallback={null}>
       <CameraRig />
-      {activeBg === 'cyber' && <><BgOptionCyber scroll={scroll} /><BgOptionHoloTopography scroll={scroll} /></>}
-      {activeBg === 'network' && <BgOptionNeuralNetwork scroll={scroll} />}
-      {activeBg === 'quantum' && <BgOptionQuantumFlow scroll={scroll} />}
-      {activeBg === 'synthwave' && <BgOptionRetroSynthwave scroll={scroll} />}
-      {activeBg === 'prismatic' && <BgOptionPrismaticGlass scroll={scroll} />}
-      {activeBg === 'galactic' && <BgOptionGalacticSpiral scroll={scroll} />}
-      {activeBg === 'voxel' && <BgOptionVoxelCity scroll={scroll} />}
-      {activeBg === 'fluid' && <BgOptionFluidBlob scroll={scroll} />}
-      {activeBg === 'plasma' && <BgOptionPlasmaOrbs scroll={scroll} />}
-      {activeBg === 'tunnel' && <BgOptionTunnelVision scroll={scroll} />}
-      {activeBg === 'dna' && <BgOptionDNAHelix scroll={scroll} />}
-      {activeBg === 'meteor' && <BgOptionMeteorShower scroll={scroll} />}
-      {activeBg === 'fireflies' && <BgOptionFireflies scroll={scroll} />}
-      {activeBg === 'orbit' && <BgOptionOrbitSystem scroll={scroll} />}
-      {activeBg === 'lightning' && <BgOptionLightningStorm scroll={scroll} />}
-      {activeBg === 'prism' && <BgOptionPrismBeams scroll={scroll} />}
-      {activeBg === 'fountain' && <BgOptionParticleFountain scroll={scroll} />}
-      {activeBg === 'cube' && <BgOptionHologramCube scroll={scroll} />}
+      {activePage === 'home' && <><BgOptionCyber scroll={scroll} /><BgOptionHoloTopography scroll={scroll} /></>}
+      {activePage === 'resume' && <BgOptionWaveGrid scroll={scroll} />}
+      {activePage === 'github' && <BgOptionGalacticSpiral scroll={scroll} />}
     </Suspense>
   );
 };
@@ -72,29 +37,6 @@ const App = () => {
   const [scroll, setScroll] = useState(0);
   const [activePage, setActivePage] = useState<'home' | 'resume' | 'github'>('home');
   const [isIntroDone, setIsIntroDone] = useState(false);
-  
-  const [activeBg, setActiveBg] = useState('cyber');
-  const [showBgMenu, setShowBgMenu] = useState(false);
-  const bgOptionsList = [
-      { id: 'cyber', name: 'Cyber Holograph' },
-      { id: 'network', name: 'Neural Network' },
-      { id: 'quantum', name: 'Quantum Flow' },
-      { id: 'synthwave', name: 'Retro Synthwave' },
-      { id: 'prismatic', name: 'Prismatic Glass' },
-      { id: 'galactic', name: 'Galactic Spiral' },
-      { id: 'voxel', name: 'Voxel City' },
-      { id: 'fluid', name: 'Fluid Blob' },
-      { id: 'plasma', name: 'Plasma Orbs' },
-      { id: 'tunnel', name: 'Tunnel Vision' },
-      { id: 'dna', name: 'DNA Helix' },
-      { id: 'meteor', name: 'Meteor Shower' },
-      { id: 'fireflies', name: 'Fireflies' },
-      { id: 'orbit', name: 'Orbit System' },
-      { id: 'lightning', name: 'Lightning Storm' },
-      { id: 'prism', name: 'Prism Beams' },
-      { id: 'fountain', name: 'Particle Fountain' },
-      { id: 'cube', name: 'Hologram Cube' },
-  ];
 
   // ── Smooth Scroll (Lenis) ──────────────────
   useEffect(() => {
@@ -202,37 +144,45 @@ const App = () => {
             zIndex: 0
           }}
         >
-          <ImmersiveCore scroll={scroll} activeBg={activeBg} />
+          <ImmersiveCore scroll={scroll} activePage={activePage} />
         </Canvas>
       </div>
 
       {/* INTERACTIVE UI LAYER */}
       <main className="relative z-10 w-full">
-        
-        {/* EXPLORE STYLES BUTTON & MENU */}
-        <div className="fixed bottom-8 left-8 md:bottom-12 md:left-12 z-[100] flex flex-col font-mono items-start pointer-events-auto">
-            {showBgMenu && (
-                <div className="mb-4 bg-[#020617]/90 backdrop-blur-3xl border border-[#475569] p-4 rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.2)] max-h-[60vh] overflow-y-auto flex flex-col gap-2 w-56 custom-scrollbar-hide">
-                    {bgOptionsList.map(bg => (
-                        <button
-                            key={bg.id}
-                            onClick={() => { setActiveBg(bg.id); setShowBgMenu(false); }}
-                            className={`text-left px-3 py-2 text-[10px] md:text-xs uppercase tracking-wider rounded-lg transition-all duration-300 ${activeBg === bg.id ? 'bg-[#00d4ff]/20 text-[#00d4ff] border border-[#00d4ff]/50' : 'text-[#94a3b8] border border-transparent hover:border-[#475569]/50 hover:bg-white/5 hover:text-white'}`}
-                        >
-                            {bg.name}
-                        </button>
-                    ))}
-                </div>
-            )}
-            <button
-                onClick={() => setShowBgMenu(!showBgMenu)}
-                className="group flex items-center gap-3 px-5 py-2 md:px-6 md:py-3 rounded-full border border-white/10 bg-[#020617]/50 backdrop-blur-xl hover:border-[#00d4ff]/50 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:scale-105"
-            >
-                <div className="w-2 h-2 rounded-full bg-[#00d4ff] animate-pulse shadow-[0_0_10px_#00d4ff]" />
-                <span className="text-white/70 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase group-hover:text-white transition-colors">
-                    Explore Styles
-                </span>
-            </button>
+
+        {/* SMALL NAVIGATION MENU (LEFT BOTTOM) */}
+        <div className="fixed bottom-8 left-8 md:bottom-12 md:left-12 z-[100] flex items-center bg-[#020617]/50 backdrop-blur-xl border border-white/10 rounded-full p-2 shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+          <button
+            onClick={() => setActivePage('home')}
+            className={`px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 ${
+              activePage === 'home'
+                ? 'bg-[#00d4ff]/20 text-[#00d4ff] shadow-[0_0_15px_rgba(0,212,255,0.3)]'
+                : 'text-[#94a3b8] hover:text-white hover:bg-white/5'
+            }`}
+          >
+            Portfolio
+          </button>
+          <button
+            onClick={() => setActivePage('resume')}
+            className={`px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 ${
+              activePage === 'resume'
+                ? 'bg-[#00d4ff]/20 text-[#00d4ff] shadow-[0_0_15px_rgba(0,212,255,0.3)]'
+                : 'text-[#94a3b8] hover:text-white hover:bg-white/5'
+            }`}
+          >
+            Resume
+          </button>
+          <button
+            onClick={() => setActivePage('github')}
+            className={`px-4 md:px-6 py-2 rounded-full text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 ${
+              activePage === 'github'
+                ? 'bg-[#00d4ff]/20 text-[#00d4ff] shadow-[0_0_15px_rgba(0,212,255,0.3)]'
+                : 'text-[#94a3b8] hover:text-white hover:bg-white/5'
+            }`}
+          >
+            Github
+          </button>
         </div>
 
         {/* FLOATING LEFT BUTTON */}
@@ -240,42 +190,8 @@ const App = () => {
           onClick={() => setActivePage('home')}
           className="fixed top-8 left-8 z-[100] text-2xl font-black tracking-tighter text-[#b6bac5] hover:text-[#94a3b8] hover:scale-110 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]"
         >
-          OM.
+          OM YADAO
         </button>
-
-        {/* FLOATING RIGHT BUTTONS */}
-        <div className="fixed top-8 right-8 z-[100] flex flex-col gap-4 text-[10px] uppercase tracking-widest text-[#b6bac5] font-bold items-end">
-          <button
-            onClick={() => setActivePage('home')}
-            className={`px-4 py-2 rounded-full border backdrop-blur-xl ${
-              activePage === 'home'
-                ? 'border-[#94a3b8]/70 text-white bg-[#94a3b8]/20 shadow-[0_0_20px_rgba(148,163,184,0.4)]'
-                : 'border-white/10 hover:border-[#94a3b8]/40 hover:text-white bg-[#05060b]/30'
-            } transition-all duration-300`}
-          >
-            Portfolio
-          </button>
-          <button
-            onClick={() => setActivePage('resume')}
-            className={`px-4 py-2 rounded-full border backdrop-blur-xl ${
-              activePage === 'resume'
-                ? 'border-[#94a3b8]/70 text-white bg-[#94a3b8]/20 shadow-[0_0_20px_rgba(148,163,184,0.4)]'
-                : 'border-white/10 hover:border-[#94a3b8]/40 hover:text-white bg-[#05060b]/30'
-            } transition-all duration-300`}
-          >
-            Resume
-          </button>
-          <button
-            onClick={() => setActivePage('github')}
-            className={`px-4 py-2 rounded-full border backdrop-blur-xl ${
-              activePage === 'github'
-                ? 'border-[#94a3b8]/70 text-white bg-[#94a3b8]/20 shadow-[0_0_20px_rgba(148,163,184,0.4)]'
-                : 'border-white/10 hover:border-[#94a3b8]/40 hover:text-white bg-[#05060b]/30'
-            } transition-all duration-300`}
-          >
-            GitHub Analysis
-          </button>
-        </div>
         
         <div style={{ display: activePage === 'home' ? 'block' : 'none' }}>
         <section className="min-h-screen relative flex flex-col items-center justify-center pointer-events-none">
@@ -285,29 +201,27 @@ const App = () => {
                         VISIONARY CREATIVE DEVELOPER
                     </p>
                 </div>
-                <div className="hero-reveal relative z-50 pointer-events-auto">
-                    <div className="flex flex-col items-center md:items-start group cursor-crosshair">
+                <div className="hero-reveal relative z-50 pointer-events-auto mt-4">
+                    <div className="flex flex-col items-center md:items-start group cursor-crosshair gap-8">
                         {/* FIRST NAME */}
-                        <div className="flex overflow-visible relative">
+                        <div className="flex overflow-visible relative perspective-1000">
                             {"OM".split('').map((char, i) => (
                                 <span 
                                     key={i} 
-                                    className="text-[8rem] md:text-[18rem] font-black leading-[0.75] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/70 hover:from-[#00d4ff] hover:to-[#94a3b8] transition-all duration-300 ease-out hover:-translate-y-8 hover:translate-x-2 hover:-rotate-12 hover:scale-[1.2] inline-block drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:drop-shadow-[0_0_80px_rgba(0,212,255,0.8)] z-10 hover:z-50 will-change-transform"
+                                    className="text-[8rem] md:text-[18rem] font-black leading-[0.75] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-white/90 to-[#94a3b8] hover:from-[#00d4ff] hover:to-[#94a3b8] transition-all duration-500 ease-out hover:-translate-y-12 hover:rotate-[-5deg] hover:scale-[1.2] inline-block drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:drop-shadow-[0_0_80px_rgba(0,212,255,0.8)] z-10 hover:z-50 will-change-transform"
+                                    style={{ transitionDelay: `${i * 100}ms` }}
                                 >
                                     {char}
                                 </span>
                             ))}
-                            {/* Hover accent dot */}
-                            <span className="text-[#00d4ff] text-[8rem] md:text-[18rem] font-black leading-[0.75] opacity-0 group-hover:opacity-100 transition-opacity duration-700 animate-pulse hidden md:block ml-4 drop-shadow-[0_0_40px_#00d4ff]">
-                                .
-                            </span>
                         </div>
                         {/* LAST NAME */}
-                        <div className="flex ml-0 md:ml-40 overflow-visible relative">
-                            {"YADAV".split('').map((char, i) => (
+                        <div className="flex ml-0 md:ml-40 overflow-visible relative perspective-1000">
+                            {"YADAO".split('').map((char, i) => (
                                 <span 
                                     key={i} 
-                                    className="text-[8rem] md:text-[18rem] font-black leading-[0.75] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#e2e8f0] to-[#334155] hover:from-[#64748b] hover:to-[#94a3b8] transition-all duration-300 ease-out hover:-translate-y-12 hover:-translate-x-2 hover:rotate-12 hover:scale-[1.3] inline-block drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:drop-shadow-[0_0_100px_rgba(100,116,139,0.8)] z-10 hover:z-50 will-change-transform"
+                                    className="text-[6rem] md:text-[14rem] font-black leading-[0.75] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-[#e2e8f0] to-[#334155] hover:from-[#64748b] hover:to-[#94a3b8] transition-all duration-500 ease-out hover:-translate-y-16 hover:translate-x-4 hover:rotate-[15deg] hover:scale-[1.3] inline-block drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:drop-shadow-[0_0_100px_rgba(100,116,139,0.8)] z-10 hover:z-50 will-change-transform"
+                                    style={{ transitionDelay: `${(i+2) * 100}ms` }}
                                 >
                                     {char}
                                 </span>

@@ -4,7 +4,7 @@ import * as THREE from 'three';
 
 export const BgOptionCyber = ({ scroll }: { scroll: number }) => {
   const pointsRef = useRef<THREE.Points>(null!);
-  const count = 10000;
+  const count = 3000;
 
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);

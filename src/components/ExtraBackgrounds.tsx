@@ -76,7 +76,7 @@ export const BgOptionHoloTopography = ({ scroll }: { scroll: number }) => {
     });
     return (
         <group position={[0, 0, -25]}>
-            <Torus ref={planeRef} args={[30, 8, 30, 100]}>
+            <Torus ref={planeRef} args={[30, 8, 16, 64]}>
                 <meshBasicMaterial color="#00d4ff" wireframe transparent opacity={0.3} />
             </Torus>
             <fog attach="fog" args={["#05060b", 10, 60]} />
