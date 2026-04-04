@@ -243,12 +243,12 @@ export const BgOptionGalacticSpiral = ({ scroll }: { scroll: number }) => {
         const pos = new Float32Array(count * 3);
         for(let i=0; i<count; i++) {
             const angle = Math.random() * Math.PI * 2;
-            const radius = Math.pow(Math.random(), 2) * 50; // Dense center
+            const radius = Math.pow(Math.random(), 2) * 150; // Massively expand radius
             const branchOffset = (i % 5) * ((Math.PI * 2) / 5);
             const spiralAngle = angle + radius * 0.1 + branchOffset;
             
             pos[i*3] = Math.cos(spiralAngle) * radius;
-            pos[i*3+1] = (Math.random() - 0.5) * (10 - radius * 0.15); // Flatter at edges
+            pos[i*3+1] = (Math.random() - 0.5) * (30 - radius * 0.1); // Slightly thicker disk
             pos[i*3+2] = Math.sin(spiralAngle) * radius;
         }
         return pos;
@@ -256,19 +256,20 @@ export const BgOptionGalacticSpiral = ({ scroll }: { scroll: number }) => {
 
     useFrame(({ clock }) => {
         if(pointsRef.current) {
-            pointsRef.current.rotation.y = clock.getElapsedTime() * 0.1;
-            pointsRef.current.rotation.x = clock.getElapsedTime() * 0.05 + 0.5;
-            pointsRef.current.position.y = -scroll * 10;
+            pointsRef.current.rotation.y = clock.getElapsedTime() * 0.05;
+            pointsRef.current.rotation.x = 0.5;
+            // Dramatically slow down scroll tracking so it stays in sight
+            pointsRef.current.position.y = -scroll * 1.5;
         }
     });
 
     return (
-        <group position={[0, -5, -40]}>
+        <group position={[0, -5, -45]}>
             <points ref={pointsRef}>
                 <bufferGeometry>
                     <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
                 </bufferGeometry>
-                <pointsMaterial size={0.15} color="#e2e8f0" transparent opacity={0.6} blending={THREE.AdditiveBlending} />
+                <pointsMaterial size={0.18} color="#cbd5e1" transparent opacity={0.65} blending={THREE.AdditiveBlending} />
             </points>
         </group>
     );
