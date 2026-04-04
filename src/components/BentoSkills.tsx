@@ -4,16 +4,19 @@ export const BentoSkills = () => {
     return (
         <section className="relative min-h-screen py-32 z-20 pointer-events-none">
             <div className="max-w-7xl mx-auto px-8 pointer-events-auto">
-                <div className="mb-16">
-                    <p className="text-white/80 text-lg md:text-xl leading-relaxed font-light max-w-2xl bg-[#05060b]/80 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 shadow-2xl">
-                        ARSENAL
-                    </p>
-                    <h2 className="text-5xl md:text-[6rem] font-black text-white leading-[0.8] tracking-tighter">
-                        EXPERTISE.
-                    </h2>
-                </div>
+                <div className="flex flex-col bg-[#05060b]/80 border border-white/10 rounded-[3rem] p-12 md:p-20 overflow-hidden relative group/section backdrop-blur-2xl shadow-2xl">
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-white/[0.05] to-transparent opacity-0 group-hover/section:opacity-100 transition-opacity duration-1000 blur-2xl z-0" />
+                    
+                    <div className="relative z-10 mb-16">
+                        <p className="text-white/80 text-lg md:text-xl leading-relaxed font-light max-w-2xl bg-[#05060b]/80 backdrop-blur-2xl p-8 rounded-3xl border border-white/10 shadow-2xl">
+                            ARSENAL
+                        </p>
+                        <h2 className="text-5xl md:text-[6rem] font-black text-white leading-[0.8] tracking-tighter">
+                            EXPERTISE.
+                        </h2>
+                    </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-3 gap-6 h-auto md:h-[800px]">
+                    <div className="relative z-10 grid grid-cols-1 md:grid-cols-4 md:grid-rows-3 gap-6 h-auto md:h-[800px]">
                     {/* Main Tech Stack - Span 2x2 */}
                     <div className="md:col-span-2 md:row-span-2 bg-[#05060b]/80 border border-white/10 rounded-[2rem] p-8 md:p-12 hover:bg-white/[0.05] transition-all duration-500 overflow-hidden relative group">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white/[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-white/[0.08] transition-all duration-700" />
@@ -69,6 +72,7 @@ export const BentoSkills = () => {
                         <h1 className="text-8xl font-black text-white/[0.05] tracking-tighter hidden md:block">
                             LOGIC
                         </h1>
+                    </div>
                     </div>
                 </div>
             </div>

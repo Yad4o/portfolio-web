@@ -54,15 +54,18 @@ export const ExperienceTimeline = () => {
 
     return (
         <section ref={containerRef} className="relative min-h-screen py-32 z-20 pointer-events-none">
-            <div className="max-w-4xl mx-auto px-8 pointer-events-auto">
-                <div className="text-center mb-24">
-                    <Briefcase className="w-8 h-8 text-white/30 mx-auto mb-6" />
-                    <h2 className="text-5xl md:text-[7rem] font-black text-white leading-[0.8] tracking-tighter">
-                        JOURNEY.
-                    </h2>
-                </div>
+            <div className="max-w-7xl mx-auto px-8 pointer-events-auto">
+                <div className="flex flex-col bg-[#05060b]/80 border border-white/10 rounded-[3rem] p-12 md:p-20 overflow-hidden relative group/section backdrop-blur-2xl shadow-2xl">
+                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-white/[0.05] to-transparent opacity-0 group-hover/section:opacity-100 transition-opacity duration-1000 blur-2xl z-0" />
+                    
+                    <div className="relative z-10 text-center mb-24">
+                        <Briefcase className="w-8 h-8 text-white/30 mx-auto mb-6" />
+                        <h2 className="text-5xl md:text-[7rem] font-black text-white leading-[0.8] tracking-tighter">
+                            JOURNEY.
+                        </h2>
+                    </div>
 
-                <div className="relative">
+                    <div className="relative z-10 max-w-4xl mx-auto w-full">
                     {/* The Track */}
                     <div className="absolute left-0 md:left-1/2 top-0 bottom-0 w-[1px] bg-white/10 -translate-x-1/2" />
                     {/* The Fill */}
@@ -87,6 +90,7 @@ export const ExperienceTimeline = () => {
                     ))}
                 </div>
             </div>
+          </div>
         </section>
     );
 };
