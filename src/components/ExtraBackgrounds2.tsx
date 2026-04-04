@@ -731,7 +731,7 @@ export const BgOptionHologramCube = ({ scroll }: { scroll: number }) => {
             </mesh>
             {/* Corner spheres on outer cube */}
             {[[-1, -1, -1], [-1, -1, 1], [-1, 1, -1], [-1, 1, 1],
-              [1, -1, -1], [1, -1, 1], [1, 1, -1], [1, 1, 1]].map((c, i) => (
+            [1, -1, -1], [1, -1, 1], [1, 1, -1], [1, 1, 1]].map((c, i) => (
                 <Sphere key={i} args={[0.3, 8, 8]} position={[c[0] * 7.5, c[1] * 7.5, c[2] * 7.5]}>
                     <meshBasicMaterial color="#00d4ff" />
                 </Sphere>
@@ -879,3 +879,4 @@ export const BgOptionDigitalMatrix = ({ scroll }: { scroll: number }) => {
         </group>
     );
 };
+

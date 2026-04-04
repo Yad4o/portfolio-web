@@ -3,10 +3,31 @@ import Lenis from '@studio-freight/lenis';
 import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Github, Mail, ArrowDown, ExternalLink, Linkedin } from 'lucide-react';
+import { Github, Mail, ArrowDown, ExternalLink, Linkedin, Instagram } from 'lucide-react';
 
 import { BgOptionCyber } from './components/BgOptionCyber';
-import { BgOptionHoloTopography } from './components/ExtraBackgrounds';
+import { 
+  BgOptionHoloTopography, 
+  BgOptionNeuralNetwork, 
+  BgOptionQuantumFlow, 
+  BgOptionRetroSynthwave, 
+  BgOptionPrismaticGlass,
+  BgOptionGalacticSpiral,
+  BgOptionVoxelCity,
+  BgOptionFluidBlob,
+  BgOptionPlasmaOrbs,
+  BgOptionTunnelVision
+} from './components/ExtraBackgrounds';
+import {
+  BgOptionDNAHelix,
+  BgOptionMeteorShower,
+  BgOptionFireflies,
+  BgOptionOrbitSystem,
+  BgOptionLightningStorm,
+  BgOptionPrismBeams,
+  BgOptionParticleFountain,
+  BgOptionHologramCube
+} from './components/ExtraBackgrounds2';
 import { CameraRig } from './components/CameraRig';
 import { GitHubProjects } from './components/GitHubProjects';
 import { GithubInsights } from './components/GithubInsights';
@@ -18,12 +39,28 @@ import { IntroSequence } from './components/IntroSequence';
 gsap.registerPlugin(ScrollTrigger);
 
 // IMMERSIVE 3D BACKGROUND
-const ImmersiveCore = ({ scroll }: { scroll: number }) => {
+const ImmersiveCore = ({ scroll, activeBg }: { scroll: number, activeBg: string }) => {
   return (
     <Suspense fallback={null}>
       <CameraRig />
-      <BgOptionCyber scroll={scroll} />
-      <BgOptionHoloTopography scroll={scroll} />
+      {activeBg === 'cyber' && <><BgOptionCyber scroll={scroll} /><BgOptionHoloTopography scroll={scroll} /></>}
+      {activeBg === 'network' && <BgOptionNeuralNetwork scroll={scroll} />}
+      {activeBg === 'quantum' && <BgOptionQuantumFlow scroll={scroll} />}
+      {activeBg === 'synthwave' && <BgOptionRetroSynthwave scroll={scroll} />}
+      {activeBg === 'prismatic' && <BgOptionPrismaticGlass scroll={scroll} />}
+      {activeBg === 'galactic' && <BgOptionGalacticSpiral scroll={scroll} />}
+      {activeBg === 'voxel' && <BgOptionVoxelCity scroll={scroll} />}
+      {activeBg === 'fluid' && <BgOptionFluidBlob scroll={scroll} />}
+      {activeBg === 'plasma' && <BgOptionPlasmaOrbs scroll={scroll} />}
+      {activeBg === 'tunnel' && <BgOptionTunnelVision scroll={scroll} />}
+      {activeBg === 'dna' && <BgOptionDNAHelix scroll={scroll} />}
+      {activeBg === 'meteor' && <BgOptionMeteorShower scroll={scroll} />}
+      {activeBg === 'fireflies' && <BgOptionFireflies scroll={scroll} />}
+      {activeBg === 'orbit' && <BgOptionOrbitSystem scroll={scroll} />}
+      {activeBg === 'lightning' && <BgOptionLightningStorm scroll={scroll} />}
+      {activeBg === 'prism' && <BgOptionPrismBeams scroll={scroll} />}
+      {activeBg === 'fountain' && <BgOptionParticleFountain scroll={scroll} />}
+      {activeBg === 'cube' && <BgOptionHologramCube scroll={scroll} />}
     </Suspense>
   );
 };
@@ -35,6 +72,29 @@ const App = () => {
   const [scroll, setScroll] = useState(0);
   const [activePage, setActivePage] = useState<'home' | 'resume' | 'github'>('home');
   const [isIntroDone, setIsIntroDone] = useState(false);
+  
+  const [activeBg, setActiveBg] = useState('cyber');
+  const [showBgMenu, setShowBgMenu] = useState(false);
+  const bgOptionsList = [
+      { id: 'cyber', name: 'Cyber Holograph' },
+      { id: 'network', name: 'Neural Network' },
+      { id: 'quantum', name: 'Quantum Flow' },
+      { id: 'synthwave', name: 'Retro Synthwave' },
+      { id: 'prismatic', name: 'Prismatic Glass' },
+      { id: 'galactic', name: 'Galactic Spiral' },
+      { id: 'voxel', name: 'Voxel City' },
+      { id: 'fluid', name: 'Fluid Blob' },
+      { id: 'plasma', name: 'Plasma Orbs' },
+      { id: 'tunnel', name: 'Tunnel Vision' },
+      { id: 'dna', name: 'DNA Helix' },
+      { id: 'meteor', name: 'Meteor Shower' },
+      { id: 'fireflies', name: 'Fireflies' },
+      { id: 'orbit', name: 'Orbit System' },
+      { id: 'lightning', name: 'Lightning Storm' },
+      { id: 'prism', name: 'Prism Beams' },
+      { id: 'fountain', name: 'Particle Fountain' },
+      { id: 'cube', name: 'Hologram Cube' },
+  ];
 
   // ── Smooth Scroll (Lenis) ──────────────────
   useEffect(() => {
@@ -142,13 +202,39 @@ const App = () => {
             zIndex: 0
           }}
         >
-          <ImmersiveCore scroll={scroll} />
+          <ImmersiveCore scroll={scroll} activeBg={activeBg} />
         </Canvas>
       </div>
 
       {/* INTERACTIVE UI LAYER */}
       <main className="relative z-10 w-full">
         
+        {/* EXPLORE STYLES BUTTON & MENU */}
+        <div className="fixed bottom-8 left-8 md:bottom-12 md:left-12 z-[100] flex flex-col font-mono items-start pointer-events-auto">
+            {showBgMenu && (
+                <div className="mb-4 bg-[#020617]/90 backdrop-blur-3xl border border-[#475569] p-4 rounded-2xl shadow-[0_0_50px_rgba(0,212,255,0.2)] max-h-[60vh] overflow-y-auto flex flex-col gap-2 w-56 custom-scrollbar-hide">
+                    {bgOptionsList.map(bg => (
+                        <button
+                            key={bg.id}
+                            onClick={() => { setActiveBg(bg.id); setShowBgMenu(false); }}
+                            className={`text-left px-3 py-2 text-[10px] md:text-xs uppercase tracking-wider rounded-lg transition-all duration-300 ${activeBg === bg.id ? 'bg-[#00d4ff]/20 text-[#00d4ff] border border-[#00d4ff]/50' : 'text-[#94a3b8] border border-transparent hover:border-[#475569]/50 hover:bg-white/5 hover:text-white'}`}
+                        >
+                            {bg.name}
+                        </button>
+                    ))}
+                </div>
+            )}
+            <button
+                onClick={() => setShowBgMenu(!showBgMenu)}
+                className="group flex items-center gap-3 px-5 py-2 md:px-6 md:py-3 rounded-full border border-white/10 bg-[#020617]/50 backdrop-blur-xl hover:border-[#00d4ff]/50 transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:scale-105"
+            >
+                <div className="w-2 h-2 rounded-full bg-[#00d4ff] animate-pulse shadow-[0_0_10px_#00d4ff]" />
+                <span className="text-white/70 text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase group-hover:text-white transition-colors">
+                    Explore Styles
+                </span>
+            </button>
+        </div>
+
         {/* FLOATING LEFT BUTTON */}
         <button
           onClick={() => setActivePage('home')}
@@ -252,17 +338,17 @@ const App = () => {
 
         {/* MARQUEE SECTION - HYPER GEN-Z TYPOGRAPHY */}
         <section className="marquee-section relative h-[50vh] flex items-center overflow-hidden bg-transparent z-10 pointer-events-auto mix-blend-overlay cursor-none group">
-            <div className="absolute top-1/2 -translate-y-1/2 w-[200vw] flex marquee-track group-hover:[animation-play-state:paused]">
-                <div className="flex shrink-0 w-[100vw] justify-around items-center space-x-16 px-8">
-                    {['WEBGL', 'THREE.JS', 'REACT', 'GSAP', 'GLSL', 'VITE'].map((text, i) => (
-                        <span key={i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent hover:text-white hover:scale-110 hover:-rotate-3 hover:drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] transition-all duration-300" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
+            <div className="absolute top-1/2 -translate-y-1/2 w-max flex marquee-track group-hover:[animation-play-state:paused]">
+                <div className="flex shrink-0 min-w-[100vw] w-max justify-around items-center space-x-16 px-8 pr-16">
+                    {['ONE', 'PIECE', 'ONE', 'PIECE', 'ONE', 'PIECE'].map((text, i) => (
+                        <span key={i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent hover:text-white hover:scale-110 hover:-rotate-3 hover:drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] transition-all duration-300 whitespace-nowrap" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
                             {text}
                         </span>
                     ))}
                 </div>
-                <div className="flex shrink-0 w-[100vw] justify-around items-center space-x-16 px-8">
-                    {['WEBGL', 'THREE.JS', 'REACT', 'GSAP', 'GLSL', 'VITE'].map((text, i) => (
-                        <span key={'b'+i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent hover:text-white hover:scale-110 hover:-rotate-3 hover:drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] transition-all duration-300" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
+                <div className="flex shrink-0 min-w-[100vw] w-max justify-around items-center space-x-16 px-8 pr-16">
+                    {['ONE', 'PIECE', 'ONE', 'PIECE', 'ONE', 'PIECE'].map((text, i) => (
+                        <span key={'b'+i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent hover:text-white hover:scale-110 hover:-rotate-3 hover:drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] transition-all duration-300 whitespace-nowrap" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
                             {text}
                         </span>
                     ))}
@@ -386,6 +472,15 @@ const App = () => {
                       Open for visionary opportunities
                     </p>
                 </div>
+            </div>
+
+            {/* OTHER CONTACT OPTIONS (INSTAGRAM) */}
+            <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 flex flex-col items-end gap-3 pointer-events-auto">
+                <span className="text-[8px] md:text-[10px] uppercase font-bold tracking-[0.2em] md:tracking-[0.3em] text-[#94a3b8]/70">See other contact opt</span>
+                <a href="https://www.instagram.com/om.fps" target="_blank" className="group flex items-center gap-3 px-5 py-2 md:px-6 md:py-3 rounded-full border border-white/10 bg-[#020617]/50 backdrop-blur-xl hover:bg-gradient-to-r hover:from-[#833ab4] hover:via-[#fd1d1d] hover:to-[#fcb045] hover:border-transparent transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(253,29,29,0.4)] hover:scale-105 hover:-rotate-2">
+                    <span className="text-white/70 text-[10px] md:text-xs font-mono group-hover:text-white transition-colors tracking-widest">@om.fps</span>
+                    <Instagram className="w-3 h-3 md:w-4 md:h-4 text-white/70 group-hover:text-white transition-colors" />
+                </a>
             </div>
         </section>
 
