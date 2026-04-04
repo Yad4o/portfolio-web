@@ -1,117 +1,55 @@
-# Om Yadav - AI/ML Engineer Portfolio
+# OM YADAO — AI/ML Engineer Portfolio
 
-A premium, performance-optimized portfolio website built from scratch with vanilla HTML/CSS/JavaScript.
-
-## 🚀 Features
-
-- **Custom Cursor**: Interactive dot + ring cursor with magnetic hover effects
-- **Smooth Animations**: Intersection Observer-based scroll animations
-- **Parallax Effects**: Multi-layer depth with grid background and floating particles
-- **Responsive Design**: Mobile-first approach with optimized breakpoints
-- **Performance Optimized**: 60fps animations with requestAnimationFrame
-- **Dark Theme**: Elegant near-black design with cyan accent colors
-
-## 🛠 Tech Stack
-
-- **Frontend**: Vanilla HTML5, CSS3, JavaScript (ES6+)
-- **Styling**: CSS Variables, Grid, Flexbox, Clamp-based typography
-- **Animations**: CSS Transitions, requestAnimationFrame, IntersectionObserver
-- **Performance**: Debounced scroll events, optimized rendering
-
-## 📁 Project Structure
-
-```
-portfolio/
-├── index.html          # Main HTML structure
-├── style.css           # Complete styling with CSS variables
-├── script.js           # Interactive JavaScript functionality
-└── README.md           # This file
-```
-
-## 🎨 Design System
-
-### Colors
-- Primary: `#0a0a0a` (near-black background)
-- Secondary: `#111111` (slightly lighter sections)
-- Accent: `#00d4ff` (cyan/blue glow)
-- Text: `#ffffff`, `#a0a0a0`, `#666666` (hierarchy)
-
-### Typography
-- Font: Inter (Google Fonts)
-- Weights: 300, 400, 500, 600, 700, 900
-- Responsive sizing with `clamp()`
-
-### Animations
-- Title reveal: `cubic-bezier(0.34, 1.56, 0.64, 1)`
-- Smooth transitions: `cubic-bezier(0.4, 0, 0.2, 1)`
-- 60fps particle system
-
-## 📱 Sections
-
-1. **Hero**: Name, role, tagline, CTAs with animated background
-2. **About**: Engineering mindset and focus areas
-3. **Skills**: Data-driven skills from GitHub analysis
-4. **Projects**: Real repositories with hover interactions
-5. **Journey**: Technical evolution timeline
-6. **Contact**: GitHub, LinkedIn links
-
-## 🚀 Deployment
-
-### GitHub Pages
-1. Push to repository
-2. Enable GitHub Pages in settings
-3. Select source as `main` branch
-4. Deploy at `https://username.github.io/portfolio`
-
-### Vercel
-1. Connect GitHub repository
-2. Auto-deploy on push
-3. Custom domain support
-
-### Netlify
-1. Drag and drop folder
-2. Or connect Git repository
-3. Continuous deployment
-
-## ⚡ Performance
-
-- **Lighthouse Score**: 95+ (Performance, Accessibility, Best Practices, SEO)
-- **Core Web Vitals**: Optimized for FCP, LCP, CLS
-- **Bundle Size**: <50KB total (no external dependencies)
-- **Load Time**: <1s on 3G
-
-## 🎯 Key Features
-
-### Custom Cursor
-- Dot follows mouse immediately
-- Ring smooth-follows with easing
-- Hover state expansion
-- Mobile hidden for touch devices
-
-### Scroll Animations
-- Intersection Observer API
-- Staggered fade-up effects
-- Parallax depth layers
-- Performance optimized
-
-### Interactive Elements
-- Magnetic button hover
-- Card lift effects
-- Glow accents
-- Smooth scroll navigation
-
-## 🔧 Browser Support
-
-- Chrome 60+
-- Firefox 55+
-- Safari 12+
-- Edge 79+
-- Mobile browsers (iOS Safari, Android Chrome)
-
-## 📄 License
-
-MIT License - feel free to use for your own portfolio projects.
+A premium, immersive, and performance-optimized portfolio website. This project leverages cutting-edge web technologies to create a high-fidelity experience that reflects a career at the intersection of **AI Systems**, **Data Science**, and **Creative Development**.
 
 ---
 
-Built with ❤️ using vanilla web technologies for maximum performance and control.
+## 🚀 Vision
+This portfolio is designed to be as intelligent and responsive as the systems it showcases. It features a custom-built 3D background system that adapts in real-time to navigation, paired with cinematic typography and glassmorphic UI elements.
+
+## 🛠 Tech Stack
+
+- **Framework:** [React](https://reactjs.org/) + [Vite](https://vitejs.dev/)
+- **3D Graphics:** [Three.js](https://threejs.org/) via [@react-three/fiber](https://docs.pmnd.rs/react-three-fiber) & [@react-three/drei](https://github.com/pmndrs/drei)
+- **Animation:** [GSAP](https://greensock.com/gsap/) (ScrollTrigger, Timelines)
+- **Scrolling:** [Lenis](https://github.com/darkroomengineering/lenis) (Sleek Smooth Scrolling)
+- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- **Icons:** [Lucide React](https://lucide.dev/)
+
+## 🎨 Immersive Features
+
+### 1. State-Aware 3D Backgrounds
+The background environment isn't just static; it evolves as you navigate:
+- **Portfolio (Home):** Deep-space `Galactic Spiral` — A massive, interactive 3D particle vortex representing data scale.
+- **Resume:** `Wave Grid` — An undulating topographic mesh that tracks your scroll speed.
+- **GitHub Analysis:** `Cyber Holograph` — A Matrix-inspired data rain combined with a wireframe torus knot, optimized for 60fps.
+
+### 2. Premium 3D Typography
+- **OM YADAO Branding:** Custom-built text blocks with independent 3D transformations.
+- **Staggered Animations:** Each letter responds to hover with a unique rotation, scale, and offset, creating a tactile, "touchable" feel.
+- **Perspective Rendering:** Uses `perspective-1000` CSS containers for realistic depth.
+
+### 3. High-Performance UI
+- **Glassmorphism:** Elegant, blurred-background containers (`backdrop-blur-xl`) for content blocks.
+- **Cinematic Reveal:** GSAP-powered entrance sequences for all hero elements and section titles.
+- **Mobile-First Optimization:** Fluid layouts that retain their 3D impact on high-and-low-end mobile devices.
+
+## 📁 Key Components
+
+- `App.tsx`: Central logic, state-driven navigation, and the `ImmersiveCore` background engine.
+- `BgOptionCyber.tsx`: High-performance falling particle system.
+- `GithubInsights.tsx`: Deep-dive project categorization with interactive repo cards.
+- `BentoSkills.tsx`: Modern, grid-based skill visualization.
+- `ExperienceTimeline.tsx`: Detailed career progression with glass-morphic styling.
+
+## 📱 Navigation
+We've moved to a **Top-Right Navigation Pill** system for maximum visibility and accessibility, freeing up the bottom of the screen for ambient 3D visuals.
+
+## ⚡ Performance Optimization
+- **Polygon-Lean Geometries:** Reduced segment counts in complex 3D shapes to prevent GPU throttling.
+- **Particle Balancing:** Fine-tuned point counts (2000-3000) for high density without frame-drops.
+- **Layered Rendering:** Strategic use of `will-change-transform` and reduced `backdrop-blur` in high-interaction areas to maintain 60fps.
+
+---
+
+Built with ❤️ by **OM YADAO**.
