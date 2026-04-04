@@ -23,9 +23,9 @@ const ImmersiveCore = ({ scroll, activePage }: { scroll: number, activePage: str
   return (
     <Suspense fallback={null}>
       <CameraRig />
-      {activePage === 'home' && <><BgOptionCyber scroll={scroll} /><BgOptionHoloTopography scroll={scroll} /></>}
+      {activePage === 'home' && <BgOptionGalacticSpiral scroll={scroll} />}
       {activePage === 'resume' && <BgOptionWaveGrid scroll={scroll} />}
-      {activePage === 'github' && <BgOptionGalacticSpiral scroll={scroll} />}
+      {activePage === 'github' && <><BgOptionCyber scroll={scroll} /><BgOptionHoloTopography scroll={scroll} /></>}
     </Suspense>
   );
 };
