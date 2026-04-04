@@ -7,10 +7,16 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
     {
-        year: "2024 - Present",
+        year: "Dec 2025 - Present",
         role: "AI/ML Intern",
         company: "KEMURI Technology",
-        desc: "Building and testing machine learning models. Working intimately with multi-agent systems, data analysis pipelines, and expanding internal feature scopes utilizing Python and computer vision libraries."
+        desc: "Focusing on Artificial Intelligence frameworks, FastAPI microservices, and scalable backend infrastructure. Building multi-agent systems, testing machine learning models, and leading backend logic for complex product features."
+    },
+    {
+        year: "Oct 2025 - Nov 2025",
+        role: "Machine Learning Intern",
+        company: "EVOASTRA VENTURES PVT LTD",
+        desc: "Worked on real-world AI and ML projects focusing on data-driven solutions and predictive analytics. Responsibilities included model development, data preprocessing, and performance optimization for client projects using Python and Data Science pipelines."
     }
 ];
 

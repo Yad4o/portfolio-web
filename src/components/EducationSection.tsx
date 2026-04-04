@@ -22,9 +22,18 @@ export const EducationSection = () => {
                             <h3 className="text-2xl font-bold text-white group-hover/item:text-white/80 transition-colors">Bachelor of Engineering (B.E.)</h3>
                             <div className="flex justify-between items-center mt-2 border-b border-white/10 pb-4">
                                 <span className="text-white/50 text-sm tracking-wider uppercase">Artificial Intelligence & Data Science</span>
-                                <span className="text-white/30 text-xs font-bold tracking-[0.2em] px-3 py-1 bg-white/[0.05] rounded-full">3rd Year</span>
+                                <span className="text-white/30 text-xs font-bold tracking-[0.2em] px-3 py-1 bg-white/[0.05] rounded-full">Aug 2023 - Jun 2027</span>
                             </div>
-                            <p className="text-white/40 mt-3 text-xs uppercase tracking-widest">Savitribai Phule Pune University (SPPU)</p>
+                            <p className="text-white/40 mt-3 text-xs uppercase tracking-widest">Savitribai Phule Pune University</p>
+                        </div>
+                        
+                        <div className="group/item mt-4">
+                            <h3 className="text-2xl font-bold text-white group-hover/item:text-white/80 transition-colors">Technology Job Simulation</h3>
+                            <div className="flex justify-between items-center mt-2 border-b border-white/10 pb-4">
+                                <span className="text-white/50 text-sm tracking-wider uppercase">Deloitte Certification</span>
+                                <span className="text-white/30 text-xs font-bold tracking-[0.2em] px-3 py-1 bg-white/[0.05] rounded-full">Jul 2025</span>
+                            </div>
+                            <p className="text-white/40 mt-3 text-[10px] uppercase tracking-widest font-mono">Credential ID: zsxShAZXbZfjmGcvk</p>
                         </div>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import Lenis from '@studio-freight/lenis';
 import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Github, Mail, ArrowDown, ExternalLink } from 'lucide-react';
+import { Github, Mail, ArrowDown, ExternalLink, Linkedin } from 'lucide-react';
 
 import { BgOptionCyber } from './components/BgOptionCyber';
 import { BgOptionHoloTopography } from './components/ExtraBackgrounds';
@@ -229,17 +229,18 @@ const App = () => {
                         </div>
                     </div>
                 </div>
-                <div className="hero-reveal mt-10 flex flex-col items-center md:items-start gap-4 pointer-events-auto">
-                    <div className="bg-gradient-to-r from-[#0f172a]/80 to-transparent border-l-4 border-[#94a3b8] rounded-r-3xl p-6 backdrop-blur-2xl shadow-[0_20px_50px_rgba(15,23,42,0.5)] hover:translate-x-4 hover:bg-[#1e293b]/80 transition-all duration-500 text-left">
-                        <p className="text-[#e2e8f0] text-sm md:text-lg max-w-lg font-medium tracking-[0.1em] leading-relaxed uppercase">
-                            Forging immersive digital experiences perfectly balanced strictly between engineering and visual art.
+                <div className="hero-reveal mt-10 flex flex-col items-center md:items-start gap-4 pointer-events-auto w-full md:w-auto px-4 md:px-0">
+                    <div className="bg-gradient-to-r from-[#020617]/95 via-[#0f172a]/95 to-[#05060b]/50 border-l-4 border-[#00d4ff] rounded-r-3xl p-6 md:p-8 backdrop-blur-3xl shadow-[0_20px_50px_rgba(0,0,0,0.8)] hover:translate-x-4 hover:bg-[#0f172a]/100 transition-all duration-500 text-left relative overflow-hidden group/hero-desc">
+                        <div className="absolute inset-0 bg-gradient-to-r from-[#00d4ff]/10 to-transparent opacity-0 group-hover/hero-desc:opacity-100 transition-opacity duration-700" />
+                        <p className="text-white text-sm md:text-lg max-w-lg font-semibold tracking-[0.1em] leading-relaxed uppercase drop-shadow-md relative z-10">
+                            Engineering intelligent systems perfectly balanced between rigorous data science and bleeding-edge machine learning.
                         </p>
                     </div>
                     
-                    <div className="flex flex-wrap gap-3 mt-4 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#94a3b8]">
-                        <span className="px-4 py-2 border border-[#334155] rounded-full bg-[#0f172a]/60 backdrop-blur-md">19 YO</span>
-                        <span className="px-4 py-2 border border-[#334155] rounded-full bg-[#0f172a]/60 backdrop-blur-md">3rd Yr AI & DS Student</span>
-                        <span className="px-4 py-2 border border-[#334155] rounded-full bg-[#0f172a]/60 backdrop-blur-md">AI/ML Intern @ Kemuri Tech</span>
+                    <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-4 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#e2e8f0]">
+                        <span className="px-5 py-2.5 border border-[#475569] rounded-full bg-[#020617]/95 backdrop-blur-2xl shadow-lg hover:border-[#00d4ff]/50 transition-colors cursor-default">19 YO</span>
+                        <span className="px-5 py-2.5 border border-[#475569] rounded-full bg-[#020617]/95 backdrop-blur-2xl shadow-lg hover:border-[#00d4ff]/50 transition-colors cursor-default">3rd Yr AI & DS Student</span>
+                        <span className="px-5 py-2.5 border-2 border-[#00d4ff]/50 rounded-full bg-[#020617]/95 backdrop-blur-2xl shadow-[0_0_15px_rgba(0,212,255,0.2)] text-[#00d4ff] hover:shadow-[0_0_25px_rgba(0,212,255,0.4)] transition-all cursor-default">AI/ML Intern @ Kemuri Tech</span>
                     </div>
                 </div>
                 <div className="hero-reveal absolute bottom-12 flex flex-col items-center gap-3 text-white/30">
@@ -309,21 +310,21 @@ const App = () => {
             <div className="max-w-7xl mx-auto px-8 relative w-full grid grid-cols-1 md:grid-cols-3 gap-12 text-center pointer-events-auto">
                 <div className="parallax-float backdrop-blur-3xl bg-gradient-to-t from-[#020617]/95 to-[#0f172a]/80 border-b-4 border-[#475569] p-12 rounded-t-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)] group hover:bg-[#0f172a]/90 hover:-translate-y-6 hover:shadow-[0_0_100px_rgba(71,85,105,0.2)] transition-all duration-700 ease-out cursor-default">
                     <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-[#94a3b8] overflow-hidden drop-shadow-[0_10px_10px_rgba(0,0,0,0.9)] group-hover:scale-110 transition-transform duration-700">
-                        <span className="metric-number" data-target="9">0</span>
+                        <span className="metric-number" data-target="6">0</span><span className="text-[#64748b] font-light">+</span>
                     </h4>
-                    <p className="text-[#94a3b8] text-sm font-bold tracking-[0.4em] uppercase mt-6 group-hover:text-white group-hover:tracking-[0.6em] transition-all duration-700">Repositories</p>
+                    <p className="text-[#94a3b8] text-sm font-bold tracking-[0.3em] uppercase mt-6 group-hover:text-white group-hover:tracking-[0.45em] transition-all duration-700">Real-World Backend Systems</p>
                 </div>
                 <div className="parallax-float backdrop-blur-3xl bg-gradient-to-t from-[#020617]/95 to-[#0f172a]/80 border-b-4 border-[#475569] p-12 rounded-t-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)] group hover:bg-[#0f172a]/90 hover:-translate-y-6 hover:shadow-[0_0_100px_rgba(71,85,105,0.2)] transition-all duration-700 ease-out cursor-default md:mt-24">
                     <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-[#94a3b8] overflow-hidden drop-shadow-[0_10px_10px_rgba(0,0,0,0.9)] group-hover:scale-110 transition-transform duration-700">
-                        <span className="metric-number" data-target="4">0</span><span className="text-[#64748b] font-light">M</span>
+                        <span className="metric-number" data-target="150">0</span><span className="text-[#64748b] font-light">+</span>
                     </h4>
-                    <p className="text-[#94a3b8] text-sm font-bold tracking-[0.4em] uppercase mt-6 group-hover:text-white group-hover:tracking-[0.6em] transition-all duration-700">Lines of Code</p>
+                    <p className="text-[#94a3b8] text-sm font-bold tracking-[0.3em] uppercase mt-6 group-hover:text-white group-hover:tracking-[0.45em] transition-all duration-700">API Endpoints Deployed</p>
                 </div>
                 <div className="parallax-float backdrop-blur-3xl bg-gradient-to-t from-[#020617]/95 to-[#0f172a]/80 border-b-4 border-[#475569] p-12 rounded-t-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)] group hover:bg-[#0f172a]/90 hover:-translate-y-6 hover:shadow-[0_0_100px_rgba(71,85,105,0.2)] transition-all duration-700 ease-out cursor-default">
                     <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-[#94a3b8] overflow-hidden drop-shadow-[0_10px_10px_rgba(0,0,0,0.9)] group-hover:scale-110 transition-transform duration-700">
-                        <span className="text-[#64748b] font-light">∞</span>
+                        <span className="metric-number" data-target="9">0</span><span className="text-[#64748b] font-light">+</span>
                     </h4>
-                    <p className="text-[#94a3b8] text-sm font-bold tracking-[0.4em] uppercase mt-6 group-hover:text-white group-hover:tracking-[0.6em] transition-all duration-700">Energy Level</p>
+                    <p className="text-[#94a3b8] text-sm font-bold tracking-[0.3em] uppercase mt-6 group-hover:text-white group-hover:tracking-[0.45em] transition-all duration-700">GitHub Repositories</p>
                 </div>
             </div>
             {/* Interactive Cyber grid background element */}
@@ -372,6 +373,9 @@ const App = () => {
                 <div className="flex justify-center gap-8 mt-4">
                     <a href="mailto:omyadao@gmail.com" className="group/btn w-20 h-20 rounded-3xl border-2 border-[#334155] bg-[#020617] backdrop-blur-xl flex items-center justify-center hover:bg-gradient-to-br hover:from-[#94a3b8] hover:to-[#334155] hover:border-white transition-all duration-500 hover:-translate-y-4 hover:-rotate-6 hover:scale-110 shadow-[0_10px_30px_rgba(0,0,0,0.9)] hover:shadow-[0_0_50px_rgba(71,85,105,0.6)]">
                         <Mail className="w-8 h-8 text-[#94a3b8] group-hover/btn:text-white transition-colors duration-500" />
+                    </a>
+                    <a href="https://www.linkedin.com/in/om-yadao-5359791a9" target="_blank" className="group/btn w-20 h-20 rounded-3xl border-2 border-[#334155] bg-[#020617] backdrop-blur-xl flex items-center justify-center hover:bg-gradient-to-br hover:from-[#94a3b8] hover:to-[#334155] hover:border-white transition-all duration-500 hover:-translate-y-4 hover:scale-110 shadow-[0_10px_30px_rgba(0,0,0,0.9)] hover:shadow-[0_0_50px_rgba(71,85,105,0.6)]">
+                        <Linkedin className="w-8 h-8 text-[#94a3b8] group-hover/btn:text-white transition-colors duration-500" />
                     </a>
                     <a href="https://github.com/Yad4o" target="_blank" className="group/btn w-20 h-20 rounded-3xl border-2 border-[#334155] bg-[#020617] backdrop-blur-xl flex items-center justify-center hover:bg-gradient-to-br hover:from-[#94a3b8] hover:to-[#334155] hover:border-white transition-all duration-500 hover:-translate-y-4 hover:rotate-6 hover:scale-110 shadow-[0_10px_30px_rgba(0,0,0,0.9)] hover:shadow-[0_0_50px_rgba(71,85,105,0.6)]">
                         <Github className="w-8 h-8 text-[#94a3b8] group-hover/btn:text-white transition-colors duration-500" />
