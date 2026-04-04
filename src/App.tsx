@@ -278,15 +278,15 @@ const App = () => {
                         </h2>
                         <div className="group space-y-6 text-lg md:text-xl text-white/80 leading-relaxed font-light max-w-xl pointer-events-auto bg-gradient-to-br from-[#020617]/95 to-[#0f172a]/95 border-l-4 border-[#94a3b8] backdrop-blur-3xl p-8 rounded-r-3xl shadow-[0_20px_50px_rgba(2,6,23,0.8)] hover:shadow-[0_0_80px_rgba(148,163,184,0.3)] hover:translate-x-4 transition-all duration-700">
                             <p className="group-hover:text-white transition-colors duration-500">
-                                A relentless pursuit of flawless interactive execution. Specialized in fusing high-performance code with bleeding-edge visual fidelity.
+                                A relentless pursuit of intelligent system architecture. Specialized in fusing complex data pipelines with bleeding-edge machine learning models.
                             </p>
                             <p className="text-[#e2e8f0] text-base group-hover:text-[#94a3b8] transition-colors duration-500 font-medium">
-                                Transforming static concepts into living, breathing fluid WebGL realities.
+                                Transforming raw data into predictive, autonomous, and scalable AI realities.
                             </p>
                         </div>
                     </div>
                     <div className="md:col-span-5 grid grid-cols-2 gap-4 items-center pointer-events-auto mt-10 md:mt-0 perspective-1000">
-                        {['React.js', 'WebGL', 'Three.js', 'Animation'].map((t, i) => (
+                        {['Python', 'Machine Learning', 'Computer Vision', 'Multi-Agent AI'].map((t, i) => (
                             <div
                               key={i}
                               className="group p-6 bg-gradient-to-b from-[#020617]/90 to-[#0f172a]/90 shadow-[0_15px_30px_rgba(0,0,0,0.9)] border-t-2 border-transparent hover:border-[#e2e8f0] backdrop-blur-3xl rounded-xl hover:bg-[#0f172a]/90 transition-all duration-700 hover:-translate-y-4 hover:rotate-3 hover:scale-110 hover:shadow-[0_0_40px_rgba(148,163,184,0.4)]"
