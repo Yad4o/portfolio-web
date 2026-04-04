@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useState, useRef } from 'react';
 import Lenis from '@studio-freight/lenis';
 import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
@@ -37,6 +37,17 @@ const App = () => {
   const [scroll, setScroll] = useState(0);
   const [activePage, setActivePage] = useState<'home' | 'resume' | 'github'>('home');
   const [isIntroDone, setIsIntroDone] = useState(false);
+  const lenisRef = useRef<any>(null);
+
+  // ── Reset scroll on page switch ──
+  useEffect(() => {
+    if (lenisRef.current) {
+        lenisRef.current.scrollTo(0, { immediate: true });
+    } else {
+        window.scrollTo(0, 0);
+    }
+    setScroll(0);
+  }, [activePage]);
 
   // ── Smooth Scroll (Lenis) ──────────────────
   useEffect(() => {
@@ -46,6 +57,7 @@ const App = () => {
       smoothWheel: true,
       wheelMultiplier: 0.8,
     });
+    lenisRef.current = lenis;
 
     lenis.on('scroll', (e: any) => {
         setScroll(e.progress);
@@ -54,6 +66,7 @@ const App = () => {
     gsap.ticker.add((time: number) => lenis.raf(time * 1000));
     return () => {
         gsap.ticker.remove((time: number) => lenis.raf(time * 1000));
+        lenisRef.current = null;
         lenis.destroy();
     };
   }, []);
