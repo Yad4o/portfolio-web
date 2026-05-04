@@ -12,10 +12,10 @@ const HIGHLIGHT_REPOS = [
   {
     name: 'SRS',
     url: 'https://github.com/Yad4o/SRS',
-    tag: 'Recommendation Engine',
+    tag: 'NLP / Classification',
     summary:
-      'Python recommendation system exploring retrieval, ranking, and evaluation patterns for smarter suggestions.',
-    focus: ['ML pipelines', 'Recommenders'],
+      'NLP-based ticket classification system using Python, applying text preprocessing and ML models to route and categorize support tickets accurately.',
+    focus: ['NLP', 'Classification'],
   },
   {
     name: 'Human-Action-Recognition',
@@ -63,7 +63,7 @@ export const GithubInsights = () => {
             AI & ML <br/> Profile.
           </h2>
           <p className="text-white/80 text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto border border-[#00d4ff]/20 bg-[#001018]/90 px-8 py-6 rounded-2xl shadow-[0_15px_40px_rgba(0,212,255,0.1)] backdrop-blur-3xl text-left pointer-events-auto hover:border-[#00d4ff]/60 hover:shadow-[0_0_50px_rgba(0,212,255,0.2)] hover:-translate-y-2 transition-all duration-700">
-            A curated snapshot of GitHub work – highlighting multi‑agent systems, recommendation engines,
+            A curated snapshot of GitHub work – highlighting multi‑agent systems, NLP systems,
             computer vision, and data‑driven projects demonstrating capability as an applied AI engineer.
           </p>
         </div>
@@ -91,7 +91,7 @@ export const GithubInsights = () => {
                   AI SYSTEMS
                 </p>
                 <p>
-                  Projects like <span className="font-bold text-white">MAP</span> and recommendation
+                  Projects like <span className="font-bold text-white">MAP</span> and NLP
                   work in <span className="font-bold text-white">SRS</span> show you can design, orchestrate,
                   and ship end‑to‑end AI products.
                 </p>
@@ -119,7 +119,7 @@ export const GithubInsights = () => {
                 <div>
                   <p className="text-xl font-black text-white tracking-tight">GitHub</p>
                   <p className="font-mono text-xs text-[#64748b]/60 tracking-[0.2em] uppercase mt-1">
-                    8+ Public · AI/ML
+                    20+ Public · AI/ML
                   </p>
                 </div>
               </div>

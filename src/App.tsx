@@ -211,7 +211,7 @@ const App = () => {
             <div className="h-screen flex flex-col items-center justify-center text-center px-4 w-full">
                 <div className="hero-reveal mb-6 overflow-hidden">
                     <p className="text-white/50 text-[10px] md:text-xs font-semibold uppercase tracking-[0.5em] backdrop-blur-sm px-6 py-2 rounded-full border border-white/10 bg-white/[0.02]">
-                        VISIONARY CREATIVE DEVELOPER
+                        APPLIED AI & ML ENGINEER
                     </p>
                 </div>
                 <div className="hero-reveal relative z-50 pointer-events-auto mt-4">
@@ -267,14 +267,14 @@ const App = () => {
         <section className="marquee-section relative h-[50vh] flex items-center overflow-hidden bg-transparent z-10 pointer-events-auto mix-blend-overlay cursor-none group">
             <div className="absolute top-1/2 -translate-y-1/2 w-max flex marquee-track group-hover:[animation-play-state:paused]">
                 <div className="flex shrink-0 min-w-[100vw] w-max justify-around items-center space-x-16 px-8 pr-16">
-                    {['ONE', 'PIECE', 'ONE', 'PIECE', 'ONE', 'PIECE'].map((text, i) => (
+                    {['ENGINEER', 'AI', 'PYTHON', 'ML', 'VISION', 'BACKEND'].map((text, i) => (
                         <span key={i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent hover:text-white hover:scale-110 hover:-rotate-3 hover:drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] transition-all duration-300 whitespace-nowrap" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
                             {text}
                         </span>
                     ))}
                 </div>
                 <div className="flex shrink-0 min-w-[100vw] w-max justify-around items-center space-x-16 px-8 pr-16">
-                    {['ONE', 'PIECE', 'ONE', 'PIECE', 'ONE', 'PIECE'].map((text, i) => (
+                    {['FASTAPI', 'AGENTS', 'DATA', 'INFERENCE', 'NEURAL', 'SYSTEMS'].map((text, i) => (
                         <span key={'b'+i} className="text-[8rem] md:text-[12rem] font-black italic tracking-tighter text-transparent hover:text-white hover:scale-110 hover:-rotate-3 hover:drop-shadow-[0_0_50px_rgba(255,255,255,0.8)] transition-all duration-300 whitespace-nowrap" style={{ WebkitTextStroke: '1px rgba(255,255,255,0.15)' }}>
                             {text}
                         </span>
@@ -335,7 +335,7 @@ const App = () => {
                 </div>
                 <div className="parallax-float backdrop-blur-3xl bg-gradient-to-t from-[#020617]/95 to-[#0f172a]/80 border-b-4 border-[#475569] p-12 rounded-t-3xl shadow-[0_30px_60px_rgba(0,0,0,0.9)] group hover:bg-[#0f172a]/90 hover:-translate-y-6 hover:shadow-[0_0_100px_rgba(71,85,105,0.2)] transition-all duration-700 ease-out cursor-default">
                     <h4 className="text-[5rem] md:text-[8rem] font-black leading-none text-transparent bg-clip-text bg-gradient-to-b from-white to-[#94a3b8] overflow-hidden drop-shadow-[0_10px_10px_rgba(0,0,0,0.9)] group-hover:scale-110 transition-transform duration-700">
-                        <span className="metric-number" data-target="9">0</span><span className="text-[#64748b] font-light">+</span>
+                        <span className="metric-number" data-target="20">0</span><span className="text-[#64748b] font-light">+</span>
                     </h4>
                     <p className="text-[#94a3b8] text-sm font-bold tracking-[0.3em] uppercase mt-6 group-hover:text-white group-hover:tracking-[0.45em] transition-all duration-700">GitHub Repositories</p>
                 </div>
@@ -412,7 +412,7 @@ const App = () => {
         </section>
 
         <footer className="p-12 text-center text-white/15 text-[10px] uppercase font-black tracking-widest border-t-2 border-[#b6bac5]/20">
-            © 2024 OM YADAV. CRAFTED WITH PASSION.
+            © 2025 OM YADAO. CRAFTED WITH PASSION.
         </footer>
         </div>
 
