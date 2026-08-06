@@ -252,7 +252,7 @@ const App = () => {
                     
                     <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-4 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] text-[#e2e8f0]">
                         <span className="px-5 py-2.5 border border-[#475569] rounded-full bg-[#020617]/95 backdrop-blur-2xl shadow-lg hover:border-[#00d4ff]/50 transition-colors cursor-default">19 YO</span>
-                        <span className="px-5 py-2.5 border border-[#475569] rounded-full bg-[#020617]/95 backdrop-blur-2xl shadow-lg hover:border-[#00d4ff]/50 transition-colors cursor-default">3rd Yr AI & DS Student</span>
+                        <span className="px-5 py-2.5 border border-[#475569] rounded-full bg-[#020617]/95 backdrop-blur-2xl shadow-lg hover:border-[#00d4ff]/50 transition-colors cursor-default">Final Yr AI & DS Student</span>
                         <span className="px-5 py-2.5 border-2 border-[#00d4ff]/50 rounded-full bg-[#020617]/95 backdrop-blur-2xl shadow-[0_0_15px_rgba(0,212,255,0.2)] text-[#00d4ff] hover:shadow-[0_0_25px_rgba(0,212,255,0.4)] transition-all cursor-default">AI/ML Intern @ Kemuri Tech</span>
                     </div>
                 </div>
@@ -384,13 +384,13 @@ const App = () => {
                   LET'S TALK
                 </h2>
                 <div className="flex justify-center gap-8 mt-4">
-                    <a href="mailto:omyadao@gmail.com" className="group/btn w-20 h-20 rounded-3xl border-2 border-[#334155] bg-[#020617] backdrop-blur-xl flex items-center justify-center hover:bg-gradient-to-br hover:from-[#94a3b8] hover:to-[#334155] hover:border-white transition-all duration-500 hover:-translate-y-4 hover:-rotate-6 hover:scale-110 shadow-[0_10px_30px_rgba(0,0,0,0.9)] hover:shadow-[0_0_50px_rgba(71,85,105,0.6)]">
+                    <a href="mailto:omyadao1706@gmail.com" aria-label="Email Om" className="group/btn w-20 h-20 rounded-3xl border-2 border-[#334155] bg-[#020617] backdrop-blur-xl flex items-center justify-center hover:bg-gradient-to-br hover:from-[#94a3b8] hover:to-[#334155] hover:border-white transition-all duration-500 hover:-translate-y-4 hover:-rotate-6 hover:scale-110 shadow-[0_10px_30px_rgba(0,0,0,0.9)] hover:shadow-[0_0_50px_rgba(71,85,105,0.6)]">
                         <Mail className="w-8 h-8 text-[#94a3b8] group-hover/btn:text-white transition-colors duration-500" />
                     </a>
-                    <a href="https://www.linkedin.com/in/om-yadao-5359791a9" target="_blank" className="group/btn w-20 h-20 rounded-3xl border-2 border-[#334155] bg-[#020617] backdrop-blur-xl flex items-center justify-center hover:bg-gradient-to-br hover:from-[#94a3b8] hover:to-[#334155] hover:border-white transition-all duration-500 hover:-translate-y-4 hover:scale-110 shadow-[0_10px_30px_rgba(0,0,0,0.9)] hover:shadow-[0_0_50px_rgba(71,85,105,0.6)]">
+                    <a href="https://www.linkedin.com/in/om-yadao-5359791a9" target="_blank" rel="noopener noreferrer" aria-label="Om's LinkedIn profile" className="group/btn w-20 h-20 rounded-3xl border-2 border-[#334155] bg-[#020617] backdrop-blur-xl flex items-center justify-center hover:bg-gradient-to-br hover:from-[#94a3b8] hover:to-[#334155] hover:border-white transition-all duration-500 hover:-translate-y-4 hover:scale-110 shadow-[0_10px_30px_rgba(0,0,0,0.9)] hover:shadow-[0_0_50px_rgba(71,85,105,0.6)]">
                         <Linkedin className="w-8 h-8 text-[#94a3b8] group-hover/btn:text-white transition-colors duration-500" />
                     </a>
-                    <a href="https://github.com/Yad4o" target="_blank" className="group/btn w-20 h-20 rounded-3xl border-2 border-[#334155] bg-[#020617] backdrop-blur-xl flex items-center justify-center hover:bg-gradient-to-br hover:from-[#94a3b8] hover:to-[#334155] hover:border-white transition-all duration-500 hover:-translate-y-4 hover:rotate-6 hover:scale-110 shadow-[0_10px_30px_rgba(0,0,0,0.9)] hover:shadow-[0_0_50px_rgba(71,85,105,0.6)]">
+                    <a href="https://github.com/Yad4o" target="_blank" rel="noopener noreferrer" aria-label="Om's GitHub profile" className="group/btn w-20 h-20 rounded-3xl border-2 border-[#334155] bg-[#020617] backdrop-blur-xl flex items-center justify-center hover:bg-gradient-to-br hover:from-[#94a3b8] hover:to-[#334155] hover:border-white transition-all duration-500 hover:-translate-y-4 hover:rotate-6 hover:scale-110 shadow-[0_10px_30px_rgba(0,0,0,0.9)] hover:shadow-[0_0_50px_rgba(71,85,105,0.6)]">
                         <Github className="w-8 h-8 text-[#94a3b8] group-hover/btn:text-white transition-colors duration-500" />
                     </a>
                 </div>
@@ -404,7 +404,7 @@ const App = () => {
             {/* OTHER CONTACT OPTIONS (INSTAGRAM) */}
             <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 flex flex-col items-end gap-3 pointer-events-auto">
                 <span className="text-[8px] md:text-[10px] uppercase font-bold tracking-[0.2em] md:tracking-[0.3em] text-[#94a3b8]/70">See other contact opt</span>
-                <a href="https://www.instagram.com/om.fps" target="_blank" className="group flex items-center gap-3 px-5 py-2 md:px-6 md:py-3 rounded-full border border-white/10 bg-[#020617]/50 backdrop-blur-xl hover:bg-gradient-to-r hover:from-[#833ab4] hover:via-[#fd1d1d] hover:to-[#fcb045] hover:border-transparent transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(253,29,29,0.4)] hover:scale-105 hover:-rotate-2">
+                <a href="https://www.instagram.com/om.fps" target="_blank" rel="noopener noreferrer" aria-label="Om's Instagram profile" className="group flex items-center gap-3 px-5 py-2 md:px-6 md:py-3 rounded-full border border-white/10 bg-[#020617]/50 backdrop-blur-xl hover:bg-gradient-to-r hover:from-[#833ab4] hover:via-[#fd1d1d] hover:to-[#fcb045] hover:border-transparent transition-all duration-500 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_0_40px_rgba(253,29,29,0.4)] hover:scale-105 hover:-rotate-2">
                     <span className="text-white/70 text-[10px] md:text-xs font-mono group-hover:text-white transition-colors tracking-widest">@om.fps</span>
                     <Instagram className="w-3 h-3 md:w-4 md:h-4 text-white/70 group-hover:text-white transition-colors" />
                 </a>

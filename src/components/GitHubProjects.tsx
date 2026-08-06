@@ -1,5 +1,47 @@
 import { useState, useEffect } from 'react';
-import { Github, ExternalLink, Star } from 'lucide-react';
+import {
+  Github,
+  ExternalLink,
+  Star,
+  Bot,
+  ShieldCheck,
+  Activity,
+  Building2,
+  Database,
+  MessagesSquare,
+  Sparkles,
+  Code2,
+} from 'lucide-react';
+
+// Maps a repo name to a distinct icon + gradient "cover" so each project card
+// reads as visually distinct at a glance, even though GitHub doesn't give us
+// a real screenshot to work with.
+const getProjectVisual = (name: string) => {
+  const n = name.toLowerCase();
+
+  if (n.includes('map') || n.includes('agent')) {
+    return { Icon: Bot, gradient: 'from-[#0ea5e9]/25 to-[#0f172a]/0', ring: '#38bdf8' };
+  }
+  if (n.includes('srs') || n.includes('support')) {
+    return { Icon: MessagesSquare, gradient: 'from-[#a855f7]/25 to-[#0f172a]/0', ring: '#c084fc' };
+  }
+  if (n.includes('shawty') || n.includes('claw')) {
+    return { Icon: Sparkles, gradient: 'from-[#f59e0b]/25 to-[#0f172a]/0', ring: '#fbbf24' };
+  }
+  if (n.includes('deepfake') || n.includes('detection')) {
+    return { Icon: ShieldCheck, gradient: 'from-[#ef4444]/25 to-[#0f172a]/0', ring: '#f87171' };
+  }
+  if (n.includes('action') || n.includes('recognition') || n.includes('vision')) {
+    return { Icon: Activity, gradient: 'from-[#22c55e]/25 to-[#0f172a]/0', ring: '#4ade80' };
+  }
+  if (n.includes('college') || n.includes('event')) {
+    return { Icon: Building2, gradient: 'from-[#06b6d4]/25 to-[#0f172a]/0', ring: '#22d3ee' };
+  }
+  if (n.includes('loan') || n.includes('data') || n.includes('analysis')) {
+    return { Icon: Database, gradient: 'from-[#eab308]/25 to-[#0f172a]/0', ring: '#facc15' };
+  }
+  return { Icon: Code2, gradient: 'from-[#94a3b8]/20 to-[#0f172a]/0', ring: '#94a3b8' };
+};
 
 interface Repo {
   id: number;
@@ -81,18 +123,37 @@ export const GitHubProjects = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000">
-      {repos.map((repo) => (
+      {repos.map((repo) => {
+        const { Icon, gradient, ring } = getProjectVisual(repo.name);
+        return (
         <a
           key={repo.id}
           href={repo.html_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="group relative p-8 flex flex-col justify-between h-full bg-gradient-to-br from-[#020617]/80 to-[#0f172a]/80 backdrop-blur-3xl border border-[#475569]/30 rounded-[2rem] shadow-[0_20px_40px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-[600ms] ease-out hover:bg-gradient-to-br hover:from-[#0f172a]/90 hover:to-[#0f172a]/90 hover:border-[#94a3b8]/60 hover:scale-[1.03] hover:-translate-y-4 hover:shadow-[0_40px_80px_rgba(71,85,105,0.5)]"
+          aria-label={`View ${repo.name.replace(/-/g, ' ').replace(/_/g, ' ')} on GitHub`}
+          className="group relative flex flex-col justify-between h-full bg-gradient-to-br from-[#020617]/80 to-[#0f172a]/80 backdrop-blur-3xl border border-[#475569]/30 rounded-[2rem] shadow-[0_20px_40px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-[600ms] ease-out hover:bg-gradient-to-br hover:from-[#0f172a]/90 hover:to-[#0f172a]/90 hover:border-[#94a3b8]/60 hover:scale-[1.03] hover:-translate-y-4 hover:shadow-[0_40px_80px_rgba(71,85,105,0.5)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00d4ff]"
         >
+          {/* Per-project cover banner: distinct icon + tint so cards read apart at a glance */}
+          <div
+            className={`relative h-28 w-full flex items-center justify-center bg-gradient-to-br ${gradient} border-b border-[#475569]/30 overflow-hidden`}
+            aria-hidden="true"
+          >
+            <div
+              className="absolute w-40 h-40 rounded-full blur-[50px] opacity-40 transition-all duration-700 group-hover:opacity-70 group-hover:scale-110"
+              style={{ backgroundColor: ring }}
+            />
+            <Icon
+              className="w-10 h-10 relative z-10 transition-transform duration-500 group-hover:scale-125 group-hover:-rotate-6"
+              style={{ color: ring }}
+              strokeWidth={1.75}
+            />
+          </div>
+
           {/* Background interactive element (Constant neon bloom across all) */}
           <div className="absolute top-0 right-0 w-48 h-48 bg-[#94a3b8]/10 rounded-full blur-[60px] pointer-events-none transition-all duration-700 group-hover:scale-[2] group-hover:bg-[#e2e8f0]/15" />
           
-          <div className="relative z-10 w-full">
+          <div className="relative z-10 w-full p-8 pb-0">
               <div className="flex items-start justify-between mb-8 w-full">
                 <div className="p-3 bg-[#0f172a]/30 border border-[#475569]/40 rounded-xl transition-all duration-500 group-hover:bg-[#334155]/60 group-hover:border-[#94a3b8] group-hover:scale-110 group-hover:-rotate-12">
                   <Github className="w-6 h-6 text-[#94a3b8] transition-all duration-500 group-hover:text-white" />
@@ -114,7 +175,7 @@ export const GitHubProjects = () => {
               </p>
           </div>
           
-          <div className="flex flex-wrap items-center justify-between border-t border-[#475569]/20 pt-6 mt-auto relative z-10 transition-colors duration-500 group-hover:border-[#94a3b8]/40">
+          <div className="flex flex-wrap items-center justify-between border-t border-[#475569]/20 p-8 pt-6 mt-auto relative z-10 transition-colors duration-500 group-hover:border-[#94a3b8]/40">
             {repo.language && (
               <div className="flex items-center gap-2 border border-[#475569]/30 bg-[#020617]/60 px-3 py-1.5 rounded-full transition-colors duration-500 group-hover:border-[#94a3b8]/50">
                 <div 
@@ -131,7 +192,8 @@ export const GitHubProjects = () => {
             </div>
           </div>
         </a>
-      ))}
+        );
+      })}
     </div>
   );
 };
