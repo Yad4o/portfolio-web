@@ -1,14 +1,9 @@
-import { Suspense, useEffect, useState, useRef } from 'react';
+import { Suspense, useEffect, useState, useRef, lazy } from 'react';
 import Lenis from '@studio-freight/lenis';
-import { Canvas } from '@react-three/fiber';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Github, Mail, ArrowDown, ExternalLink, Linkedin, Instagram } from 'lucide-react';
 
-import { BgOptionCyber } from './components/BgOptionCyber';
-import { BgOptionHoloTopography, BgOptionGalacticSpiral } from './components/ExtraBackgrounds';
-import { BgOptionWaveGrid } from './components/ExtraBackgrounds2';
-import { CameraRig } from './components/CameraRig';
 import { GitHubProjects } from './components/GitHubProjects';
 import { GithubInsights } from './components/GithubInsights';
 import { BentoSkills } from './components/BentoSkills';
@@ -16,19 +11,12 @@ import { ExperienceTimeline } from './components/ExperienceTimeline';
 import { EducationSection } from './components/EducationSection';
 import { IntroSequence } from './components/IntroSequence';
 
-gsap.registerPlugin(ScrollTrigger);
+// Lazy-loaded: this pulls in react-three-fiber + three.js (the largest chunk
+// in the bundle). Splitting it out means the page shell can paint before the
+// 3D background has even finished downloading.
+const Scene3D = lazy(() => import('./components/Scene3D'));
 
-// IMMERSIVE 3D BACKGROUND
-const ImmersiveCore = ({ scroll, activePage }: { scroll: number, activePage: string }) => {
-  return (
-    <Suspense fallback={null}>
-      <CameraRig />
-      {activePage === 'home' && <BgOptionGalacticSpiral scroll={scroll} />}
-      {activePage === 'resume' && <BgOptionWaveGrid scroll={scroll} />}
-      {activePage === 'github' && <><BgOptionCyber scroll={scroll} /><BgOptionHoloTopography scroll={scroll} /></>}
-    </Suspense>
-  );
-};
+gsap.registerPlugin(ScrollTrigger);
 
 // ─────────────────────────────────────────────
 // MAIN APP ENTRY
@@ -136,29 +124,11 @@ const App = () => {
       {/* MASSIVE CINEMATIC INTRO SEQUENCE */}
       {!isIntroDone && <IntroSequence onComplete={() => setIsIntroDone(true)} />}
 
-      {/* FIXED IMMERSIVE CANVAS */}
-      <div className="fixed inset-0 z-0 w-screen h-screen">
-        <Canvas
-          camera={{ position: [0, 0, 10], fov: 45 }}
-          gl={{ 
-            antialias: false, 
-            powerPreference: 'high-performance',
-            stencil: false,
-            depth: true,
-            alpha: false
-          }}
-          dpr={[1, 1]}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            zIndex: 0
-          }}
-        >
-          <ImmersiveCore scroll={scroll} activePage={activePage} />
-        </Canvas>
+      {/* FIXED IMMERSIVE CANVAS (lazy-loaded, see Scene3D.tsx) */}
+      <div className="fixed inset-0 z-0 w-screen h-screen bg-[#05060b]">
+        <Suspense fallback={<div className="absolute inset-0 bg-gradient-to-b from-[#05060b] via-[#0a0e1a] to-[#05060b]" />}>
+          <Scene3D scroll={scroll} activePage={activePage} />
+        </Suspense>
       </div>
 
       {/* INTERACTIVE UI LAYER */}
