@@ -18,8 +18,13 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          three: ['three', '@react-three/fiber', '@react-three/drei'],
           gsap: ['gsap'],
+          // Note: three/@react-three/* are intentionally NOT forced into a
+          // manual chunk here. Scene3D.tsx lazy-loads them via dynamic
+          // import(), and Rollup's automatic code-splitting keeps that as a
+          // real async chunk (not modulepreloaded on first paint). Forcing
+          // them into a manual vendor chunk makes Vite treat it as always
+          // needed and defeats the lazy-load.
         },
       },
     },
