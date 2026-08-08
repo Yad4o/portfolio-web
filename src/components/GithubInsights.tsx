@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Github, BrainCog, LineChart, Cpu, ExternalLink } from 'lucide-react';
 
 const HIGHLIGHT_REPOS = [
@@ -33,25 +34,38 @@ const HIGHLIGHT_REPOS = [
       '3D‑inspired image description tool that blends creative visuals with language‑model powered descriptions.',
     focus: ['Multimodal', 'Creative ML'],
   },
-  {
-    name: 'Text-Autocomplete-System',
-    url: 'https://github.com/Yad4o/Text-Autocomplete-System',
-    tag: 'Algorithms',
-    summary:
-      'Trie‑based autocomplete engine in C++ optimized for fast prefix search and clean data structures.',
-    focus: ['Algorithms', 'Data structures'],
-  },
-  {
-    name: 'Evoastra_project',
-    url: 'https://github.com/Yad4o/Evoastra_project',
-    tag: 'Analytics',
-    summary:
-      'Customer purchase‑pattern and churn analysis for an e‑commerce dataset, focused on retention insights.',
-    focus: ['EDA', 'Customer analytics'],
-  },
 ];
 
 export const GithubInsights = () => {
+  // HIGHLIGHT_REPOS above is hand-written (custom summaries per project), but
+  // repos get made private or deleted over time. Cross-check against the
+  // live public repo list so a privated/removed repo just quietly drops out
+  // instead of needing a manual edit here every time.
+  const [visibleRepoNames, setVisibleRepoNames] = useState<Set<string> | null>(null);
+
+  useEffect(() => {
+    const checkVisibility = async () => {
+      try {
+        const response = await fetch('https://api.github.com/users/Yad4o/repos?per_page=100');
+        const data = await response.json();
+        const names = new Set(
+          Array.isArray(data) ? data.map((r: { name: string }) => r.name.toLowerCase()) : []
+        );
+        setVisibleRepoNames(names);
+      } catch (error) {
+        console.error('Error checking repo visibility:', error);
+        // If the check fails, fall back to showing the curated list as-is
+        // rather than hiding everything.
+        setVisibleRepoNames(new Set(HIGHLIGHT_REPOS.map((r) => r.name.toLowerCase())));
+      }
+    };
+    checkVisibility();
+  }, []);
+
+  const highlightRepos = visibleRepoNames
+    ? HIGHLIGHT_REPOS.filter((repo) => visibleRepoNames.has(repo.name.toLowerCase()))
+    : [];
+
   return (
     <section className="min-h-screen relative py-24" id="github-insights">
       <div className="max-w-7xl mx-auto px-6 md:px-10">
@@ -157,7 +171,14 @@ export const GithubInsights = () => {
         </div>
 
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {HIGHLIGHT_REPOS.map((repo) => (
+          {visibleRepoNames === null
+            ? [...Array(3)].map((_, i) => (
+                <div
+                  key={i}
+                  className="h-48 rounded-r-3xl border border-[#00d4ff]/10 border-l-4 bg-[#001018]/60 animate-pulse"
+                />
+              ))
+            : highlightRepos.map((repo) => (
             <a
               key={repo.name}
               href={repo.url}
