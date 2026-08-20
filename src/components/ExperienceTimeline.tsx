@@ -7,16 +7,26 @@ gsap.registerPlugin(ScrollTrigger);
 
 const experiences = [
     {
-        year: "Dec 2025 - Present",
-        role: "AI/ML Intern",
-        company: "KEMURI Technology",
-        desc: "Focusing on Artificial Intelligence frameworks, FastAPI microservices, and scalable backend infrastructure. Building multi-agent systems, testing machine learning models, and leading backend logic for complex product features."
+        year: "Dec 2025 - Jun 2026",
+        role: "AI/ML Engineering Intern",
+        company: "Kemuri Technology",
+        desc: "Eight-month internship working under a senior engineer on COE AI, an internal AI platform initiative. Built and shipped backend infrastructure in a production FastAPI codebase alongside integrating and testing ML models.",
+        highlights: [
+            "Built FastAPI microservices and contributed to scalable backend infrastructure for the COE AI platform",
+            "Integrated, tested, and validated machine learning models against production workloads",
+            "Collaborated within an existing engineering codebase, reviewed by senior engineers"
+        ]
     },
     {
         year: "Oct 2025 - Nov 2025",
         role: "Machine Learning Intern",
-        company: "EVOASTRA VENTURES PVT LTD",
-        desc: "Worked on real-world AI and ML projects focusing on data-driven solutions and predictive analytics. Responsibilities included model development, data preprocessing, and performance optimization for client projects using Python and Data Science pipelines."
+        company: "Evoastra Ventures Pvt Ltd",
+        desc: "Worked on real-world AI and ML projects focusing on data-driven solutions and predictive analytics for client engagements.",
+        highlights: [
+            "Built and iterated on predictive models using Python data science pipelines",
+            "Handled data preprocessing and feature engineering for client datasets",
+            "Optimized model performance for real-world deployment constraints"
+        ]
     }
 ];
 
@@ -78,7 +88,14 @@ export const ExperienceTimeline = () => {
                                     <span className="font-mono text-sm tracking-[0.2em] text-white/50 bg-white/[0.05] px-4 py-1 rounded-full">{exp.year}</span>
                                     <h3 className="text-3xl md:text-5xl font-black text-white mt-8 mb-2 tracking-tighter group-hover:text-white/90 transition-colors">{exp.role}</h3>
                                     <h4 className="font-mono text-lg text-white/40 mb-6 tracking-tight uppercase border-b border-white/10 pb-4 inline-block">{exp.company}</h4>
-                                    <p className="text-white/50 text-sm md:text-base leading-loose font-light">{exp.desc}</p>
+                                    <p className="text-white/50 text-sm md:text-base leading-loose font-light mb-6">{exp.desc}</p>
+                                    <ul className={`space-y-2.5 ${i % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
+                                        {exp.highlights.map((h, hi) => (
+                                            <li key={hi} className="text-white/40 text-xs md:text-sm leading-relaxed font-light">
+                                                {h}
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             </div>
                             
