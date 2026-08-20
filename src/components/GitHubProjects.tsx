@@ -31,6 +31,56 @@ const getProjectVisual = (name: string) => {
   return { label: 'software project', ring: '#94a3b8' };
 };
 
+// Curated 2-3 point highlights for flagship projects, since GitHub's API
+// description field is too short to convey real architecture/scope. Matched
+// by substring against the repo name; unmatched repos just show their
+// GitHub description as before.
+const getProjectHighlights = (name: string): string[] => {
+  const n = name.toLowerCase();
+
+  if (n === 'map' || (n.includes('map') && !n.includes('smart'))) {
+    return [
+      'LangGraph agent pipeline (Planner → Executor → Analyzer → Memory) with FAISS RAG memory',
+      'Neon PostgreSQL + Upstash Redis + Celery, JWT RS256 auth with RBAC',
+      'React 18 + TypeScript frontend with follow-up conversations and fast-path single-step routing',
+    ];
+  }
+  if (n.includes('srs')) {
+    return [
+      'Sub-intent classification with an OpenAI fallback chain for low-confidence cases',
+      'Public /resolve API endpoint with CORS-enabled, independently split agent routes',
+      'Full dark-editorial frontend redesign built with Framer Motion',
+    ];
+  }
+  if (n.includes('college-event') || n.includes('college_event')) {
+    return [
+      'FastAPI + PostgreSQL + Redis + Celery backend with real-time WebSocket notifications',
+      'Multi-role auth for students, club admins, and college admins',
+      'React 18 + TypeScript frontend',
+    ];
+  }
+  if (n.includes('shawty') || n.includes('claw')) {
+    return [
+      'Local-first autonomous coding agent running entirely on Ollama',
+      'No cloud API dependency — task planning and execution run on-device',
+    ];
+  }
+  if (n.includes('deepfake')) {
+    return [
+      'EfficientNet-B4 classifier for deepfake image detection',
+      'GradCAM visual explanations for model predictions',
+      'Served as a REST API for downstream integration',
+    ];
+  }
+  if (n.includes('smart-city') || n.includes('gims')) {
+    return [
+      'Hackathon-built grievance routing system for civic complaints',
+      'Automated categorization and dispatch to the relevant city department',
+    ];
+  }
+  return [];
+};
+
 interface Repo {
   id: number;
   name: string;
@@ -113,6 +163,7 @@ export const GitHubProjects = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000">
       {repos.map((repo) => {
         const { label, ring } = getProjectVisual(repo.name);
+        const highlights = getProjectHighlights(repo.name);
         return (
         <a
           key={repo.id}
@@ -163,9 +214,23 @@ export const GitHubProjects = () => {
                 {repo.name.replace(/-/g, ' ').replace(/_/g, ' ')}
               </h3>
               
-              <p className="text-[#e2e8f0]/60 text-sm mb-10 line-clamp-3 leading-relaxed transition-all duration-500 group-hover:text-[#e2e8f0]/90">
+              <p className="text-[#e2e8f0]/60 text-sm mb-4 line-clamp-3 leading-relaxed transition-all duration-500 group-hover:text-[#e2e8f0]/90">
                 {repo.description || 'Command-line execution and data-orchestration repository without immediate public description.'}
               </p>
+
+              {highlights.length > 0 && (
+                <ul className="mb-10 space-y-1.5">
+                  {highlights.map((h, hi) => (
+                    <li
+                      key={hi}
+                      className="flex gap-2 text-[#e2e8f0]/50 text-xs leading-relaxed transition-all duration-500 group-hover:text-[#e2e8f0]/80"
+                    >
+                      <span className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ backgroundColor: ring }} />
+                      <span>{h}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
           </div>
           
           <div className="flex flex-wrap items-center justify-between border-t border-[#475569]/20 p-8 pt-6 mt-auto relative z-10 transition-colors duration-500 group-hover:border-[#94a3b8]/40">
