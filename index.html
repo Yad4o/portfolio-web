@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OM YADAO — AI/ML ENGINEER</title>
-<meta name="description" content="Om Yadao builds the backend half of AI products: inference APIs, retrieval pipelines and agent systems. Final-year AI &amp; Data Science engineer in Pune, India.">
+<meta name="description" content="Om Yadao builds the backend half of AI products: inference APIs, retrieval pipelines, LoRA fine-tuned small models and agent systems. Final-year AI &amp; Data Science engineer in Pune, India.">
 <meta name="author" content="Om Yadao">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#0B0D16">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23000%27/%3E%3Cdefs%3E%3ClinearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop offset=%270%25%27 stop-color=%27%237C5CFF%27/%3E%3Cstop offset=%27100%25%27 stop-color=%27%2300E5FF%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x=%2710%27 y=%2710%27 width=%2712%27 height=%2712%27 fill=%27url(%23g)%27 transform=%27rotate(45 16 16)%27/%3E%3C/svg%3E">
 <link rel="canonical" href="https://multiagents.me/">
 <meta property="og:title" content="OM YADAO — AI/ML ENGINEER">
@@ -18,20 +18,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --black:#000000;
-  --ink:#08090C;
-  --ink-2:#0C0E14;
-  --line:#1A1D24;
-  --line-2:#262A33;
-  --white:#F2F2F0;
-  --grey:#8A8F99;
-  --grey-2:#5A5F6A;
-  --violet:#7C5CFF;
-  --cyan:#00E5FF;
-  --blue:#4C8DFF;
-  --green:#3DDC84;
-  --pink:#FF5CA8;
-  --amber:#FFB020;
+  --black:#0B0D16;
+  --ink:#10131E;
+  --ink-2:#151A28;
+  --line:#212637;
+  --line-2:#303851;
+  --white:#F6F5F1;
+  --grey:#AAB0BE;
+  --grey-2:#7F8798;
+  --violet:#8C6DFF;
+  --cyan:#2CE8FF;
+  --blue:#5B9BFF;
+  --green:#4BE08F;
+  --pink:#FF6DB2;
+  --amber:#FFBE3D;
+  --r:12px;
   --disp:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
   --pad:clamp(16px,4vw,54px);
@@ -52,14 +53,14 @@ a{color:inherit;text-decoration:none}
 h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin:0;line-height:.86;letter-spacing:-.01em}
 
 /* grain */
-.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.035;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* ---------- progress ---------- */
 .prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:100;background:linear-gradient(90deg,var(--violet),var(--cyan))}
 
 /* ---------- top bar ---------- */
-.bar{position:fixed;top:0;left:0;right:0;z-index:70;background:linear-gradient(180deg,rgba(0,0,0,.88),rgba(0,0,0,.5) 65%,transparent)}
+.bar{position:fixed;top:0;left:0;right:0;z-index:70;background:linear-gradient(180deg,rgba(11,13,22,.9),rgba(11,13,22,.5) 65%,transparent)}
 .bar-in{display:flex;align-items:center;gap:18px;padding:16px var(--pad)}
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto;font-size:13px;font-weight:700;letter-spacing:.04em}
 .brand .dot{width:9px;height:9px;background:linear-gradient(135deg,var(--violet),var(--cyan));transform:rotate(45deg);flex:none}
@@ -82,16 +83,16 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 
 .jumpbtn{
   display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.04em;
-  background:rgba(255,255,255,.045);border:1px solid var(--line-2);color:var(--grey);padding:8px 12px;cursor:pointer;
+  background:rgba(255,255,255,.05);border:1px solid var(--line-2);border-radius:8px;color:var(--grey);padding:8px 12px;cursor:pointer;
   transition:border-color .18s ease,color .18s ease,background .18s ease;
 }
 .jumpbtn:hover{color:var(--white);border-color:var(--violet);background:rgba(124,92,255,.1)}
 .jumpbtn kbd{font-family:var(--mono);background:var(--line-2);color:var(--white);border-radius:3px;padding:1px 6px;font-size:10.5px}
 
 /* ---------- command palette ---------- */
-.palette-back{position:fixed;inset:0;z-index:110;background:rgba(4,5,9,.7);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:none;padding:11vh 20px 20px}
+.palette-back{position:fixed;inset:0;z-index:110;background:rgba(8,10,18,.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:none;padding:11vh 20px 20px}
 .palette-back.open{display:block}
-.palette{max-width:560px;margin:0 auto;background:var(--ink);border:1px solid var(--line-2);box-shadow:0 50px 100px -30px rgba(0,0,0,.9)}
+.palette{max-width:560px;margin:0 auto;background:var(--ink);border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden;box-shadow:0 50px 100px -30px rgba(0,0,0,.9)}
 .palette-in{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
 .palette-in svg{flex:none;opacity:.5;color:var(--grey)}
 .palette-in input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--white);font-family:var(--mono);font-size:14px;letter-spacing:.02em}
@@ -114,7 +115,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 .hero{position:relative;isolation:isolate;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:112px var(--pad) 26px;overflow:hidden}
 .hero-bg{position:absolute;inset:0;z-index:0}
 .hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.5}
-.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,.72) 42%,#000 88%)}
+.hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 85% 20%,rgba(140,109,255,.22),transparent 70%),linear-gradient(180deg,rgba(11,13,22,.45) 0%,rgba(11,13,22,.7) 42%,#0B0D16 88%)}
 .hero-grid{position:absolute;inset:0;z-index:1;pointer-events:none;
   background-image:linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
   background-size:calc(100% / 6) 100%}
@@ -135,7 +136,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 .hero-inner{position:relative;z-index:2}
 .hero h1{font-size:clamp(38px,8.2vw,120px);line-height:.94;letter-spacing:-.02em}
 .hero h1 .thin{-webkit-text-stroke:1.4px var(--white);color:transparent;paint-order:stroke}
-.hero h1 .gr{background:linear-gradient(96deg,var(--violet),var(--blue) 46%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .gr{background:linear-gradient(96deg,var(--pink),var(--violet) 38%,var(--blue) 66%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-meta{display:flex;flex-wrap:wrap;gap:12px 34px;margin-top:26px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
 .hero-meta b{color:var(--white);font-weight:500}
 .hero-lead{margin:22px 0 0;max-width:62ch;font-size:14.5px;line-height:1.8;color:var(--grey)}
@@ -148,7 +149,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
   clip-path:polygon(0 0,100% 0,100% 58%,calc(100% - 15px) 100%,0 100%);
   transition:background .2s ease,color .2s ease,transform .2s ease;
 }
-.cta:hover{background:var(--violet);color:#fff;transform:translateY(-2px)}
+.cta:hover{background:linear-gradient(96deg,var(--violet),var(--blue));color:#fff;transform:translateY(-2px)}
 .cta.alt{background:transparent;color:var(--white);box-shadow:inset 0 0 0 1px var(--line-2)}
 .cta.alt:hover{background:var(--white);color:#000;box-shadow:none}
 .scrollhint{display:flex;align-items:center;gap:12px;margin-top:28px;font-size:10.5px;letter-spacing:.24em;color:var(--grey-2);text-transform:uppercase}
@@ -169,14 +170,15 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 .sec{padding-top:clamp(64px,9vw,132px);padding-bottom:clamp(64px,9vw,132px);position:relative}
 
 /* per-section identity backgrounds — subtle, so scrolling reads as chapters */
-#about{background-image:radial-gradient(ellipse 820px 460px at 104% -8%,rgba(124,92,255,.09),transparent 62%)}
+#about{background-image:radial-gradient(ellipse 820px 460px at 104% -8%,rgba(140,109,255,.16),transparent 62%),radial-gradient(ellipse 600px 380px at -6% 100%,rgba(255,109,178,.07),transparent 65%)}
+#work{background-image:radial-gradient(ellipse 900px 520px at -8% 6%,rgba(44,232,255,.07),transparent 62%),radial-gradient(ellipse 760px 480px at 108% 60%,rgba(140,109,255,.09),transparent 65%)}
 #experience{
   background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
   background-size:44px 44px;background-position:0 0;
   -webkit-mask-image:linear-gradient(180deg,transparent,#000 10%,#000 90%,transparent);
   mask-image:linear-gradient(180deg,transparent,#000 10%,#000 90%,transparent);
 }
-#stack{background-image:radial-gradient(rgba(0,229,255,.16) 1.1px,transparent 1.4px);background-size:24px 24px}
+#stack{background-image:radial-gradient(rgba(44,232,255,.2) 1.1px,transparent 1.4px);background-size:24px 24px}
 #education{background-image:repeating-linear-gradient(180deg,transparent 0 41px,rgba(255,255,255,.03) 41px 42px);-webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);mask-image:linear-gradient(180deg,#000 82%,transparent)}
 .head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(34px,5vw,64px)}
 .head h2{font-size:clamp(36px,8.4vw,110px);line-height:.9;letter-spacing:-.02em}
@@ -198,7 +200,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 .about p{margin:0 0 22px;font-size:15px;line-height:1.95;color:var(--grey);max-width:66ch}
 .about p:last-of-type{margin-bottom:0}
 .about p b{color:var(--white);font-weight:500}
-.panel{border:1px solid var(--line-2);padding:24px 26px}
+.panel{border:1px solid var(--line-2);padding:24px 26px;border-radius:var(--r);background:linear-gradient(160deg,rgba(255,255,255,.04),rgba(255,255,255,.012))}
 .panel-h{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--grey-2);text-transform:uppercase;margin-bottom:4px}
 .now{margin-top:30px;border-top:1px solid var(--line)}
 .now div{display:flex;justify-content:space-between;gap:16px;padding:13px 0;border-bottom:1px solid var(--line);font-size:12.5px;color:var(--grey);letter-spacing:.02em}
@@ -210,18 +212,18 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 @media (min-width:1020px){.feat{grid-template-columns:minmax(0,1fr) minmax(0,1.04fr);align-items:center}}
 .pmeta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-2)}
 .pmeta .no{color:var(--acc)}
-.pmeta .flag{color:#000;background:var(--acc);padding:3px 9px;font-weight:700;letter-spacing:.14em}
+.pmeta .flag{color:#0B0D16;background:var(--acc);padding:3px 10px;border-radius:999px;font-weight:700;letter-spacing:.14em}
 .ptitle{font-size:clamp(27px,4.8vw,56px);line-height:1;margin:18px 0 0;letter-spacing:-.015em}
 .prole{margin:14px 0 0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
 .ptxt{margin:20px 0 0;font-size:14.5px;line-height:1.9;color:var(--grey);max-width:60ch}
 .ptxt b{color:var(--white);font-weight:500}
-.metric{color:#000;background:var(--acc);padding:1px 7px;font-weight:700}
+.metric{color:#0B0D16;background:var(--acc);padding:1px 8px;border-radius:5px;font-weight:700}
 
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:24px}
-.tag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border:1px solid var(--line-2);color:var(--grey);transition:border-color .2s ease,color .2s ease,background .2s ease}
-.tag:hover{border-color:var(--acc);color:var(--white)}
+.tag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 11px;border:1px solid var(--line-2);border-radius:999px;color:var(--grey);transition:border-color .2s ease,color .2s ease,background .2s ease}
+.tag:hover{border-color:var(--acc);color:var(--white);background:color-mix(in srgb,var(--acc) 12%,transparent)}
 
-.arch{border:1px solid var(--line-2);background:linear-gradient(160deg,var(--ink-2),#000);padding:18px;overflow-x:auto}
+.arch{border:1px solid var(--line-2);background:linear-gradient(160deg,var(--ink-2),var(--black));padding:18px;overflow-x:auto;border-radius:var(--r)}
 .arch svg{display:block;min-width:430px;width:100%;height:auto}
 .flow{stroke-dasharray:4 8;animation:fl 2.2s linear infinite}
 @keyframes fl{to{stroke-dashoffset:-24}}
@@ -236,7 +238,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 @media (max-width:979px){.row .side{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:22px}}
 
 .pipe{display:flex;flex-wrap:wrap;align-items:center;gap:5px;margin-top:22px}
-.pipe i{font-style:normal;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:6px 9px;border:1px solid var(--line-2);color:var(--grey);white-space:nowrap}
+.pipe i{font-style:normal;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border:1px solid var(--line-2);border-radius:6px;color:var(--grey);white-space:nowrap}
 .pipe i.hot{border-color:var(--acc);color:var(--white);background:color-mix(in srgb,var(--acc) 16%,transparent)}
 .pipe u{width:10px;height:1px;background:var(--line-2);text-decoration:none;flex:none}
 .spec{margin:0;border-top:1px solid var(--line)}
@@ -293,7 +295,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 /* ---------- contact ---------- */
 .contact{position:relative;padding-top:clamp(70px,10vw,140px);padding-bottom:0;overflow:hidden}
 .contact::before{content:"";position:absolute;left:50%;top:-8%;transform:translateX(-50%);width:min(1100px,150vw);height:520px;
-  background:radial-gradient(circle,rgba(124,92,255,.32),rgba(0,229,255,.1) 52%,transparent 72%);filter:blur(90px);pointer-events:none}
+  background:radial-gradient(circle,rgba(140,109,255,.36),rgba(255,109,178,.1) 38%,rgba(44,232,255,.12) 56%,transparent 72%);filter:blur(90px);pointer-events:none}
 .contact-grid{position:relative;display:grid;grid-template-columns:1fr;gap:clamp(28px,4vw,48px);align-items:start}
 @media (min-width:900px){.contact-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
 .contact h2{font-size:clamp(40px,8vw,104px);line-height:.86;letter-spacing:-.02em}
@@ -322,7 +324,7 @@ footer{margin-top:clamp(56px,8vw,96px);border-top:1px solid var(--line);padding:
 /* ---------- facts strip ---------- */
 .facts{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 @media (min-width:760px){.facts{grid-template-columns:repeat(4,1fr)}}
-.fact{background:var(--black);padding:24px clamp(16px,3vw,30px)}
+.fact{background:var(--ink);padding:24px clamp(16px,3vw,30px)}
 .fact b{display:block;font-family:var(--disp);font-weight:700;font-size:clamp(28px,4vw,46px);line-height:1;font-variant-numeric:tabular-nums;color:var(--white)}
 .fact span{display:block;margin-top:8px;font-size:11px;letter-spacing:.08em;color:var(--grey-2);text-transform:uppercase}
 
@@ -401,7 +403,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
       <span>FINAL YEAR B.E. AI &amp; DS</span>
     </div>
 
-    <p class="hero-lead">Inference APIs, retrieval pipelines and agent systems that hold up outside a notebook. Three AI/ML internships, eight-plus shipped projects, and a preference for the parts of the stack nobody demos.</p>
+    <p class="hero-lead">Inference APIs, retrieval pipelines, <b>LoRA fine-tuned small models</b> and agent systems that hold up outside a notebook. Three AI/ML internships, eight-plus shipped projects, and a preference for the parts of the stack nobody demos.</p>
 
     <div class="hero-cta">
       <a class="cta" href="#work">Selected work*</a>
@@ -416,7 +418,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
 <!-- ============ TICKER ============ -->
 <div class="ticker" aria-hidden="true">
   <div class="ticker-in" id="ticker">
-    <span><b>FASTAPI</b> <i>/</i> LANGGRAPH <i>/</i> <b>POSTGRESQL</b> <i>/</i> REDIS <i>/</i> <b>CELERY</b> <i>/</i> PYTORCH <i>/</i> <b>OLLAMA</b> <i>/</i> FAISS <i>/</i> <b>CHROMADB</b> <i>/</i> DOCKER <i>/</i> <b>BENTOML</b> <i>/</i> PEFT <i>/</i> <b>LORA</b> <i>/</i> OPENCV <i>/</i> <b>REACT 18</b> <i>/</i> TYPESCRIPT <i>/</i>&nbsp;</span>
+    <span><b>FASTAPI</b> <i>/</i> LANGGRAPH <i>/</i> <b>POSTGRESQL</b> <i>/</i> REDIS <i>/</i> <b>CELERY</b> <i>/</i> PYTORCH <i>/</i> <b>OLLAMA</b> <i>/</i> FAISS <i>/</i> <b>CHROMADB</b> <i>/</i> DOCKER <i>/</i> <b>BENTOML</b> <i>/</i> PEFT <i>/</i> <b>LORA</b> <i>/</i> UNSLOTH <i>/</i> <b>GGUF</b> <i>/</i> OPENCV <i>/</i> <b>REACT 18</b> <i>/</i> TYPESCRIPT <i>/</i> <b>NEXT.JS</b> <i>/</i>&nbsp;</span>
   </div>
 </div>
 
@@ -436,7 +438,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
   </div>
   <div class="manifest rv">
     <a href="#about"><em>01</em><strong>About</strong><span>Profile / working on</span></a>
-    <a href="#work"><em>02</em><strong>Selected work</strong><span>05 systems + 03 builds</span></a>
+    <a href="#work"><em>02</em><strong>Selected work</strong><span>06 systems + 06 builds</span></a>
     <a href="#experience"><em>03</em><strong>Experience</strong><span>03 internships</span></a>
     <a href="#stack"><em>04</em><strong>Stack</strong><span>08 categories</span></a>
     <a href="#education"><em>05</em><strong>Education</strong><span>SPPU / Maharashtra board</span></a>
@@ -457,13 +459,13 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
     <div class="rv">
       <p>I'm a final-year Artificial Intelligence and Data Science student at SPPU, Pune. Most of my work sits behind the model rather than on top of it: <b>serving inference over HTTP, wiring retrieval, keeping pipelines from falling over when a provider times out.</b></p>
       <p>I care about how these systems actually work internally, not just which library call returns the right shape. That's why a lot of what I build runs locally — quantised models under Ollama, embeddings and vector search on my own machine — before it ever touches a hosted API.</p>
-      <p>Right now I'm going deeper on PyTorch and parameter-efficient fine-tuning, and building domain assistants where being wrong has a cost.</p>
+      <p>I've fine-tuned two small language models with LoRA, one for skincare and health and one for the Indian Constitution, and I'm now building agents and platforms around that work.</p>
 
       <div class="now">
-        <div><b>Fine-tuning with LoRA and QLoRA</b><s>IN PROGRESS</s></div>
-        <div><b>Model quantisation and local serving</b><s>IN PROGRESS</s></div>
-        <div><b>Agent orchestration with LangGraph</b><s>IN PROGRESS</s></div>
-        <div><b>Production deployment with BentoML</b><s>IN PROGRESS</s></div>
+        <div><b>Skill Scout, an AI job-hunting agent</b><s>BUILDING</s></div>
+        <div><b>DAB AI, a voice-agent builder platform</b><s>BUILDING</s></div>
+        <div><b>Offline coding agent for small local models</b><s>BUILT</s></div>
+        <div><b>LoRA fine-tuning, GGUF export, local serving</b><s>SHIPPED</s></div>
       </div>
     </div>
 
@@ -471,7 +473,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
       <div class="panel-h">PROFILE — QUICK FACTS</div>
       <div class="spec" style="border-top:0">
         <div><em>Role</em><b>AI/ML Engineer</b></div>
-        <div><em>Focus</em><b>Backend · Inference · Retrieval</b></div>
+        <div><em>Focus</em><b>Backend · Fine-tuning · Agents</b></div>
         <div><em>Based in</em><b>Pune, Maharashtra, IN</b></div>
         <div><em>Education</em><b>B.E. AI &amp; DS — SPPU, 2027</b></div>
         <div><em>Status</em><b>Open to roles &amp; internships</b></div>
@@ -486,7 +488,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
 <section class="sec pad" id="work" style="--acc:var(--violet)">
   <div class="head rv">
     <div><span class="idx">02 / SELECTED WORK</span><h2>Projects</h2></div>
-    <p>Five systems, plus the smaller builds underneath them.</p>
+    <p>Six systems, including two fine-tuned models, plus the smaller builds underneath them.</p>
   </div>
 
   <!-- FEATURED -->
@@ -508,52 +510,52 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
             <linearGradient id="gv" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7C5CFF"/><stop offset="100%" stop-color="#4C8DFF"/></linearGradient>
             <linearGradient id="gc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00E5FF"/><stop offset="100%" stop-color="#4C8DFF"/></linearGradient>
           </defs>
-          <g font-family="JetBrains Mono, monospace" font-size="10.5" fill="#8A8F99" letter-spacing=".06em">
-            <path d="M104 44 H160" stroke="#262A33" stroke-width="1.4" fill="none"/>
+          <g font-family="JetBrains Mono, monospace" font-size="10.5" fill="#AAB0BE" letter-spacing=".06em">
+            <path d="M104 44 H160" stroke="#303851" stroke-width="1.4" fill="none"/>
             <path d="M104 44 H160" stroke="url(#gv)" stroke-width="1.4" fill="none" class="flow"/>
-            <path d="M228 60 V104" stroke="#262A33" stroke-width="1.4" fill="none"/>
+            <path d="M228 60 V104" stroke="#303851" stroke-width="1.4" fill="none"/>
             <path d="M228 60 V104" stroke="url(#gv)" stroke-width="1.4" fill="none" class="flow"/>
-            <path d="M196 144 H150 V196 H196" stroke="#262A33" stroke-width="1.4" fill="none"/>
+            <path d="M196 144 H150 V196 H196" stroke="#303851" stroke-width="1.4" fill="none"/>
             <path d="M196 144 H150 V196 H196" stroke="url(#gc)" stroke-width="1.4" fill="none" class="flow"/>
-            <path d="M324 144 H372 V196 H324" stroke="#262A33" stroke-width="1.4" fill="none"/>
+            <path d="M324 144 H372 V196 H324" stroke="#303851" stroke-width="1.4" fill="none"/>
             <path d="M324 144 H372 V196 H324" stroke="url(#gc)" stroke-width="1.4" fill="none" class="flow"/>
-            <path d="M260 176 V246 H400" stroke="#262A33" stroke-width="1.4" fill="none"/>
+            <path d="M260 176 V246 H400" stroke="#303851" stroke-width="1.4" fill="none"/>
             <path d="M260 176 V246 H400" stroke="url(#gv)" stroke-width="1.4" fill="none" class="flow"/>
 
             <g class="node n1">
-              <rect x="16" y="28" width="88" height="32" fill="#08090C" stroke="#262A33"/>
+              <rect x="16" y="28" width="88" height="32" fill="#10131E" stroke="#303851"/>
               <text x="60" y="48" text-anchor="middle" fill="#F2F2F0">REQUEST</text>
             </g>
 
             <g class="node n2">
-              <rect x="160" y="28" width="136" height="32" fill="#08090C" stroke="#4C8DFF" stroke-opacity=".55"/>
+              <rect x="160" y="28" width="136" height="32" fill="#10131E" stroke="#4C8DFF" stroke-opacity=".55"/>
               <text x="228" y="48" text-anchor="middle" fill="#9CC0FF">PLANNER</text>
             </g>
 
             <g class="node n3">
-              <rect x="160" y="104" width="200" height="72" fill="#0C0A18" stroke="#7C5CFF" stroke-opacity=".7"/>
+              <rect x="160" y="104" width="200" height="72" fill="#171330" stroke="#7C5CFF" stroke-opacity=".7"/>
               <text x="260" y="128" text-anchor="middle" fill="#C3B4FF">AGENT POOL</text>
               <rect x="196" y="142" width="18" height="18" fill="none" stroke="#7C5CFF" stroke-opacity=".9"/>
               <rect x="226" y="142" width="18" height="18" fill="none" stroke="#7C5CFF" stroke-opacity=".62"/>
               <rect x="256" y="142" width="18" height="18" fill="none" stroke="#7C5CFF" stroke-opacity=".44"/>
               <rect x="286" y="142" width="18" height="18" fill="none" stroke="#7C5CFF" stroke-opacity=".28"/>
-              <rect x="14" y="104" width="112" height="56" fill="#000" stroke="#1A1D24"/>
-              <text x="70" y="126" text-anchor="middle" fill="#5A5F6A" font-size="9.5">CIRCUIT BREAKERS</text>
-              <text x="70" y="144" text-anchor="middle" fill="#5A5F6A" font-size="9.5">STRUCTLOG</text>
+              <rect x="14" y="104" width="112" height="56" fill="#0B0D16" stroke="#212637"/>
+              <text x="70" y="126" text-anchor="middle" fill="#7F8798" font-size="9.5">CIRCUIT BREAKERS</text>
+              <text x="70" y="144" text-anchor="middle" fill="#7F8798" font-size="9.5">STRUCTLOG</text>
             </g>
 
             <g class="node n4">
-              <rect x="60" y="180" width="136" height="32" fill="#08090C" stroke="#00E5FF" stroke-opacity=".5"/>
+              <rect x="60" y="180" width="136" height="32" fill="#10131E" stroke="#00E5FF" stroke-opacity=".5"/>
               <text x="128" y="200" text-anchor="middle" fill="#8CEEFF">TOOL CALLS</text>
             </g>
 
             <g class="node n5">
-              <rect x="324" y="180" width="152" height="32" fill="#08090C" stroke="#00E5FF" stroke-opacity=".5"/>
+              <rect x="324" y="180" width="152" height="32" fill="#10131E" stroke="#00E5FF" stroke-opacity=".5"/>
               <text x="400" y="200" text-anchor="middle" fill="#8CEEFF">CELERY WORKERS</text>
             </g>
 
             <g class="node n6">
-              <rect x="400" y="230" width="86" height="32" fill="#04140B" stroke="#3DDC84" stroke-opacity=".6"/>
+              <rect x="400" y="230" width="86" height="32" fill="#0A2418" stroke="#3DDC84" stroke-opacity=".6"/>
               <text x="443" y="250" text-anchor="middle" fill="#84EEB4">RESULT</text>
             </g>
           </g>
@@ -564,14 +566,77 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
   </article>
 
   <!-- ROWS -->
-  <article class="row rv" style="--acc:var(--cyan)">
+  <article class="row rv" style="--acc:var(--amber)">
     <div class="bignum">02</div>
+    <div>
+      <div class="pmeta"><span class="no">LORA</span><span>MODEL DEVELOPMENT</span></div>
+      <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Health &amp; Skincare Assistant</h3>
+      <p class="prole">LoRA fine-tune of Qwen3.5-0.8B that runs on a laptop</p>
+      <p class="ptxt">A very small model for skincare, nutrition and general wellness questions such as weight loss and weight gain. The goal was a 0.8B model that stays useful at low memory, so the training data was generated as JSONL and filtered to leave out examples the base model already answers well.</p>
+      <p class="ptxt">Trained with Unsloth on a free Colab T4, merged to 16-bit weights, then exported as a <b>Q4_K_M GGUF</b> that runs through Ollama on consumer hardware.</p>
+      <div class="pipe"><i>DATA CURATION</i><u></u><i class="hot">LORA · UNSLOTH</i><u></u><i>MERGE 16-BIT</i><u></u><i class="hot">Q4_K_M GGUF</i><u></u><i>OLLAMA</i></div>
+    </div>
+    <div class="side">
+      <div class="spec">
+        <div><em>Base model</em><b>Qwen3.5-0.8B</b></div>
+        <div><em>Method</em><b>LoRA with Unsloth</b></div>
+        <div><em>Training</em><b>Colab T4</b></div>
+        <div><em>Export</em><b>Q4_K_M GGUF</b></div>
+      </div>
+      <div class="tags"><span class="tag">Python</span><span class="tag">Unsloth</span><span class="tag">LoRA</span><span class="tag">Hugging Face</span><span class="tag">GGUF</span><span class="tag">Ollama</span></div>
+    </div>
+  </article>
+
+  <article class="row rv" style="--acc:var(--pink)">
+    <div class="bignum">03</div>
+    <div>
+      <div class="pmeta"><span class="no">LORA</span><span>MODEL DEVELOPMENT</span></div>
+      <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Constitution of India Q&amp;A</h3>
+      <p class="prole">LoRA fine-tune of Qwen2.5-1.7B on legal question-answer data</p>
+      <p class="ptxt">A domain model that answers questions about the Indian Constitution, trained on Constitution Q&amp;A data with LoRA adapters on a 1.7B base.</p>
+      <p class="ptxt">Local GPUs were too old for modern quantised training, so I moved the work to Colab and set up a tunnel to run models back on my own machine. The learning path came from a RAG → LoRA → RAFT roadmap.</p>
+      <div class="pipe"><i>Q&amp;A DATASET</i><u></u><i class="hot">LORA ADAPTERS</i><u></u><i class="hot">QWEN2.5-1.7B</i><u></u><i>LOCAL SERVING</i></div>
+    </div>
+    <div class="side">
+      <div class="spec">
+        <div><em>Base model</em><b>Qwen2.5-1.7B</b></div>
+        <div><em>Method</em><b>LoRA</b></div>
+        <div><em>Domain</em><b>Indian Constitution</b></div>
+        <div><em>Training</em><b>Colab T4 + Unsloth</b></div>
+      </div>
+      <div class="tags"><span class="tag">Python</span><span class="tag">LoRA</span><span class="tag">PEFT</span><span class="tag">Unsloth</span><span class="tag">Colab</span></div>
+    </div>
+  </article>
+
+  <article class="row rv" style="--acc:var(--green)">
+    <div class="bignum">04</div>
+    <div>
+      <div class="pmeta"><span class="no">LOCAL-CODE-AGENT</span><span>AGENT · PRIVATE REPO</span></div>
+      <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Offline Coding Agent</h3>
+      <p class="prole">Built for a 0.8B model on a 2 GB GPU</p>
+      <p class="ptxt">A coding agent for small local models, with no internet and no dependencies beyond the Python standard library. The harness decides the next step and the model only does tiny, well-defined jobs: write these tests, write this code, fix this failing output.</p>
+      <p class="ptxt">Each step follows a fixed loop of tests first, implement, run the tests, then commit, and any failure rolls the step back. It has built working apps step by step, including an HRMS and a task manager.</p>
+      <div class="pipe"><i>PLAN</i><u></u><i class="hot">TESTS FIRST</i><u></u><i class="hot">IMPLEMENT</i><u></u><i>RUN TESTS</i><u></u><i>COMMIT</i></div>
+    </div>
+    <div class="side">
+      <div class="spec">
+        <div><em>Model</em><b>Qwen 0.8B Q4, Ollama</b></div>
+        <div><em>Dependencies</em><b>Standard library only</b></div>
+        <div><em>Loop</em><b>Tests → code → verify</b></div>
+        <div><em>Safety</em><b>Rollback on failure</b></div>
+      </div>
+      <div class="tags"><span class="tag">Python</span><span class="tag">Ollama</span><span class="tag">Qwen</span><span class="tag">pytest</span><span class="tag">Git</span></div>
+    </div>
+  </article>
+
+  <article class="row rv" style="--acc:var(--cyan)">
+    <div class="bignum">05</div>
     <div>
       <div class="pmeta"><span class="no">SRS</span><span>CLASSIFICATION</span></div>
       <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Support Resolution System</h3>
       <p class="prole">Multi-tenant ticket classification backend</p>
       <p class="ptxt">An enterprise support system that reads an incoming ticket and routes it to the right queue at <span class="metric">90%+ accuracy</span>, isolated per tenant so one customer's volume can't starve another's.</p>
-      <p class="ptxt">Classification runs against OpenAI first and falls back to a self-hosted BentoML model when the API is slow, rate-limited or down, so routing degrades instead of stopping. Redis caches repeat classifications and slowapi caps per-tenant throughput.</p>
+      <p class="ptxt">Classification runs against OpenAI first and falls back to a self-hosted BentoML model when the API is slow, rate-limited or down, so routing degrades instead of stopping. Deployed on Render and Vercel.</p>
       <div class="pipe"><i>TICKET</i><u></u><i>REDIS CACHE</i><u></u><i class="hot">OPENAI</i><u></u><i class="hot">BENTOML FALLBACK</i><u></u><i>QUEUE</i></div>
     </div>
     <div class="side">
@@ -586,28 +651,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
   </article>
 
   <article class="row rv" style="--acc:var(--blue)">
-    <div class="bignum">03</div>
-    <div>
-      <div class="pmeta"><span class="no">SHAWTY</span><span>AGENT</span></div>
-      <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Local-First Coding Agent</h3>
-      <p class="prole">Autonomous agent, zero cloud dependency</p>
-      <p class="ptxt">A Claude Code-style agent that reads a repository, plans an edit and applies it — running entirely against local models under Ollama, so <b>no source code leaves the machine.</b></p>
-      <p class="ptxt">Built on a LangGraph state machine with tool nodes for file reads, writes and shell commands, and an explicit review step before anything is written to disk.</p>
-      <div class="pipe"><i>REPO</i><u></u><i class="hot">LANGGRAPH STATE MACHINE</i><u></u><i>REVIEW</i><u></u><i>WRITE</i></div>
-    </div>
-    <div class="side">
-      <div class="spec">
-        <div><em>Runtime</em><b>Fully local</b></div>
-        <div><em>Control</em><b>LangGraph state machine</b></div>
-        <div><em>Tools</em><b>Read / write / shell</b></div>
-        <div><em>Guard</em><b>Review before write</b></div>
-      </div>
-      <div class="tags"><span class="tag">Python</span><span class="tag">LangGraph</span><span class="tag">Ollama</span><span class="tag">Qwen2.5 Coder</span></div>
-    </div>
-  </article>
-
-  <article class="row rv" style="--acc:var(--pink)">
-    <div class="bignum">04</div>
+    <div class="bignum">06</div>
     <div>
       <div class="pmeta"><span class="no">DEEPFAKE</span><span>COMPUTER VISION</span></div>
       <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Deepfake Detection API</h3>
@@ -623,35 +667,17 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
         <div><em>Explainability</em><b>GradCAM heatmap</b></div>
         <div><em>Delivery</em><b>Docker + React</b></div>
       </div>
-      <div class="tags"><span class="tag">PyTorch</span><span class="tag">EfficientNet-B4</span><span class="tag">GradCAM</span><span class="tag">FastAPI</span><span class="tag">Docker</span><span class="tag">React</span><span class="tag">TypeScript</span></div>
-    </div>
-  </article>
-
-  <article class="row rv" style="--acc:var(--amber)">
-    <div class="bignum">05</div>
-    <div>
-      <div class="pmeta"><span class="no">SKINCARE</span><span>FINE-TUNING</span></div>
-      <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">AI Skincare Assistant</h3>
-      <p class="prole">Fine-tuned Qwen on curated medical data</p>
-      <p class="ptxt">A fine-tuned assistant that gives skincare routines grounded in medical literature rather than marketing copy, with product suggestions priced for the Indian market.</p>
-      <p class="ptxt">Training data was assembled from PubMed abstracts, MedQuAD and a Kaggle skincare set into roughly 5,300 curated examples, then used to fine-tune Qwen with PEFT. <b>Most of the effort went into cleaning the dataset, not the training run.</b></p>
-      <div class="pipe"><i>PUBMED</i><u></u><i>MEDQUAD</i><u></u><i class="hot">5,300 EXAMPLES</i><u></u><i class="hot">PEFT FINE-TUNE</i></div>
-    </div>
-    <div class="side">
-      <div class="spec">
-        <div><em>Dataset</em><b>~5,300 examples</b></div>
-        <div><em>Sources</em><b>PubMed / MedQuAD / Kaggle</b></div>
-        <div><em>Method</em><b>PEFT on Qwen</b></div>
-        <div><em>Market</em><b>India-priced products</b></div>
-      </div>
-      <div class="tags"><span class="tag">Python</span><span class="tag">Hugging Face</span><span class="tag">PEFT</span><span class="tag">Qwen</span><span class="tag">LoRA</span></div>
+      <div class="tags"><span class="tag">PyTorch</span><span class="tag">EfficientNet-B4</span><span class="tag">GradCAM</span><span class="tag">FastAPI</span><span class="tag">Docker</span><span class="tag">React</span></div>
     </div>
   </article>
 
   <div style="margin-top:clamp(40px,6vw,72px)" class="rv">
     <span class="lbl">ALSO BUILT</span>
     <div class="also" style="margin-top:20px">
-      <div><h4>Local RAG pipeline</h4><p>Chunking, local embeddings and vector search with Ollama, FAISS and ChromaDB — EmbeddingGemma and Qwen2.5 Coder 1.5B, fully offline.</p></div>
+      <div><h4>Skill Scout</h4><p>In progress. An AI-assisted job hunter that discovers jobs from public sources, scores them with explainable rules, and keeps an application tracker so nothing is submitted twice. FastAPI, SQLite, Ollama.</p></div>
+      <div><h4>DAB AI</h4><p>In progress. A voice-agent builder platform on FastAPI, PostgreSQL and Next.js, built test-first.</p></div>
+      <div><h4>OmClaw</h4><p>A local-first autonomous coding agent on Ollama with tool-calling and Docker-sandboxed execution. Earlier name: Shawty.</p></div>
+      <div><h4>Local RAG pipeline</h4><p>Chunking, local embeddings and vector search with Ollama, FAISS and ChromaDB, using EmbeddingGemma and Qwen2.5 Coder 1.5B, fully offline.</p></div>
       <div><h4>Human action recognition</h4><p>Real-time webcam pose detection and action classification with MediaPipe, OpenCV and Keras.</p></div>
       <div><h4>Image captioning</h4><p>CNN encoder with an LSTM decoder trained on Flickr8k to generate captions from scratch.</p></div>
     </div>
@@ -671,11 +697,11 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
   <article class="job rv">
     <div>
       <h3>Kemuri<br>Technology</h3>
-      <div class="when">Dec 2025 — Present</div>
+      <div class="when">Dec 2025 — Jun 2026</div>
       <div class="loc">Remote / AI/ML Intern</div>
     </div>
     <div>
-      <p>AI/ML Intern, backend. Working on the Clean Ocean Ensemble waste-classification system and the Python services around it.</p>
+      <p>AI/ML Intern, backend. Worked on COE AI, a marine garbage classification and weight-estimation service integrated with a Kuroco CMS, plus the Python services around it. Tasks came through tickets and went through senior review before merge.</p>
       <ul>
         <li><em>01</em><span>Prompt engineering for vision-language models against real field photography</span></li>
         <li><em>02</em><span>OCR prompt optimisation and a weight-estimation pipeline for scale readings</span></li>
@@ -725,18 +751,18 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
 
   <div class="stacklist rv">
     <div class="srow" style="--acc:var(--violet)"><h3>Languages</h3><p>Python, C, C++, SQL, Bash</p></div>
-    <div class="srow" style="--acc:var(--cyan)"><h3>Backend</h3><p>FastAPI, Celery, Docker, Pydantic, structlog, BentoML, REST</p></div>
+    <div class="srow" style="--acc:var(--cyan)"><h3>Backend</h3><p>FastAPI, SQLAlchemy, Alembic, Celery, Docker, Pydantic, structlog, BentoML, REST</p></div>
     <div class="srow" style="--acc:var(--blue)"><h3>Machine learning</h3><p>PyTorch, TensorFlow, Keras, OpenCV, MediaPipe, scikit-learn</p></div>
-    <div class="srow" style="--acc:var(--violet)"><h3>LLMs and agents</h3><p>LangGraph, LangChain, RAG, Ollama, Hugging Face Transformers, PEFT, LoRA, QLoRA, OpenAI API</p></div>
+    <div class="srow" style="--acc:var(--violet)"><h3>LLMs and agents</h3><p>LangGraph, LangChain, RAG, Ollama, Hugging Face Transformers, PEFT, LoRA, Unsloth, GGUF quantisation, OpenAI API</p></div>
     <div class="srow" style="--acc:var(--green)"><h3>Data and retrieval</h3><p>PostgreSQL, Redis, MySQL, FAISS, ChromaDB, NumPy, Pandas</p></div>
-    <div class="srow" style="--acc:var(--pink)"><h3>Frontend</h3><p>React 18, TypeScript, HTML, CSS</p></div>
+    <div class="srow" style="--acc:var(--pink)"><h3>Frontend</h3><p>React 18, Next.js, TypeScript, Tailwind, HTML, CSS</p></div>
     <div class="srow" style="--acc:var(--amber)"><h3>Environment</h3><p>Ubuntu, Git, tmux, SSH, NVIDIA CUDA setup, Tailscale, Jupyter, Colab</p></div>
     <div class="srow" style="--acc:var(--cyan)"><h3>Practice</h3><p>Feature branches, pull-request review, Pytest, test-driven development</p></div>
   </div>
 
-  <div class="rv" style="margin-top:clamp(34px,5vw,56px);border:1px solid var(--line-2);padding:clamp(22px,3vw,34px);background:linear-gradient(140deg,rgba(124,92,255,.1),transparent 60%)">
+  <div class="rv" style="margin-top:clamp(34px,5vw,56px);border:1px solid var(--line-2);padding:clamp(22px,3vw,34px);background:linear-gradient(140deg,rgba(140,109,255,.14),rgba(44,232,255,.05) 55%,transparent);border-radius:var(--r)">
     <span class="lbl" style="color:var(--violet)">CURRENTLY LEARNING</span>
-    <p style="margin:14px 0 0;font-size:15.5px;line-height:1.85;color:var(--grey);max-width:64ch">PyTorch internals, LoRA and QLoRA fine-tuning, model quantisation, BentoML deployment and agent development with LangGraph.</p>
+    <p style="margin:14px 0 0;font-size:15.5px;line-height:1.85;color:var(--grey);max-width:64ch">RAFT, evaluating fine-tuned models, PyTorch internals, BentoML deployment and agent development with LangGraph.</p>
   </div>
 </section>
 
