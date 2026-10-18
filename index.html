@@ -573,14 +573,14 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
       <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Health &amp; Skincare Assistant</h3>
       <p class="prole">LoRA fine-tune of Qwen3.5-0.8B that runs on a laptop</p>
       <p class="ptxt">A very small model for skincare, nutrition and general wellness questions such as weight loss and weight gain. The goal was a 0.8B model that stays useful at low memory, so the training data was generated as JSONL and filtered to leave out examples the base model already answers well.</p>
-      <p class="ptxt">Trained with Unsloth on a free Colab T4, merged to 16-bit weights, then exported as a <b>Q4_K_M GGUF</b> that runs through Ollama on consumer hardware.</p>
+      <p class="ptxt">Trained by me with Unsloth, merged to 16-bit weights, then exported as a <b>Q4_K_M GGUF</b> that runs through Ollama on consumer hardware.</p>
       <div class="pipe"><i>DATA CURATION</i><u></u><i class="hot">LORA · UNSLOTH</i><u></u><i>MERGE 16-BIT</i><u></u><i class="hot">Q4_K_M GGUF</i><u></u><i>OLLAMA</i></div>
     </div>
     <div class="side">
       <div class="spec">
         <div><em>Base model</em><b>Qwen3.5-0.8B</b></div>
         <div><em>Method</em><b>LoRA with Unsloth</b></div>
-        <div><em>Training</em><b>Colab T4</b></div>
+        <div><em>Training</em><b>Self-trained, Unsloth</b></div>
         <div><em>Export</em><b>Q4_K_M GGUF</b></div>
       </div>
       <div class="tags"><span class="tag">Python</span><span class="tag">Unsloth</span><span class="tag">LoRA</span><span class="tag">Hugging Face</span><span class="tag">GGUF</span><span class="tag">Ollama</span></div>
@@ -594,7 +594,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
       <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Constitution of India Q&amp;A</h3>
       <p class="prole">LoRA fine-tune of Qwen2.5-1.7B on legal question-answer data</p>
       <p class="ptxt">A domain model that answers questions about the Indian Constitution, trained on Constitution Q&amp;A data with LoRA adapters on a 1.7B base.</p>
-      <p class="ptxt">Local GPUs were too old for modern quantised training, so I moved the work to Colab and set up a tunnel to run models back on my own machine. The learning path came from a RAG → LoRA → RAFT roadmap.</p>
+      <p class="ptxt">I trained the adapters myself with Unsloth and run the result locally. The learning path came from a RAG → LoRA → RAFT roadmap.</p>
       <div class="pipe"><i>Q&amp;A DATASET</i><u></u><i class="hot">LORA ADAPTERS</i><u></u><i class="hot">QWEN2.5-1.7B</i><u></u><i>LOCAL SERVING</i></div>
     </div>
     <div class="side">
@@ -602,9 +602,9 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
         <div><em>Base model</em><b>Qwen2.5-1.7B</b></div>
         <div><em>Method</em><b>LoRA</b></div>
         <div><em>Domain</em><b>Indian Constitution</b></div>
-        <div><em>Training</em><b>Colab T4 + Unsloth</b></div>
+        <div><em>Training</em><b>Self-trained, Unsloth</b></div>
       </div>
-      <div class="tags"><span class="tag">Python</span><span class="tag">LoRA</span><span class="tag">PEFT</span><span class="tag">Unsloth</span><span class="tag">Colab</span></div>
+      <div class="tags"><span class="tag">Python</span><span class="tag">LoRA</span><span class="tag">PEFT</span><span class="tag">Unsloth</span></div>
     </div>
   </article>
 
@@ -756,7 +756,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
     <div class="srow" style="--acc:var(--violet)"><h3>LLMs and agents</h3><p>LangGraph, LangChain, RAG, Ollama, Hugging Face Transformers, PEFT, LoRA, Unsloth, GGUF quantisation, OpenAI API</p></div>
     <div class="srow" style="--acc:var(--green)"><h3>Data and retrieval</h3><p>PostgreSQL, Redis, MySQL, FAISS, ChromaDB, NumPy, Pandas</p></div>
     <div class="srow" style="--acc:var(--pink)"><h3>Frontend</h3><p>React 18, Next.js, TypeScript, Tailwind, HTML, CSS</p></div>
-    <div class="srow" style="--acc:var(--amber)"><h3>Environment</h3><p>Ubuntu, Git, tmux, SSH, NVIDIA CUDA setup, Tailscale, Jupyter, Colab</p></div>
+    <div class="srow" style="--acc:var(--amber)"><h3>Environment</h3><p>Ubuntu, Git, tmux, SSH, NVIDIA CUDA setup, Tailscale, Jupyter</p></div>
     <div class="srow" style="--acc:var(--cyan)"><h3>Practice</h3><p>Feature branches, pull-request review, Pytest, test-driven development</p></div>
   </div>
 
