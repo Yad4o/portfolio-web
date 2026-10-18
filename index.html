@@ -6,8 +6,8 @@
 <title>OM YADAO — AI/ML ENGINEER</title>
 <meta name="description" content="Om Yadao builds the backend half of AI products: inference APIs, retrieval pipelines, LoRA fine-tuned small models and agent systems. Final-year AI &amp; Data Science engineer in Pune, India.">
 <meta name="author" content="Om Yadao">
-<meta name="theme-color" content="#0B0D16">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23000%27/%3E%3Cdefs%3E%3ClinearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop offset=%270%25%27 stop-color=%27%237C5CFF%27/%3E%3Cstop offset=%27100%25%27 stop-color=%27%2300E5FF%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x=%2710%27 y=%2710%27 width=%2712%27 height=%2712%27 fill=%27url(%23g)%27 transform=%27rotate(45 16 16)%27/%3E%3C/svg%3E">
+<meta name="theme-color" content="#0A1013">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23000%27/%3E%3Cdefs%3E%3ClinearGradient id=%27g%27 x1=%270%27 y1=%270%27 x2=%271%27 y2=%271%27%3E%3Cstop offset=%270%25%27 stop-color=%27%23D4F55C%27/%3E%3Cstop offset=%27100%25%27 stop-color=%27%233EE6C3%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x=%2710%27 y=%2710%27 width=%2712%27 height=%2712%27 fill=%27url(%23g)%27 transform=%27rotate(45 16 16)%27/%3E%3C/svg%3E">
 <link rel="canonical" href="https://multiagents.me/">
 <meta property="og:title" content="OM YADAO — AI/ML ENGINEER">
 <meta property="og:description" content="Inference APIs, retrieval pipelines and agent systems that run in production.">
@@ -18,20 +18,20 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --black:#0B0D16;
-  --ink:#10131E;
-  --ink-2:#151A28;
-  --line:#212637;
-  --line-2:#303851;
-  --white:#F6F5F1;
-  --grey:#AAB0BE;
-  --grey-2:#7F8798;
-  --violet:#8C6DFF;
-  --cyan:#2CE8FF;
-  --blue:#5B9BFF;
-  --green:#4BE08F;
-  --pink:#FF6DB2;
-  --amber:#FFBE3D;
+  --black:#0A1013;
+  --ink:#0F171B;
+  --ink-2:#142025;
+  --line:#1E2D33;
+  --line-2:#2D424B;
+  --white:#F5F4EC;
+  --grey:#A9B5B8;
+  --grey-2:#7C8C91;
+  --violet:#D4F55C;
+  --cyan:#3EE6C3;
+  --blue:#86C5E6;
+  --green:#8FE3AE;
+  --pink:#FF6F59;
+  --amber:#F4B942;
   --r:12px;
   --disp:"Space Grotesk",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
@@ -49,7 +49,7 @@ body{
 img{max-width:100%;height:auto;display:block}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
-::selection{background:var(--violet);color:#fff}
+::selection{background:var(--violet);color:#0A1013}
 h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin:0;line-height:.86;letter-spacing:-.01em}
 
 /* grain */
@@ -57,10 +57,10 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 
 /* ---------- progress ---------- */
-.prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:100;background:linear-gradient(90deg,var(--violet),var(--cyan))}
+.prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:100;background:linear-gradient(90deg,var(--amber),var(--violet),var(--cyan))}
 
 /* ---------- top bar ---------- */
-.bar{position:fixed;top:0;left:0;right:0;z-index:70;background:linear-gradient(180deg,rgba(11,13,22,.9),rgba(11,13,22,.5) 65%,transparent)}
+.bar{position:fixed;top:0;left:0;right:0;z-index:70;background:linear-gradient(180deg,rgba(10,16,19,.9),rgba(10,16,19,.5) 65%,transparent)}
 .bar-in{display:flex;align-items:center;gap:18px;padding:16px var(--pad)}
 .brand{display:flex;align-items:center;gap:10px;margin-right:auto;font-size:13px;font-weight:700;letter-spacing:.04em}
 .brand .dot{width:9px;height:9px;background:linear-gradient(135deg,var(--violet),var(--cyan));transform:rotate(45deg);flex:none}
@@ -86,11 +86,11 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
   background:rgba(255,255,255,.05);border:1px solid var(--line-2);border-radius:8px;color:var(--grey);padding:8px 12px;cursor:pointer;
   transition:border-color .18s ease,color .18s ease,background .18s ease;
 }
-.jumpbtn:hover{color:var(--white);border-color:var(--violet);background:rgba(124,92,255,.1)}
+.jumpbtn:hover{color:var(--white);border-color:var(--violet);background:rgba(212,245,92,.1)}
 .jumpbtn kbd{font-family:var(--mono);background:var(--line-2);color:var(--white);border-radius:3px;padding:1px 6px;font-size:10.5px}
 
 /* ---------- command palette ---------- */
-.palette-back{position:fixed;inset:0;z-index:110;background:rgba(8,10,18,.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:none;padding:11vh 20px 20px}
+.palette-back{position:fixed;inset:0;z-index:110;background:rgba(6,12,14,.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);display:none;padding:11vh 20px 20px}
 .palette-back.open{display:block}
 .palette{max-width:560px;margin:0 auto;background:var(--ink);border:1px solid var(--line-2);border-radius:var(--r);overflow:hidden;box-shadow:0 50px 100px -30px rgba(0,0,0,.9)}
 .palette-in{display:flex;align-items:center;gap:12px;padding:16px 18px;border-bottom:1px solid var(--line)}
@@ -103,7 +103,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 .palette-row em{font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--grey-2);min-width:22px}
 .palette-row b{color:var(--white);font-weight:500;flex:1;overflow-wrap:anywhere}
 .palette-row s{text-decoration:none;font-size:11px;color:var(--grey-2);flex:none}
-.palette-row.active{background:rgba(124,92,255,.12);border-left-color:var(--violet);color:var(--white)}
+.palette-row.active{background:rgba(212,245,92,.12);border-left-color:var(--violet);color:var(--white)}
 .palette-empty{padding:26px 12px;font-size:12.5px;color:var(--grey-2);text-align:center}
 
 /* ---------- shell ---------- */
@@ -115,7 +115,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 .hero{position:relative;isolation:isolate;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:112px var(--pad) 26px;overflow:hidden}
 .hero-bg{position:absolute;inset:0;z-index:0}
 .hero-bg img{width:100%;height:100%;object-fit:cover;opacity:.5}
-.hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 85% 20%,rgba(140,109,255,.22),transparent 70%),linear-gradient(180deg,rgba(11,13,22,.45) 0%,rgba(11,13,22,.7) 42%,#0B0D16 88%)}
+.hero-bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 85% 20%,rgba(212,245,92,.22),transparent 70%),linear-gradient(180deg,rgba(10,16,19,.45) 0%,rgba(10,16,19,.7) 42%,#0A1013 88%)}
 .hero-grid{position:absolute;inset:0;z-index:1;pointer-events:none;
   background-image:linear-gradient(90deg,rgba(255,255,255,.055) 1px,transparent 1px);
   background-size:calc(100% / 6) 100%}
@@ -136,7 +136,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 .hero-inner{position:relative;z-index:2}
 .hero h1{font-size:clamp(38px,8.2vw,120px);line-height:.94;letter-spacing:-.02em}
 .hero h1 .thin{-webkit-text-stroke:1.4px var(--white);color:transparent;paint-order:stroke}
-.hero h1 .gr{background:linear-gradient(96deg,var(--pink),var(--violet) 38%,var(--blue) 66%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .gr{background:linear-gradient(96deg,var(--amber),var(--violet) 40%,var(--cyan) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-meta{display:flex;flex-wrap:wrap;gap:12px 34px;margin-top:26px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey)}
 .hero-meta b{color:var(--white);font-weight:500}
 .hero-lead{margin:22px 0 0;max-width:62ch;font-size:14.5px;line-height:1.8;color:var(--grey)}
@@ -149,7 +149,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
   clip-path:polygon(0 0,100% 0,100% 58%,calc(100% - 15px) 100%,0 100%);
   transition:background .2s ease,color .2s ease,transform .2s ease;
 }
-.cta:hover{background:linear-gradient(96deg,var(--violet),var(--blue));color:#fff;transform:translateY(-2px)}
+.cta:hover{background:linear-gradient(96deg,var(--violet),var(--cyan));color:#0A1013;transform:translateY(-2px)}
 .cta.alt{background:transparent;color:var(--white);box-shadow:inset 0 0 0 1px var(--line-2)}
 .cta.alt:hover{background:var(--white);color:#000;box-shadow:none}
 .scrollhint{display:flex;align-items:center;gap:12px;margin-top:28px;font-size:10.5px;letter-spacing:.24em;color:var(--grey-2);text-transform:uppercase}
@@ -170,15 +170,15 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 .sec{padding-top:clamp(64px,9vw,132px);padding-bottom:clamp(64px,9vw,132px);position:relative}
 
 /* per-section identity backgrounds — subtle, so scrolling reads as chapters */
-#about{background-image:radial-gradient(ellipse 820px 460px at 104% -8%,rgba(140,109,255,.16),transparent 62%),radial-gradient(ellipse 600px 380px at -6% 100%,rgba(255,109,178,.07),transparent 65%)}
-#work{background-image:radial-gradient(ellipse 900px 520px at -8% 6%,rgba(44,232,255,.07),transparent 62%),radial-gradient(ellipse 760px 480px at 108% 60%,rgba(140,109,255,.09),transparent 65%)}
+#about{background-image:radial-gradient(ellipse 820px 460px at 104% -8%,rgba(212,245,92,.16),transparent 62%),radial-gradient(ellipse 600px 380px at -6% 100%,rgba(255,111,89,.07),transparent 65%)}
+#work{background-image:radial-gradient(ellipse 900px 520px at -8% 6%,rgba(62,230,195,.07),transparent 62%),radial-gradient(ellipse 760px 480px at 108% 60%,rgba(212,245,92,.09),transparent 65%)}
 #experience{
   background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
   background-size:44px 44px;background-position:0 0;
   -webkit-mask-image:linear-gradient(180deg,transparent,#000 10%,#000 90%,transparent);
   mask-image:linear-gradient(180deg,transparent,#000 10%,#000 90%,transparent);
 }
-#stack{background-image:radial-gradient(rgba(44,232,255,.2) 1.1px,transparent 1.4px);background-size:24px 24px}
+#stack{background-image:radial-gradient(rgba(62,230,195,.2) 1.1px,transparent 1.4px);background-size:24px 24px}
 #education{background-image:repeating-linear-gradient(180deg,transparent 0 41px,rgba(255,255,255,.03) 41px 42px);-webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);mask-image:linear-gradient(180deg,#000 82%,transparent)}
 .head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:clamp(34px,5vw,64px)}
 .head h2{font-size:clamp(36px,8.4vw,110px);line-height:.9;letter-spacing:-.02em}
@@ -212,12 +212,12 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 @media (min-width:1020px){.feat{grid-template-columns:minmax(0,1fr) minmax(0,1.04fr);align-items:center}}
 .pmeta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--grey-2)}
 .pmeta .no{color:var(--acc)}
-.pmeta .flag{color:#0B0D16;background:var(--acc);padding:3px 10px;border-radius:999px;font-weight:700;letter-spacing:.14em}
+.pmeta .flag{color:#0A1013;background:var(--acc);padding:3px 10px;border-radius:999px;font-weight:700;letter-spacing:.14em}
 .ptitle{font-size:clamp(27px,4.8vw,56px);line-height:1;margin:18px 0 0;letter-spacing:-.015em}
 .prole{margin:14px 0 0;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
 .ptxt{margin:20px 0 0;font-size:14.5px;line-height:1.9;color:var(--grey);max-width:60ch}
 .ptxt b{color:var(--white);font-weight:500}
-.metric{color:#0B0D16;background:var(--acc);padding:1px 8px;border-radius:5px;font-weight:700}
+.metric{color:#0A1013;background:var(--acc);padding:1px 8px;border-radius:5px;font-weight:700}
 
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:24px}
 .tag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 11px;border:1px solid var(--line-2);border-radius:999px;color:var(--grey);transition:border-color .2s ease,color .2s ease,background .2s ease}
@@ -295,11 +295,11 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 /* ---------- contact ---------- */
 .contact{position:relative;padding-top:clamp(70px,10vw,140px);padding-bottom:0;overflow:hidden}
 .contact::before{content:"";position:absolute;left:50%;top:-8%;transform:translateX(-50%);width:min(1100px,150vw);height:520px;
-  background:radial-gradient(circle,rgba(140,109,255,.36),rgba(255,109,178,.1) 38%,rgba(44,232,255,.12) 56%,transparent 72%);filter:blur(90px);pointer-events:none}
+  background:radial-gradient(circle,rgba(212,245,92,.36),rgba(255,111,89,.1) 38%,rgba(62,230,195,.12) 56%,transparent 72%);filter:blur(90px);pointer-events:none}
 .contact-grid{position:relative;display:grid;grid-template-columns:1fr;gap:clamp(28px,4vw,48px);align-items:start}
 @media (min-width:900px){.contact-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr)}}
 .contact h2{font-size:clamp(40px,8vw,104px);line-height:.86;letter-spacing:-.02em}
-.contact h2 .gr{background:linear-gradient(96deg,var(--violet),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.contact h2 .gr{background:linear-gradient(96deg,var(--amber),var(--violet) 45%,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
 .contact p{margin:24px 0 0;max-width:52ch;font-size:15px;line-height:1.9;color:var(--grey)}
 .channel-panel{margin-top:6px}
 .channels{margin-top:16px}
@@ -507,56 +507,56 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
       <div class="arch">
         <svg viewBox="0 0 520 300" role="img" aria-label="Request flows through a planner into an agent pool, which calls tools and dispatches to Celery workers before returning a result">
           <defs>
-            <linearGradient id="gv" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7C5CFF"/><stop offset="100%" stop-color="#4C8DFF"/></linearGradient>
-            <linearGradient id="gc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00E5FF"/><stop offset="100%" stop-color="#4C8DFF"/></linearGradient>
+            <linearGradient id="gv" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D4F55C"/><stop offset="100%" stop-color="#3EE6C3"/></linearGradient>
+            <linearGradient id="gc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#86C5E6"/><stop offset="100%" stop-color="#3EE6C3"/></linearGradient>
           </defs>
-          <g font-family="JetBrains Mono, monospace" font-size="10.5" fill="#AAB0BE" letter-spacing=".06em">
-            <path d="M104 44 H160" stroke="#303851" stroke-width="1.4" fill="none"/>
+          <g font-family="JetBrains Mono, monospace" font-size="10.5" fill="#A9B5B8" letter-spacing=".06em">
+            <path d="M104 44 H160" stroke="#2D424B" stroke-width="1.4" fill="none"/>
             <path d="M104 44 H160" stroke="url(#gv)" stroke-width="1.4" fill="none" class="flow"/>
-            <path d="M228 60 V104" stroke="#303851" stroke-width="1.4" fill="none"/>
+            <path d="M228 60 V104" stroke="#2D424B" stroke-width="1.4" fill="none"/>
             <path d="M228 60 V104" stroke="url(#gv)" stroke-width="1.4" fill="none" class="flow"/>
-            <path d="M196 144 H150 V196 H196" stroke="#303851" stroke-width="1.4" fill="none"/>
+            <path d="M196 144 H150 V196 H196" stroke="#2D424B" stroke-width="1.4" fill="none"/>
             <path d="M196 144 H150 V196 H196" stroke="url(#gc)" stroke-width="1.4" fill="none" class="flow"/>
-            <path d="M324 144 H372 V196 H324" stroke="#303851" stroke-width="1.4" fill="none"/>
+            <path d="M324 144 H372 V196 H324" stroke="#2D424B" stroke-width="1.4" fill="none"/>
             <path d="M324 144 H372 V196 H324" stroke="url(#gc)" stroke-width="1.4" fill="none" class="flow"/>
-            <path d="M260 176 V246 H400" stroke="#303851" stroke-width="1.4" fill="none"/>
+            <path d="M260 176 V246 H400" stroke="#2D424B" stroke-width="1.4" fill="none"/>
             <path d="M260 176 V246 H400" stroke="url(#gv)" stroke-width="1.4" fill="none" class="flow"/>
 
             <g class="node n1">
-              <rect x="16" y="28" width="88" height="32" fill="#10131E" stroke="#303851"/>
-              <text x="60" y="48" text-anchor="middle" fill="#F2F2F0">REQUEST</text>
+              <rect x="16" y="28" width="88" height="32" fill="#0F171B" stroke="#2D424B"/>
+              <text x="60" y="48" text-anchor="middle" fill="#F5F4EC">REQUEST</text>
             </g>
 
             <g class="node n2">
-              <rect x="160" y="28" width="136" height="32" fill="#10131E" stroke="#4C8DFF" stroke-opacity=".55"/>
-              <text x="228" y="48" text-anchor="middle" fill="#9CC0FF">PLANNER</text>
+              <rect x="160" y="28" width="136" height="32" fill="#0F171B" stroke="#3EE6C3" stroke-opacity=".55"/>
+              <text x="228" y="48" text-anchor="middle" fill="#B8DFF2">PLANNER</text>
             </g>
 
             <g class="node n3">
-              <rect x="160" y="104" width="200" height="72" fill="#171330" stroke="#7C5CFF" stroke-opacity=".7"/>
-              <text x="260" y="128" text-anchor="middle" fill="#C3B4FF">AGENT POOL</text>
-              <rect x="196" y="142" width="18" height="18" fill="none" stroke="#7C5CFF" stroke-opacity=".9"/>
-              <rect x="226" y="142" width="18" height="18" fill="none" stroke="#7C5CFF" stroke-opacity=".62"/>
-              <rect x="256" y="142" width="18" height="18" fill="none" stroke="#7C5CFF" stroke-opacity=".44"/>
-              <rect x="286" y="142" width="18" height="18" fill="none" stroke="#7C5CFF" stroke-opacity=".28"/>
-              <rect x="14" y="104" width="112" height="56" fill="#0B0D16" stroke="#212637"/>
-              <text x="70" y="126" text-anchor="middle" fill="#7F8798" font-size="9.5">CIRCUIT BREAKERS</text>
-              <text x="70" y="144" text-anchor="middle" fill="#7F8798" font-size="9.5">STRUCTLOG</text>
+              <rect x="160" y="104" width="200" height="72" fill="#1A2410" stroke="#D4F55C" stroke-opacity=".7"/>
+              <text x="260" y="128" text-anchor="middle" fill="#E6F9A8">AGENT POOL</text>
+              <rect x="196" y="142" width="18" height="18" fill="none" stroke="#D4F55C" stroke-opacity=".9"/>
+              <rect x="226" y="142" width="18" height="18" fill="none" stroke="#D4F55C" stroke-opacity=".62"/>
+              <rect x="256" y="142" width="18" height="18" fill="none" stroke="#D4F55C" stroke-opacity=".44"/>
+              <rect x="286" y="142" width="18" height="18" fill="none" stroke="#D4F55C" stroke-opacity=".28"/>
+              <rect x="14" y="104" width="112" height="56" fill="#0A1013" stroke="#1E2D33"/>
+              <text x="70" y="126" text-anchor="middle" fill="#7C8C91" font-size="9.5">CIRCUIT BREAKERS</text>
+              <text x="70" y="144" text-anchor="middle" fill="#7C8C91" font-size="9.5">STRUCTLOG</text>
             </g>
 
             <g class="node n4">
-              <rect x="60" y="180" width="136" height="32" fill="#10131E" stroke="#00E5FF" stroke-opacity=".5"/>
-              <text x="128" y="200" text-anchor="middle" fill="#8CEEFF">TOOL CALLS</text>
+              <rect x="60" y="180" width="136" height="32" fill="#0F171B" stroke="#86C5E6" stroke-opacity=".5"/>
+              <text x="128" y="200" text-anchor="middle" fill="#9CF2DF">TOOL CALLS</text>
             </g>
 
             <g class="node n5">
-              <rect x="324" y="180" width="152" height="32" fill="#10131E" stroke="#00E5FF" stroke-opacity=".5"/>
-              <text x="400" y="200" text-anchor="middle" fill="#8CEEFF">CELERY WORKERS</text>
+              <rect x="324" y="180" width="152" height="32" fill="#0F171B" stroke="#86C5E6" stroke-opacity=".5"/>
+              <text x="400" y="200" text-anchor="middle" fill="#9CF2DF">CELERY WORKERS</text>
             </g>
 
             <g class="node n6">
-              <rect x="400" y="230" width="86" height="32" fill="#0A2418" stroke="#3DDC84" stroke-opacity=".6"/>
-              <text x="443" y="250" text-anchor="middle" fill="#84EEB4">RESULT</text>
+              <rect x="400" y="230" width="86" height="32" fill="#0C2A22" stroke="#8FE3AE" stroke-opacity=".6"/>
+              <text x="443" y="250" text-anchor="middle" fill="#B8F0CB">RESULT</text>
             </g>
           </g>
         </svg>
@@ -615,7 +615,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
       <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Offline Coding Agent</h3>
       <p class="prole">Built for a 0.8B model on a 2 GB GPU</p>
       <p class="ptxt">A coding agent for small local models, with no internet and no dependencies beyond the Python standard library. The harness decides the next step and the model only does tiny, well-defined jobs: write these tests, write this code, fix this failing output.</p>
-      <p class="ptxt">Each step follows a fixed loop of tests first, implement, run the tests, then commit, and any failure rolls the step back. It has built working apps step by step, including an HRMS and a task manager.</p>
+      <p class="ptxt">Each step follows a fixed loop of tests first, implement, run the tests, then commit, with bounded retries, a loop guard, and rollback on any failure. It was built through 20+ reviewed pull requests, with full prompt and reply transcripts for debugging and a model benchmarking command. It has built working apps step by step, including an HRMS and a task manager.</p>
       <div class="pipe"><i>PLAN</i><u></u><i class="hot">TESTS FIRST</i><u></u><i class="hot">IMPLEMENT</i><u></u><i>RUN TESTS</i><u></u><i>COMMIT</i></div>
     </div>
     <div class="side">
@@ -677,7 +677,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
       <div><h4>Skill Scout</h4><p>In progress. An AI-assisted job hunter that discovers jobs from public sources, scores them with explainable rules, and keeps an application tracker so nothing is submitted twice. FastAPI, SQLite, Ollama.</p></div>
       <div><h4>DAB AI</h4><p>In progress. A voice-agent builder platform on FastAPI, PostgreSQL and Next.js, built test-first.</p></div>
       <div><h4>OmClaw</h4><p>A local-first autonomous coding agent on Ollama with tool-calling and Docker-sandboxed execution. Earlier name: Shawty.</p></div>
-      <div><h4>Local RAG pipeline</h4><p>Chunking, local embeddings and vector search with Ollama, FAISS and ChromaDB, using EmbeddingGemma and Qwen2.5 Coder 1.5B, fully offline.</p></div>
+      <div><h4>Local RAG pipeline</h4><p>Fully local: overlapping chunking, EmbeddingGemma embeddings, FAISS retrieval, CrossEncoder reranking, source attribution and grounding checks, with Qwen2.5-1.5B answering.</p></div>
       <div><h4>Human action recognition</h4><p>Real-time webcam pose detection and action classification with MediaPipe, OpenCV and Keras.</p></div>
       <div><h4>Image captioning</h4><p>CNN encoder with an LSTM decoder trained on Flickr8k to generate captions from scratch.</p></div>
     </div>
@@ -701,12 +701,12 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
       <div class="loc">Remote / AI/ML Intern</div>
     </div>
     <div>
-      <p>AI/ML Intern, backend. Worked on COE AI, a marine garbage classification and weight-estimation service integrated with a Kuroco CMS, plus the Python services around it. Tasks came through tickets and went through senior review before merge.</p>
+      <p>AI/ML Intern, backend. Worked on COE AI, an AI-powered marine debris analysis system that classifies marine plastic waste into 11 categories, with OCR and weight estimation, integrated with a Kuroco CMS, plus the Python services around it. Tasks came through tickets and went through senior review before merge.</p>
       <ul>
         <li><em>01</em><span>Prompt engineering for vision-language models against real field photography</span></li>
         <li><em>02</em><span>OCR prompt optimisation and a weight-estimation pipeline for scale readings</span></li>
-        <li><em>03</em><span>FastAPI endpoints, Pydantic schemas and image preprocessing utilities</span></li>
-        <li><em>04</em><span>Pytest coverage, security hardening and performance work on existing services</span></li>
+        <li><em>03</em><span>FastAPI endpoints for single, URL-based and batch inference, Pydantic schemas, and Pillow-based image validation and preprocessing</span></li>
+        <li><em>04</em><span>Pytest unit and integration tests, SSRF protections, structured logging and inference performance work</span></li>
         <li><em>05</em><span>Remote development on a Mac Mini over VS Code Remote SSH, feature-branch workflow</span></li>
       </ul>
     </div>
@@ -760,7 +760,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
     <div class="srow" style="--acc:var(--cyan)"><h3>Practice</h3><p>Feature branches, pull-request review, Pytest, test-driven development</p></div>
   </div>
 
-  <div class="rv" style="margin-top:clamp(34px,5vw,56px);border:1px solid var(--line-2);padding:clamp(22px,3vw,34px);background:linear-gradient(140deg,rgba(140,109,255,.14),rgba(44,232,255,.05) 55%,transparent);border-radius:var(--r)">
+  <div class="rv" style="margin-top:clamp(34px,5vw,56px);border:1px solid var(--line-2);padding:clamp(22px,3vw,34px);background:linear-gradient(140deg,rgba(212,245,92,.14),rgba(62,230,195,.05) 55%,transparent);border-radius:var(--r)">
     <span class="lbl" style="color:var(--violet)">CURRENTLY LEARNING</span>
     <p style="margin:14px 0 0;font-size:15.5px;line-height:1.85;color:var(--grey);max-width:64ch">RAFT, evaluating fine-tuned models, PyTorch internals, BentoML deployment and agent development with LangGraph.</p>
   </div>
