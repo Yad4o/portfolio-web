@@ -225,6 +225,7 @@ h1,h2,h3{font-family:var(--disp);font-weight:700;text-transform:uppercase;margin
 .ptxt b{color:var(--white);font-weight:500}
 .metric{color:#0A1013;background:var(--acc);padding:1px 8px;border-radius:5px;font-weight:700}
 
+.plinks{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px}.plinks a,.plinks span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding-bottom:3px}.plinks a{color:var(--white);border-bottom:1px solid var(--acc);transition:color .2s}.plinks a:hover{color:var(--acc)}.plinks span{color:var(--grey-2)}.flag.new{animation:newpulse 2.4s ease-in-out infinite}@keyframes newpulse{0%,100%{box-shadow:0 0 0 0 rgba(212,245,92,0)}50%{box-shadow:0 0 0 6px rgba(212,245,92,.2)}}.also h4 .st{font-style:normal;font-size:10px;letter-spacing:.16em;margin-left:10px;color:var(--cyan);border:1px solid var(--line-2);padding:2px 8px;border-radius:999px;vertical-align:middle;font-weight:500}@media (prefers-reduced-motion:reduce){.flag.new{animation:none}}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:24px}
 .tag{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 11px;border:1px solid var(--line-2);border-radius:999px;color:var(--grey);transition:border-color .2s ease,color .2s ease,background .2s ease}
 .tag:hover{border-color:var(--acc);color:var(--white);background:color-mix(in srgb,var(--acc) 12%,transparent)}
@@ -409,7 +410,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
       <span>FINAL YEAR B.E. AI &amp; DS</span>
     </div>
 
-    <p class="hero-lead">AI/ML engineer and software developer. I fine-tune small language models with LoRA, build agents and retrieval pipelines, and ship the FastAPI backends and React frontends around them, so it all holds up outside a notebook. Three AI/ML internships, eight-plus shipped projects, and a preference for the parts of the stack nobody demos.</p>
+    <p class="hero-lead">AI/ML engineer and software developer. I fine-tune small language models with LoRA, build agents and retrieval pipelines, and ship the FastAPI backends and React frontends around them, so it all holds up outside a notebook. Three internships, eight-plus shipped projects, and a preference for the parts of the stack nobody demos.</p>
 
     <div class="hero-cta">
       <a class="cta" href="#work">Selected work*</a>
@@ -430,7 +431,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
 
 <!-- ============ FACTS ============ -->
 <div class="facts">
-  <div class="fact"><b data-count="3">0</b><span>AI/ML internships</span></div>
+  <div class="fact"><b data-count="3">0</b><span>Internships</span></div>
   <div class="fact"><b data-count="8" data-suffix="+">0</b><span>Shipped projects</span></div>
   <div class="fact"><b data-count="94" data-suffix="%+">0</b><span>Deepfake classifier accuracy</span></div>
   <div class="fact"><b data-count="2027">0</b><span>B.E. AI &amp; Data Science</span></div>
@@ -444,7 +445,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
   </div>
   <div class="manifest rv">
     <a href="#about"><em>01</em><strong>About</strong><span>Profile / working on</span></a>
-    <a href="#work"><em>02</em><strong>Selected work</strong><span>06 systems + 06 builds</span></a>
+    <a href="#work"><em>02</em><strong>Selected work</strong><span>08 systems + 08 builds</span></a>
     <a href="#experience"><em>03</em><strong>Experience</strong><span>03 internships</span></a>
     <a href="#stack"><em>04</em><strong>Stack</strong><span>08 categories</span></a>
     <a href="#education"><em>05</em><strong>Education</strong><span>SPPU / Maharashtra board</span></a>
@@ -468,10 +469,10 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
       <p>I've fine-tuned two small language models with LoRA, one for skincare and health and one for the Indian Constitution, and I'm now building agents and platforms around that work.</p>
 
       <div class="now">
+        <div><b>Creator Studio, one-upload publishing to 7 platforms</b><s>BUILT</s></div>
+        <div><b>Blender story-video engine, idea to upload-ready short</b><s>BUILT</s></div>
         <div><b>Skill Scout, an AI job-hunting agent</b><s>BUILDING</s></div>
         <div><b>DAB AI, a voice-agent builder platform</b><s>BUILDING</s></div>
-        <div><b>Offline coding agent for small local models</b><s>BUILT</s></div>
-        <div><b>LoRA fine-tuning, GGUF export, local serving</b><s>SHIPPED</s></div>
       </div>
     </div>
 
@@ -494,7 +495,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
 <section class="sec pad" id="work" style="--acc:var(--violet)">
   <div class="head rv">
     <div><span class="idx">02 / SELECTED WORK</span><h2>Projects</h2></div>
-    <p>Six systems, including two fine-tuned models, plus the smaller builds underneath them.</p>
+    <p>Eight systems, from my newest builds to two fine-tuned models, plus the smaller ones underneath.</p>
   </div>
 
   <!-- FEATURED -->
@@ -568,12 +569,47 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
         </svg>
       </div>
       <div class="cap"><span>DIAGRAM — REQUEST LIFECYCLE</span><span>MAP / V1</span></div>
+      <div class="plinks"><a href="https://github.com/Yad4o/MAP" target="_blank" rel="noopener">GitHub ↗</a><a href="https://map-eight-blond.vercel.app" target="_blank" rel="noopener">Live demo ↗</a></div>
     </div>
   </article>
 
   <!-- ROWS -->
-  <article class="row rv" style="--acc:var(--amber)">
+    <article class="row rv" style="--acc:var(--amber)">
     <div class="bignum">02</div>
+    <div>
+      <div class="pmeta"><span class="no">CREATOR-STUDIO</span><span class="flag new">NEW · NOV 2026</span><span>PUBLISHING · PRIVATE REPO</span></div>
+      <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Creator Studio</h3>
+      <p class="prole">One upload, seven platforms, no AI in the loop</p>
+      <p class="ptxt">A local-first publishing app for two creators and three brands. Upload a video once, write your own text, pick accounts, review exactly what each destination will receive, and publish to <b>YouTube, Instagram, Facebook, Threads, LinkedIn, X and Pinterest</b>. Nothing in it generates or rewrites text.</p>
+      <p class="ptxt">The interesting part is reliability. Every destination is its own job, with exponential backoff on network and rate-limit errors, resumable chunked YouTube uploads and duplicate refusal. If the connection drops at the moment a post is created, the outcome is marked <b>uncertain</b> and stops for a human check, so nothing is ever posted twice.</p>
+      <div class="pipe"><i>VIDEO + TEXT</i><u></u><i>PLATFORM CHECKS</i><u></u><i class="hot">REVIEW</i><u></u><i class="hot">JOB PER ACCOUNT</i><u></u><i>CONFIRMED</i></div>
+    </div>
+    <div class="side">
+      <div class="spec"><div><em>Platforms</em><b>7 + manual Medium</b></div><div><em>Workspaces</em><b>3 brands, separate queues</b></div><div><em>Security</em><b>Fernet-encrypted tokens, PKCE</b></div><div><em>Runs</em><b>Localhost only, SQLite</b></div></div>
+      <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span class="tag">SQLite</span><span class="tag">OAuth 2.0</span><span class="tag">ffmpeg</span><span class="tag">pytest</span></div>
+      <div class="plinks"><span>Private repo</span></div>
+    </div>
+  </article>
+
+  <article class="row rv" style="--acc:var(--cyan)">
+    <div class="bignum">03</div>
+    <div>
+      <div class="pmeta"><span class="no">VIDEO-ENGINE</span><span class="flag new">NEW · NOV 2026</span><span>AUTOMATION · PRIVATE REPO</span></div>
+      <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Story Video Engine</h3>
+      <p class="prole">Roblox-style vertical shorts, generated entirely by code</p>
+      <p class="ptxt">A Blender-driven pipeline that turns a video idea into an upload-ready 1080×1920 short, with no manual animation and no video editor. A script and a shots file go in; a character generator, <b>54 props</b> and a library of sets build the scene.</p>
+      <p class="ptxt">One command runs every stage: shots validated against the engine's vocabulary, ElevenLabs voice-over with an Edge TTS fallback, QA contact sheets, the render, then a Blender sequencer edit for voice, music, sound effects, captions and transitions. One rule I held to: never patch a single episode by hacking the engine, so it stays general.</p>
+      <div class="pipe"><i>IDEA</i><u></u><i>SHOTS.JSON</i><u></u><i class="hot">VALIDATE</i><u></u><i class="hot">VOICE</i><u></u><i>BLENDER BUILD</i><u></u><i>EDIT</i><u></u><i>PUBLISH PACK</i></div>
+    </div>
+    <div class="side">
+      <div class="spec"><div><em>Output</em><b>1080×1920 vertical</b></div><div><em>Voice</em><b>ElevenLabs, Edge TTS fallback</b></div><div><em>Engine</em><b>Blender 5 + Python</b></div><div><em>Formats</em><b>2 story formats</b></div></div>
+      <div class="tags"><span class="tag">Python</span><span class="tag">Blender</span><span class="tag">bpy</span><span class="tag">ElevenLabs</span><span class="tag">Edge TTS</span></div>
+      <div class="plinks"><span>Private repo</span></div>
+    </div>
+  </article>
+
+<article class="row rv" style="--acc:var(--amber)">
+    <div class="bignum">04</div>
     <div>
       <div class="pmeta"><span class="no">LORA</span><span>MODEL DEVELOPMENT</span></div>
       <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Health &amp; Skincare Assistant</h3>
@@ -594,7 +630,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
   </article>
 
   <article class="row rv" style="--acc:var(--pink)">
-    <div class="bignum">03</div>
+    <div class="bignum">05</div>
     <div>
       <div class="pmeta"><span class="no">LORA</span><span>MODEL DEVELOPMENT</span></div>
       <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Constitution of India Q&amp;A</h3>
@@ -615,13 +651,13 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
   </article>
 
   <article class="row rv" style="--acc:var(--green)">
-    <div class="bignum">04</div>
+    <div class="bignum">06</div>
     <div>
-      <div class="pmeta"><span class="no">LOCAL-CODE-AGENT</span><span>AGENT · PRIVATE REPO</span></div>
+      <div class="pmeta"><span class="no">LOCAL-CODE-AGENT</span><span>AGENT · PUBLIC REPO</span></div>
       <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Offline Coding Agent</h3>
       <p class="prole">Built for a 0.8B model on a 2 GB GPU</p>
       <p class="ptxt">A coding agent for small local models, with no internet and no dependencies beyond the Python standard library. The harness decides the next step and the model only does tiny, well-defined jobs: write these tests, write this code, fix this failing output.</p>
-      <p class="ptxt">Each step follows a fixed loop of tests first, implement, run the tests, then commit, with bounded retries, a loop guard, and rollback on any failure. It was built through 20+ reviewed pull requests, with full prompt and reply transcripts for debugging and a model benchmarking command. It has built working apps step by step, including an HRMS and a task manager.</p>
+      <p class="ptxt">Each step follows a fixed loop of tests first, implement, run the tests, then commit, with bounded retries, a loop guard, and rollback on any failure. It was built through 20+ reviewed pull requests, with full prompt and reply transcripts for debugging and a model benchmarking command. It has built working apps step by step, including an HRMS, a task manager and a restaurant event-management backend.</p>
       <div class="pipe"><i>PLAN</i><u></u><i class="hot">TESTS FIRST</i><u></u><i class="hot">IMPLEMENT</i><u></u><i>RUN TESTS</i><u></u><i>COMMIT</i></div>
     </div>
     <div class="side">
@@ -632,11 +668,12 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
         <div><em>Safety</em><b>Rollback on failure</b></div>
       </div>
       <div class="tags"><span class="tag">Python</span><span class="tag">Ollama</span><span class="tag">Qwen</span><span class="tag">pytest</span><span class="tag">Git</span></div>
+      <div class="plinks"><a href="https://github.com/Yad4o/local-code-agent" target="_blank" rel="noopener">GitHub ↗</a></div>
     </div>
   </article>
 
   <article class="row rv" style="--acc:var(--cyan)">
-    <div class="bignum">05</div>
+    <div class="bignum">07</div>
     <div>
       <div class="pmeta"><span class="no">SRS</span><span>CLASSIFICATION</span></div>
       <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Support Resolution System</h3>
@@ -653,11 +690,12 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
         <div><em>Limits</em><b>slowapi per tenant</b></div>
       </div>
       <div class="tags"><span class="tag">FastAPI</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">BentoML</span><span class="tag">slowapi</span><span class="tag">OpenAI API</span></div>
+      <div class="plinks"><a href="https://github.com/Yad4o/SRS" target="_blank" rel="noopener">Backend ↗</a><a href="https://github.com/Yad4o/srs-frontend" target="_blank" rel="noopener">Frontend ↗</a><a href="https://srs-frontend-rho.vercel.app" target="_blank" rel="noopener">Live demo ↗</a></div>
     </div>
   </article>
 
   <article class="row rv" style="--acc:var(--blue)">
-    <div class="bignum">06</div>
+    <div class="bignum">08</div>
     <div>
       <div class="pmeta"><span class="no">DEEPFAKE</span><span>COMPUTER VISION</span></div>
       <h3 class="ptitle" style="font-size:clamp(23px,3.6vw,40px)">Deepfake Detection API</h3>
@@ -674,17 +712,20 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
         <div><em>Delivery</em><b>Docker + React</b></div>
       </div>
       <div class="tags"><span class="tag">PyTorch</span><span class="tag">EfficientNet-B4</span><span class="tag">GradCAM</span><span class="tag">FastAPI</span><span class="tag">Docker</span><span class="tag">React</span></div>
+      <div class="plinks"><a href="https://github.com/Yad4o/deepfake-detection-api" target="_blank" rel="noopener">API ↗</a><a href="https://github.com/Yad4o/deepfake-detector-frontend" target="_blank" rel="noopener">Frontend ↗</a></div>
     </div>
   </article>
 
   <div style="margin-top:clamp(40px,6vw,72px)" class="rv">
     <span class="lbl">ALSO BUILT</span>
     <div class="also" style="margin-top:20px">
-      <div><h4>Skill Scout</h4><p>In progress. An AI-assisted job hunter that discovers jobs from public sources, scores them with explainable rules, and keeps an application tracker so nothing is submitted twice. FastAPI, SQLite, Ollama.</p></div>
-      <div><h4>DAB AI</h4><p>In progress. A voice-agent builder platform on FastAPI, PostgreSQL and Next.js, built test-first.</p></div>
-      <div><h4>OmClaw</h4><p>A local-first autonomous coding agent on Ollama with tool-calling and Docker-sandboxed execution. Earlier name: Shawty.</p></div>
+      <div><h4>Skill Scout<span class="st">BUILDING</span></h4><p>An AI-assisted job hunter. It discovers jobs from Greenhouse and Lever public APIs, scores them with explainable rules, keeps a manual-apply queue and tracks every application so nothing is submitted twice. Auto-submit is left out on purpose until discovery and matching are proven. FastAPI, SQLite, Ollama, with CI.</p></div>
+      <div><h4>DAB AI<span class="st">BUILDING</span></h4><p>A voice-agent builder platform on FastAPI, PostgreSQL and Next.js, built test-first.</p></div>
+      <div><h4>Agent-built apps<span class="st">BUILT</span></h4><p>An HRMS, a task manager and a restaurant event-management backend, each written one function at a time by a 0.8B local model through my coding agent, with every step tested and committed on its own.</p></div>
+      <div><h4>Stickman Story Engine<span class="st">PLANNED</span></h4><p>A faster sibling of the video engine: a toon stickman, free image-library backgrounds, Blender EEVEE and TTS, aiming for a 2-minute video in minutes on a normal laptop.</p></div>
+      <div><h4>OmClaw</h4><p>A local-first autonomous coding agent on Ollama with tool-calling and Docker-sandboxed execution. Earlier name: Shawty. <a href="https://github.com/Yad4o/omclaw" target="_blank" rel="noopener" style="color:var(--white);border-bottom:1px solid var(--cyan)">GitHub ↗</a></p></div>
       <div><h4>Local RAG pipeline</h4><p>Fully local: overlapping chunking, EmbeddingGemma embeddings, FAISS retrieval, CrossEncoder reranking, source attribution and grounding checks, with Qwen2.5-1.5B answering.</p></div>
-      <div><h4>Human action recognition</h4><p>Real-time webcam pose detection and action classification with MediaPipe, OpenCV and Keras.</p></div>
+      <div><h4>Human action recognition</h4><p>Real-time webcam pose detection and action classification with MediaPipe, OpenCV and Keras. <a href="https://github.com/Yad4o/Human-Action-Recognition" target="_blank" rel="noopener" style="color:var(--white);border-bottom:1px solid var(--cyan)">GitHub ↗</a></p></div>
       <div><h4>Image captioning</h4><p>CNN encoder with an LSTM decoder trained on Flickr8k to generate captions from scratch.</p></div>
     </div>
   </div>
@@ -696,7 +737,7 @@ html{scrollbar-color:var(--violet) var(--black);scrollbar-width:thin}
 <section class="sec pad" id="experience" style="--acc:var(--violet)">
   <div class="head rv">
     <div><span class="idx">03 / TRACK RECORD</span><h2>Experience</h2></div>
-    <p>Three AI/ML internships, all backend or model-side.</p>
+    <p>Three internships across AI/ML and data science.</p>
   </div>
 
   <div class="timeline">
